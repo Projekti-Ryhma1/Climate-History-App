@@ -1,9 +1,13 @@
 import './App.css';
+import { Route, Routes} from 'react-router-dom';
+import Login from './components/login';
 
 function App() {
   return (
     <div className="App">
-      <h2>Hello world</h2>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>    
     </div>
   );
 }
