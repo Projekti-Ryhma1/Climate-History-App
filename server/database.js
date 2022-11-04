@@ -1,19 +1,31 @@
-const mysql = require("mysql2");
+const mysql = require("mysql");
 
-const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.BB_USER,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASS,
-    socketPath: process.env.INSTANCE_UNIX_SOCKET
-});
-
-connection.connect((err)=>{
-    if(err){
-        console.error("Error connecting: "+ err.stack);
-        return
+const config = {
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER, // e.g. 'my-db-user'
+    password: process.env.DB_PASS, // e.g. 'my-db-password'
+    database: process.env.DB_DATABASE, // e.g. 'my-database'
+    //socketPath: process.env.INSTANCE_UNIX_SOCKET, // e.g. '/cloudsql/project:region:instance'
+  }
+  if(process.env.NODE_ENV === 'production') {
+    console.log('Running from cloud. Connecting to DB through GCP socket.');
+    config.socketPath = `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`;
+  }
+  
+  // When running from localhost, get the config from .env
+  else {
+    console.log('Running from localhost. Connecting to DB directly.');
+    config.host = process.env.DB_HOST;
+  }
+  
+  let connection = mysql.createConnection(config);
+  
+  connection.connect(function(err) {
+    if (err) {
+      console.error('Error connecting: ' + err.stack);
+      return;
     }
     console.log('Connected as thread id: ' + connection.threadId);
-});
-
-module.exports = connection;
+  });
+  
+  module.exports = connection;

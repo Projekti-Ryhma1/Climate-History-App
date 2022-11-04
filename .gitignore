@@ -2,6 +2,7 @@
 
 # server
 /server/.env
+/server/CREDENTIALS_JSON_FILE.json
 
 # dependencies
 client/node_modules
