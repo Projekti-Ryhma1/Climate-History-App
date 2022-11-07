@@ -4,8 +4,13 @@ const cors = require("cors");
 const connection = require("./database");
 const bodyParser = require('body-parser');
 const port = 3001;
+
+const dataRouter = require("./routes/climatedata")
+
 const app = express();
 app.use(cors());
+
+
 
 app.get("/", (req, res) => {
   res.send(200);
