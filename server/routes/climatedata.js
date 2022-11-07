@@ -9,4 +9,5 @@ router.get("/global_monthly", async (req, res) => {
     res.json(result);
   });
 });
+
 module.exports = router;
