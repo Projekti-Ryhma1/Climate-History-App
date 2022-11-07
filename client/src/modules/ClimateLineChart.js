@@ -1,16 +1,12 @@
-import {
-  Legend,
-  Line,
-  LineChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import axios from "axios";
 
 export default function ClimateLineChart() {
+
+    const [isLoading, setIsLoading] = useState(true)
+
   return (
-    <div >
-    
+    <div>
       <h2>Global Temperature Anomaly</h2>
       <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
@@ -29,7 +25,6 @@ export default function ClimateLineChart() {
         <Legend />
         <Tooltip />
       </LineChart>
-    
     </div>
 
     //dot=False on Line component speedsup page load by 2s~
