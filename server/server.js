@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const connection = require("./database");
 const bodyParser = require('body-parser');
 const port = 3001;
 
@@ -17,13 +16,8 @@ app.get("/", (req, res) => {
   res.end();
 });
 
-app.get("/data", async (req, res) => {
-  const query = "SELECT * FROM global_monthly";
-  connection.query(query, (error, result) => {
-    if (error) throw error;
-    res.json(result);
-  });
-});
+//Route for climatedata from database
+app.use("/data",dataRouter);
 
 app.set("port", process.env.PORT || 3001);
 app.listen(port);
