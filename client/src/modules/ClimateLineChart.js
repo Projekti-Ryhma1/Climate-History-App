@@ -55,15 +55,16 @@ export default function ClimateLineChart(){
 
 
     return(
-        <di>
+        <div>
+            <h2>Global Temperature Anomaly</h2>
             <LineChart width={800} height={400} data={data}>
-                <Line dataKey="Anomaly_deg_C" />
+                <Line type="monotone" dataKey="Anomaly_deg_C" />
                 <XAxis dataKey="Time" />
                 <YAxis/>
                 <Legend/>
                 <Tooltip/>
             </LineChart>
 
-        </di>
+        </div>
     )
 } 
