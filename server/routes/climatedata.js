@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const connection = require("./database");
+const connection = require("../database");
 
 router.get("/global_monthly", async (req, res) => {
   const query = "SELECT * FROM global_monthly";
