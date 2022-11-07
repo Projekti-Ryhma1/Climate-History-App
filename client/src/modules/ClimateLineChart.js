@@ -1,35 +1,33 @@
 import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import Spinner from "./Spinner";
 
 export default function ClimateLineChart() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState([]);
 
-    const [isLoading, setIsLoading] = useState(true)
-    const [data, setData] = useState([])
+  useEffect(() => {
+    const address = "http://localhost:3001/data/global_monthly";
 
-    useEffect(() => {
-      const address = "http://localhost:3001/data/global_monthly"
-        
-      axios.get(address).then((response)=>{
-        console.log(response.data)
-        setData(response.data)     
-        setTimeout(() => { //give 0.5s time for data to load
-            setIsLoading(false)
+    axios
+      .get(address)
+      .then((response) => {
+        console.log(response.data);
+        setData(response.data);
+        setTimeout(() => {
+          //give 0.5s time for data to load
+          setIsLoading(false);
         }, 500);
-      }).catch(error => {
-        alert(error)
-      })     
-    }, [])
-    
-    if(isLoading){
-        return <h2>Loading</h2>      
-    }
-    else{
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
 
-  return (
-    <div>
-      <h2>Global Temperature Anomaly</h2>
+  const renderChart = (
+    <>
+      <p>Global Temperature Anomaly</p>
       <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         data={data}
@@ -47,9 +45,12 @@ export default function ClimateLineChart() {
         <Legend />
         <Tooltip />
       </LineChart>
-    </div>
+    </>
+  );
+
+  return (
+    <div>{isLoading ? <Spinner/> : renderChart}</div>
 
     //dot=False on Line component speedsup page load by 2s~
   );
-}
 }
