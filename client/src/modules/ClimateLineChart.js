@@ -2,14 +2,18 @@ import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+
 export default function ClimateLineChart() {
 
     const [isLoading, setIsLoading] = useState(true)
     const [data, setData] = useState([])
 
     useEffect(() => {
-      
-    
+      const address = "http://localhost:3001/data/global_monthly"
+        
+      axios.get(address).then((response)=>{
+        console.log(response.data)
+      })
       
     }, [])
     
