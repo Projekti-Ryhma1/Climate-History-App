@@ -1,15 +1,21 @@
-const express = require('express')
-const cors = require('cors')
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const port = 3001;
 
-const port = 3001
-const app = express()
+const dataRouter = require("./routes/climatedata");
 
-app.use(cors())
+const app = express();
+app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send(200);
+  res.end();
+});
 
-app.get('/', (req,res) => {
-    res.send(200);
-    res.end();
-})
+//Route for climatedata from database
+app.use("/data", dataRouter);
 
-app.listen(port)
+app.set("port", process.env.PORT || 3001);
+app.listen(port);
