@@ -13,12 +13,19 @@ export default function ClimateLineChart() {
         
       axios.get(address).then((response)=>{
         console.log(response.data)
-        setData(response.data)
+        setData(response.data)     
+        setTimeout(() => { //give 0.5s time for data to load
+            setIsLoading(false)
+        }, 500);
       }).catch(error => {
         alert(error)
       })     
     }, [])
     
+    if(isLoading){
+        return <h2>Loading</h2>      
+    }
+    else{
 
   return (
     <div>
@@ -44,4 +51,5 @@ export default function ClimateLineChart() {
 
     //dot=False on Line component speedsup page load by 2s~
   );
+}
 }
