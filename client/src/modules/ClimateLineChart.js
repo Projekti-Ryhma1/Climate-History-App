@@ -1,18 +1,37 @@
-import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 export default function ClimateLineChart() {
-
   return (
-    <div>
+    <div >
+    
       <h2>Global Temperature Anomaly</h2>
-      <LineChart width={800} height={400} data={data}>
-        <Line type="monotone" dataKey="Anomaly_deg_C" dot={false} /> 
+      <LineChart
+        margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
+        data={data}
+        width={800}
+        height={400}
+      >
+        <Line
+          type="monotone"
+          dataKey="Anomaly_deg_C"
+          dot={false}
+          name="Global temp anomaly"
+        />
         <XAxis dataKey="Time" />
         <YAxis />
         <Legend />
-        
+        <Tooltip />
       </LineChart>
+    
     </div>
+
     //dot=False on Line component speedsup page load by 2s~
   );
 }
