@@ -2,6 +2,7 @@ import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
+import "./ClimateLineChart.css"
 
 export default function ClimateLineChart() {
   const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +50,7 @@ export default function ClimateLineChart() {
   );
 
   return (
-    <div>{isLoading ? <Spinner/> : renderChart}</div>
+    <div className="container-chart">{isLoading ? <Spinner/> : renderChart}</div>
 
     //dot=False on Line component speedsup page load by 2s~
   );
