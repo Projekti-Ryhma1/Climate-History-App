@@ -1,9 +1,18 @@
 import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function ClimateLineChart() {
 
     const [isLoading, setIsLoading] = useState(true)
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+      
+    
+      
+    }, [])
+    
 
   return (
     <div>
