@@ -31,7 +31,7 @@ export default function ClimateLineChart() {
       >
         <Line
           type="monotone"
-          dataKey="Anomaly_deg_C"
+          dataKey="Anomaly (deg C)"
           dot={false}
           name="Global temp anomaly"
         />
