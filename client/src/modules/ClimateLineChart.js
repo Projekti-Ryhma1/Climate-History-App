@@ -59,6 +59,7 @@ export default function ClimateLineChart() {
         height={400}
       >
         <Line
+        stroke="#483BF6"
           xAxisId={"global"}
           data={data}
           type="monotone"
@@ -69,7 +70,7 @@ export default function ClimateLineChart() {
         <Line
           hide={hideLine}
           xAxisId={"northern"}
-          stroke="#8884d8"
+          stroke="#000000"
           data={data1}
           type="monotone"
           dataKey="northern_anomaly"
