@@ -1,4 +1,12 @@
-import { Legend, Line, LineChart, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
+import {
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+} from "recharts";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
@@ -24,7 +32,7 @@ export default function ClimateLineChart() {
       .catch((error) => {
         alert(error);
       });
-    const address1 = "http://localhost:3001/data/northern_hemisphere_monthly";
+    const address1 = "http://localhost:3001/data/northern_hemisphere_2000_year";
     axios
       .get(address1)
       .then((response) => {
@@ -40,13 +48,12 @@ export default function ClimateLineChart() {
       });
   }, []);
 
-  function handleClick(){
-    console.log("toggle")
-    if(hideLine){
-      setHideLine(false)
-    }
-    else{
-      setHideLine(true)
+  function handleClick() {
+    console.log("toggle");
+    if (hideLine) {
+      setHideLine(false);
+    } else {
+      setHideLine(true);
     }
   }
 
@@ -59,7 +66,7 @@ export default function ClimateLineChart() {
         height={400}
       >
         <Line
-        stroke="#483BF6"
+          stroke="#483BF6"
           xAxisId={"global"}
           data={data}
           type="monotone"
@@ -73,19 +80,19 @@ export default function ClimateLineChart() {
           stroke="#000000"
           data={data1}
           type="monotone"
-          dataKey="northern_anomaly"
+          dataKey="T"
           dot={false}
-          name="Northern hemisphere temp anomaly"
+          name="Northern hemisphere temperature"
         />
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="Time" xAxisId={"global"} />
-        <XAxis dataKey="Time" hide={true} xAxisId={"northern"} />
-        <YAxis data={data1} type="number" domain={[-1.8, 1.8]} />
+        <XAxis dataKey="Time" xAxisId={"northern"} />
+        <YAxis data={data1} type="number" />
         <Legend />
         <Tooltip />
       </LineChart>
       <button onClick={handleClick}>
-        Toggle Northern Temp Anomaly
+        Toggle Northern Temperature 2000years
       </button>
     </>
   );
