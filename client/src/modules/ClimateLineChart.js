@@ -24,10 +24,6 @@ export default function ClimateLineChart() {
       .then((response) => {
         console.log(response.data);
         setData(response.data);
-        setTimeout(() => {
-          //give 0.5s time for data to load
-          setIsLoading(false);
-        }, 500);
       })
       .catch((error) => {
         alert(error);
@@ -51,12 +47,17 @@ export default function ClimateLineChart() {
   function handleClick() {
     console.log("toggle");
     if (hideLine) {
-      setHideLine(false);
+      setHideLine(false); //if line is hidden show line..
     } else {
-      setHideLine(true);
+      setHideLine(true);  //if line is shown hide line..
     }
   }
 
+/**
+ * Showind data on both lines works but X axis doesnt scale properly needs fixing
+ */
+
+  
   const renderChart = (
     <>
       <p>Global Temperature Anomaly</p>
@@ -85,9 +86,9 @@ export default function ClimateLineChart() {
           name="Northern hemisphere temperature"
         />
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="Time" xAxisId={"global"} />
-        <XAxis dataKey="Time" xAxisId={"northern"} />
-        <YAxis data={data1} type="number" />
+        <XAxis dataKey="Time" xAxisId={"global"}  />
+        <XAxis dataKey="Time" xAxisId={"northern"} hide={true}/>
+        <YAxis data={data} type="number" />
         <Legend />
         <Tooltip />
       </LineChart>
@@ -97,6 +98,8 @@ export default function ClimateLineChart() {
     </>
   );
 
+
+  //if data is still loading show spinner
   return (
     <div className="container-chart">
       {isLoading ? <Spinner /> : renderChart}
