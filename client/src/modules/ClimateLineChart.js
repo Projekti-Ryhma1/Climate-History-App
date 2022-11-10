@@ -1,16 +1,16 @@
-import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import { Legend, Line, LineChart, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
-import "./ClimateLineChart.css"
+import "./ClimateLineChart.css";
 
 export default function ClimateLineChart() {
   const [isLoading, setIsLoading] = useState(true);
+  const [hideLine, setHideLine] = useState(true);
   const [data, setData] = useState([]);
-
+  const [data1, setData1] = useState([]);
   useEffect(() => {
     const address = "http://localhost:3001/data/global_monthly";
-
     axios
       .get(address)
       .then((response) => {
@@ -24,33 +24,75 @@ export default function ClimateLineChart() {
       .catch((error) => {
         alert(error);
       });
+    const address1 = "http://localhost:3001/data/northern_hemisphere_monthly";
+    axios
+      .get(address1)
+      .then((response) => {
+        console.log(response.data);
+        setData1(response.data);
+        setTimeout(() => {
+          //give 0.5s time for data to load
+          setIsLoading(false);
+        }, 500);
+      })
+      .catch((error) => {
+        alert(error);
+      });
   }, []);
+
+  function handleClick(){
+    console.log("toggle")
+    if(hideLine){
+      setHideLine(false)
+    }
+    else{
+      setHideLine(true)
+    }
+  }
 
   const renderChart = (
     <>
       <p>Global Temperature Anomaly</p>
       <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
-        data={data}
         width={800}
         height={400}
       >
         <Line
+          xAxisId={"global"}
+          data={data}
           type="monotone"
-          dataKey="Anomaly (deg C)"
+          dataKey="global_anomaly"
           dot={false}
           name="Global temp anomaly"
         />
-        <XAxis dataKey="Time" />
-        <YAxis />
+        <Line
+          hide={hideLine}
+          xAxisId={"northern"}
+          stroke="#8884d8"
+          data={data1}
+          type="monotone"
+          dataKey="northern_anomaly"
+          dot={false}
+          name="Northern hemisphere temp anomaly"
+        />
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="Time" xAxisId={"global"} />
+        <XAxis dataKey="Time" hide={true} xAxisId={"northern"} />
+        <YAxis data={data1} type="number" domain={[-1.8, 1.8]} />
         <Legend />
         <Tooltip />
       </LineChart>
+      <button onClick={handleClick}>
+        Toggle Northern Temp Anomaly
+      </button>
     </>
   );
 
   return (
-    <div className="container-chart">{isLoading ? <Spinner/> : renderChart}</div>
+    <div className="container-chart">
+      {isLoading ? <Spinner /> : renderChart}
+    </div>
 
     //dot=False on Line component speedsup page load by 2s~
   );
