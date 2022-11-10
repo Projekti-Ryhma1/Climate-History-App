@@ -16,4 +16,11 @@ router.get("/northern_hemisphere_monthly", async (req, res) => {
     res.json(result);
   });
 });
+router.get("/northern_hemisphere_2000_year", async (req, res) => {
+  const query = "SELECT * FROM northern_hemisphere_2000_year_temperature_reconstruction";
+  connection.query(query, (error, result) => {
+    if (error) throw error;
+    res.json(result);
+  });
+});
 module.exports = router;
