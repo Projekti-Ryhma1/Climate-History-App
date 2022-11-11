@@ -21,6 +21,14 @@ const config = {
   }
   
   let connection = mysql.createConnection(config);
+
+/*  let connection = mysql.createConnection({ // TESTING -> Set values manually when using other test server
+    host: "localhost",
+    port: 3306,
+    database: "climatehistorytest",
+    user: "root",
+    password: "root"
+  });*/
   
   connection.connect(function(err) {
     if (err) {
