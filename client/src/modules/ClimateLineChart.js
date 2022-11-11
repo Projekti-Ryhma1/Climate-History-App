@@ -15,6 +15,7 @@ import "./ClimateLineChart.css";
 export default function ClimateLineChart() {
   const [isLoading, setIsLoading] = useState(true);
   const [hideLine, setHideLine] = useState(true);
+  const [xAxisMin, setXAxisMin] = useState(1850);
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
   useEffect(() => {
@@ -48,16 +49,19 @@ export default function ClimateLineChart() {
     console.log("toggle");
     if (hideLine) {
       setHideLine(false); //if line is hidden show line..
+      setXAxisMin(0);
+      console.log(xAxisMin);
     } else {
-      setHideLine(true);  //if line is shown hide line..
+      setHideLine(true); //if line is shown hide line..
+      setXAxisMin(1850);
+      console.log(xAxisMin);
     }
   }
 
-/**
- * Showind data on both lines works but X axis doesnt scale properly needs fixing
- */
+  /**
+   * Showind data on both lines works but X axis doesnt scale properly needs fixing
+   */
 
-  
   const renderChart = (
     <>
       <p>Global Temperature Anomaly</p>
@@ -86,9 +90,21 @@ export default function ClimateLineChart() {
           name="Northern hemisphere temperature"
         />
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="Time" xAxisId={"global"}  />
-        <XAxis dataKey="Time" xAxisId={"northern"} hide={true}/>
-        <YAxis data={data} type="number" />
+        <XAxis
+ 
+          dataKey="Time"
+          xAxisId={"global"}
+          type="number"
+          domain={[xAxisMin, "dataMax"]}
+        />
+        <XAxis
+          dataKey="Year"
+          xAxisId={"northern"}
+          type="number"
+          domain={["dataMin - 1", "dataMax + 43"]}
+         
+        />
+        <YAxis data={data} type="number" domain={["auto", "auto"]} />
         <Legend />
         <Tooltip />
       </LineChart>
@@ -97,7 +113,6 @@ export default function ClimateLineChart() {
       </button>
     </>
   );
-
 
   //if data is still loading show spinner
   return (
