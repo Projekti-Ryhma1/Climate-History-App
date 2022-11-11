@@ -1,11 +1,4 @@
-import {
-  Legend,
-  Line,
-  LineChart,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-} from "recharts";
+import { Legend, Line, LineChart, XAxis, YAxis, CartesianGrid } from "recharts";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
@@ -18,30 +11,41 @@ export default function ClimateLineChart() {
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
   useEffect(() => {
-    const address = "http://localhost:3001/data/global_monthly";
-    axios
-      .get(address)
-      .then((response) => {
-        console.log(response.data);
-        setData(response.data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-    const address1 = "http://localhost:3001/data/northern_hemisphere_2000_year";
-    axios
-      .get(address1)
-      .then((response) => {
-        console.log(response.data);
-        setData1(response.data);
-        setTimeout(() => {
-          //give 0.5s time for data to load
-          setIsLoading(false);
-        }, 500);
-      })
-      .catch((error) => {
-        alert(error);
-      });
+    if (localStorage.getItem("data") !== null) {
+      setData(JSON.parse(localStorage.getItem("data")));
+    } else {
+      const address = "http://localhost:3001/data/global_monthly";
+      axios
+        .get(address)
+        .then((response) => {
+          console.log(response.data);
+          setData(response.data);
+          localStorage.setItem("data", JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+    if (localStorage.getItem("data1") !== null) {
+      setData1(JSON.parse(localStorage.getItem("data1")));
+    } else {
+      const address1 =
+        "http://localhost:3001/data/northern_hemisphere_2000_year";
+      axios
+        .get(address1)
+        .then((response) => {
+          console.log(response.data);
+          setData1(response.data);
+          localStorage.setItem("data1", JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+    setTimeout(() => {
+      //give 0.5s time for data to load
+      setIsLoading(false);
+    }, 500);
   }, []);
 
   function handleClick() {
@@ -93,14 +97,14 @@ export default function ClimateLineChart() {
           domain={[xAxisMin, 2022]}
         />
         <XAxis
-         hide={true}
+          hide={true}
           dataKey="Year"
           xAxisId={"northern"}
           type="number"
           domain={[0, 2022]}
         />
         <YAxis data={data} type="number" domain={["auto", "auto"]} />
-        <Legend   />
+        <Legend />
       </LineChart>
       <button onClick={handleClick}>
         Toggle Northern Temperature 2000 Years
