@@ -2,7 +2,6 @@ import {
   Legend,
   Line,
   LineChart,
-  Tooltip,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -46,15 +45,12 @@ export default function ClimateLineChart() {
   }, []);
 
   function handleClick() {
-    console.log("toggle");
     if (hideLine) {
       setHideLine(false); //if line is hidden show line..
       setXAxisMin(0);
-      console.log(xAxisMin);
     } else {
       setHideLine(true); //if line is shown hide line..
       setXAxisMin(1850);
-      console.log(xAxisMin);
     }
   }
 
@@ -77,7 +73,7 @@ export default function ClimateLineChart() {
           type="monotone"
           dataKey="global_anomaly"
           dot={false}
-          name="Global temp anomaly"
+          name="Global temperature anomaly"
         />
         <Line
           hide={hideLine}
@@ -91,25 +87,23 @@ export default function ClimateLineChart() {
         />
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
- 
           dataKey="Time"
           xAxisId={"global"}
           type="number"
-          domain={[xAxisMin, "dataMax"]}
+          domain={[xAxisMin, 2022]}
         />
         <XAxis
+         hide={true}
           dataKey="Year"
           xAxisId={"northern"}
           type="number"
-          domain={["dataMin - 1", "dataMax + 43"]}
-         
+          domain={[0, 2022]}
         />
         <YAxis data={data} type="number" domain={["auto", "auto"]} />
-        <Legend />
-        <Tooltip />
+        <Legend   />
       </LineChart>
       <button onClick={handleClick}>
-        Toggle Northern Temperature 2000years
+        Toggle Northern Temperature 2000 Years
       </button>
     </>
   );
