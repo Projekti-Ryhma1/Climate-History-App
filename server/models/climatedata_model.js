@@ -4,10 +4,8 @@ getGlobalTempAnomaly = () => {
   const query = "SELECT * FROM global_temp_anomaly";
   return new Promise((resolve, reject) => {
     database.query(query, (error, result) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(result);
+      if (error) reject(error);
+      resolve(result);
     });
   });
 };
@@ -16,10 +14,8 @@ getNorthHemis2000YearTemp = () => {
     "SELECT * FROM northern_hemisphere_2000_year_temperature_reconstruction";
   return new Promise((resolve, reject) => {
     database.query(query, (error, result) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(result);
+      if (error) reject(error);
+      resolve(result);
     });
   });
 };
