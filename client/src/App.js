@@ -10,6 +10,8 @@ import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import Emissions from './pages/Emissions';
 import TempCo2 from './pages/TempCo2';
+import Preferences from './pages/Preferences';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
@@ -46,6 +48,7 @@ function App() {
         { authRoutes }
         <Route path='/' element={<TempCo2/>} />
         <Route path='/emissions' element={<Emissions/>} />
+        <Route path="/preferences" element={<Preferences/>} />
       </Routes>
       <Footer />
     </div>

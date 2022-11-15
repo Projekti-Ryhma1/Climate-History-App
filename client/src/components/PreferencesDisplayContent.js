@@ -1,7 +1,23 @@
 import PreferencesSwitchGroup from "./PreferencesSwitchGroup"
 import PrefenrecesButtonGroup from "./PreferencesButtonGroup"
+import axios from "axios";
+import {useEffect, useState} from "react"
 
 export default function PreferencesDisplayContent(){
+    const [username, setUsername] = useState ("Matti");
+    const [preferences, setPreferences] = useState(null);
+
+    useEffect(() => {
+        const address = "http://localhost:3001/preferences/" + username;
+        axios.get(address)
+        .then((response) => {
+            console.log(response.data);
+            setPreferences(response.data);
+        }).catch(error => {
+            alert("Retrieving user preferences failed " + error);
+        });
+    }, [])
+
     const checked = true;
     return(
         <div className="div-centered">
