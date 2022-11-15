@@ -9,27 +9,25 @@ export default function PreferencesDisplayContent(){
     const [preferences, setPreferences] = useState(null);
 
     useEffect(() => {
-        if(localStorage.getItem("preferences") !== null){
-            setPreferences(JSON.parse(localStorage.getItem("preferences")));
-            console.log("Items loaded from local storage")
+        if(sessionStorage.getItem("preferences") !== null){
+            setPreferences(JSON.parse(sessionStorage.getItem("preferences")));
+            console.log("Items loaded from session storage storage")
         } else {   
             const address = "http://localhost:3001/userpreferences/" + username;
             axios.get(address)
             .then((response) => {
-                console.log(response.data);
+                console.log("Loaded data from database");
                 setPreferences(response.data); 
-                localStorage.setItem("preferences", JSON.stringify(response.data));
+                sessionStorage.setItem("preferences", JSON.stringify(response.data));
             }).catch(error => {
                 alert("Retrieving user preferences failed " + error);
             });
         }
-        
+
         setTimeout(() =>{
             setIsLoading(false);
         }, 500);
     }, [])
-
-    console.log(preferences + "THIS IS DATA FROM PREFERENCES VARIABLE");
     
     if(isLoading){
         return "Loading..."
