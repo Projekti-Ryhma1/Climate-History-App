@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const port = 3001;
 
 const dataRouter = require("./routes/climatedata");
+const createUserRoute = require("./routes/createUser_route");
 const loginRoute = require("./routes/login_route");
 
 const app = express();
@@ -15,11 +16,12 @@ app.get("/", (req, res) => {
   res.end();
 });
 
+app.use(bodyParser.json())
+
 //Route for climatedata from database
 app.use("/data", dataRouter);
+app.use("/createuser", createUserRoute);
 app.use("/user", loginRoute);
-
-app.set("port", process.env.PORT || port);
 
 app.set("port", process.env.PORT || 3001);
 app.listen(port);

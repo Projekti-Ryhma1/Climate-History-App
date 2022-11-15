@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const login = require('../models/login_model');
 
-router.get('/:value?',
- function(req, res) {
+router.get('/:value?', function(req, res) {
   if (req.params.value) {
     login.getByUserName(req.params.value, function(err, result) {
       if (err) {

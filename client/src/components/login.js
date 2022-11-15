@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import './login.css';
 import axios from 'axios';
-const dotenv = require('dotenv'); //WIP
-const jwt = require('jsonwebtoken'); //WIP
-
-dotenv.config(); //WIP
 
 const URL = 'http://localhost:3001/user/';
 
@@ -18,9 +14,8 @@ export default function Login() {
       password: password
       
     }).then(resp => {
-      console.log("Hashed password: "+password); // Test
+      console.log("Password: "+password); // Test
       console.log(resp.data[0]); //Test -> shows user data from the database
-      console.log(resp.data[0].username+" -> "+username);
 
       if(resp.data[0].password === password) {
         alert("Password was correct! \n Username: "+resp.data[0].username+"\n Email: "+resp.data[0].email);
@@ -43,7 +38,7 @@ export default function Login() {
           </div>
           <div class="password">
           <label>Password:</label>
-            <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(bcrypt.hashSync(e.target.value, 10))}/>
+            <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(e.target.value)}/>
           </div>
         <div>
         <button id="loginButton" onClick={SendLoginData}>Login</button>
