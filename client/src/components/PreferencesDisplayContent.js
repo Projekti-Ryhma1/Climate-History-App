@@ -9,14 +9,21 @@ export default function PreferencesDisplayContent(){
     const [preferences, setPreferences] = useState(null);
 
     useEffect(() => {
-        const address = "http://localhost:3001/userpreferences/" + username;
-        axios.get(address)
-        .then((response) => {
-            console.log(response.data);
-            setPreferences(response.data); 
-        }).catch(error => {
-            alert("Retrieving user preferences failed " + error);
-        });
+        if(localStorage.getItem("preferences") !== null){
+            setPreferences(JSON.parse(localStorage.getItem("preferences")));
+            console.log("Items loaded from local storage")
+        } else {   
+            const address = "http://localhost:3001/userpreferences/" + username;
+            axios.get(address)
+            .then((response) => {
+                console.log(response.data);
+                setPreferences(response.data); 
+                localStorage.setItem("preferences", JSON.stringify(response.data));
+            }).catch(error => {
+                alert("Retrieving user preferences failed " + error);
+            });
+        }
+        
         setTimeout(() =>{
             setIsLoading(false);
         }, 500);
