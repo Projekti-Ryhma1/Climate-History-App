@@ -1,13 +1,12 @@
 import './App.css';
-import ClimateLineChart from './modules/ClimateLineChart';
+import StackedAreaChart from './modules/StackedAreaChart';
 
 function App() {
   return (
     <div className="App">
       <h2>Hello world</h2>
-
-      <ClimateLineChart/>
-    </div>
+        <StackedAreaChart></StackedAreaChart>
+          </div>
   );
 }
 
