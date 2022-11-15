@@ -19,8 +19,20 @@ getNorthHemis2000YearTemp = () => {
     });
   });
 };
+getCO2EmissionByCountry = () => {
+  const query =
+    "SELECT * FROM national_carbon_emissions_2021";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
+
 
 module.exports = {
   getGlobalTempAnomaly,
   getNorthHemis2000YearTemp,
+  getCO2EmissionByCountry
 };
