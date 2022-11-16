@@ -9,6 +9,7 @@ const preferencesRouter = require("./routes/userpreferencesdata");
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.send(200);
