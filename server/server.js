@@ -16,12 +16,12 @@ app.get("/", (req, res) => {
   res.end();
 });
 
+app.use(bodyParser.json());
+
 //Route for climatedata from database
 app.use("/data", dataRouter);
 app.use("/user", loginRoute);
 app.use("/createuser", createUser);
-
-app.set("port", process.env.PORT || port);
 
 app.set("port", process.env.PORT || 3001);
 app.listen(port);
