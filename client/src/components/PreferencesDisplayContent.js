@@ -13,7 +13,7 @@ export default function PreferencesDisplayContent(){
             setPreferences(JSON.parse(sessionStorage.getItem("preferences")));
             console.log("Items loaded from session storage storage")
         } else {   
-            const address = "http://localhost:3001/userpreferences/" + username;
+            const address = "http://localhost:3001/userpreferences/user/" + username;
             axios.get(address)
             .then((response) => {
                 console.log("Loaded data from database");
