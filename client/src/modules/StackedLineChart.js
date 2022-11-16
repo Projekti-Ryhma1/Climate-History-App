@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 import axios from "axios";
 import Spinner from "./Spinner";
+import "./ClimateLineChart.css"
 
 export default function StackedLineChart() {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,10 +40,8 @@ export default function StackedLineChart() {
   for (let i = 0; i < keyArray.length; i++) {
     newColours = newColours.concat(colours);
   }
-  console.log(newColours);
 
   let tooltip;
-
   const CustomTooltip = ({ active, payload }) => {
     if (!active || !tooltip) return null;
     for (const line of payload) {
@@ -80,6 +79,7 @@ export default function StackedLineChart() {
               dot={false}
               name={keyId}
               onMouseOver={() => (tooltip = keyId)}
+              activeDot={false}
             ></Line>
           );
         })}
@@ -87,5 +87,9 @@ export default function StackedLineChart() {
     </>
   );
 
-  return <div>{isLoading ? <Spinner /> : renderChart}</div>;
+  return (
+    <div className="container-chart">
+      {isLoading ? <Spinner /> : renderChart}
+    </div>
+  );
 }
