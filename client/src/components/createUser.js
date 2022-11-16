@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './login.css';
 import axios from 'axios';
+const bcrypt = require('bcrypt');
 
 const URL = 'http://localhost:3001/createuser';
 
@@ -36,7 +37,7 @@ export default function Create_user() {
             </div>
             <div class="password">
             <label>Password:</label>
-              <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(e.target.value)}/>
+              <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(bcrypt.hashSync(e.target.value, 10))}/>
             </div>
             <div class="email">
             <label>Email:</label>

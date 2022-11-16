@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import './login.css';
 import axios from 'axios';
+const bcrypt = require('bcryptjs');
+// dotenv = require('dotenv'); //WIP
+//const jwt = require('jsonwebtoken'); //WIP
+//dotenv.config(); //WIP
 
 const URL = 'http://localhost:3001/user/';
 
@@ -17,7 +21,7 @@ export default function Login() {
       console.log("Password: "+password); // Test
       console.log(resp.data[0]); //Test -> shows user data from the database
 
-      if(resp.data[0].password === password) {
+      if(bcrypt.compareSync(resp.data[0].password,password)) {
         alert("Password was correct! \n Username: "+resp.data[0].username+"\n Email: "+resp.data[0].email);
         console.log("Password is correct");
       }
