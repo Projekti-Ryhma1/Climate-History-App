@@ -1,4 +1,4 @@
-import { Cell, Pie, PieChart, Tooltip } from "recharts";
+import {LabelList ,Cell, Pie, PieChart, Tooltip } from "recharts";
 import "./EmissionPieChart.css"
 
 export default function EmissionPieChart() {
@@ -12,14 +12,17 @@ export default function EmissionPieChart() {
     </>
   );
   const renderLabel = (entry) => {
-    return entry.Sector
+    return (entry.Sector)
   };
-
+  const renderPercentage = (data3) => {
+    let percentageToString = data3.emissions;
+    return percentageToString.toFixed(1).replace(".",",").toString()+"%"
+  }
+ 
   return (
     <div className="container-chart">
       <p>Emission by Sector</p>
-      <PieChart width={800} height={400}>
-        <Tooltip></Tooltip>
+      <PieChart width={800} height={500}>
         <Pie
           data={data3}
           dataKey="emissions"
@@ -31,7 +34,16 @@ export default function EmissionPieChart() {
           {data3.map((entry, index) => (
             <Cell fill={COLORS[index % COLORS.length]} />
           ))}
+          <LabelList
+              fill="#4d4d4d" // Percentage colour
+              dataKey={renderPercentage}
+              position="inside"
+              angle="0"
+              stroke="none" // Border of letters
+              className="label-percentage"
+            />
         </Pie>
+        
       </PieChart>
     </div>
   );
