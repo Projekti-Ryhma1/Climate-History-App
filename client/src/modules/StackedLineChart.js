@@ -42,6 +42,18 @@ export default function StackedLineChart() {
   }
   console.log(newColours);
 
+  let tooltip;
+  
+  const CustomTooltip = ({active,payload}) =>{
+    if(!active || !tooltip) return null
+    for (const line of payload){
+        if (line.dataKey === tooltip){
+            return <div>{line.name}<br/>{line.value}</div>
+        }
+    }
+    return null
+  }
+
   const renderChart = (
 
     <>
@@ -52,7 +64,7 @@ export default function StackedLineChart() {
         width={800}
         height={400}
       >
-        <Tooltip/>
+        <Tooltip content={<CustomTooltip/>} />
         <XAxis dataKey="MtCO2/year"></XAxis>
         <YAxis/>
         {keyArray.map((keyId, i) => {
@@ -63,6 +75,8 @@ export default function StackedLineChart() {
               key={keyId}
               dataKey={keyId}
               dot={false}
+              name={keyId}
+              onMouseOver={()=> tooltip=keyId}
             ></Line>
           );
         })}
