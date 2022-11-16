@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import {Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import { Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 import axios from "axios";
 import Spinner from "./Spinner";
 
 export default function StackedLineChart() {
-  
   const [isLoading, setIsLoading] = useState(true);
-  const [data2, setData2] = useState([])
+  const [data2, setData2] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("data2") !== null) {
@@ -43,30 +42,34 @@ export default function StackedLineChart() {
   console.log(newColours);
 
   let tooltip;
-  
-  const CustomTooltip = ({active,payload}) =>{
-    if(!active || !tooltip) return null
-    for (const line of payload){
-        if (line.dataKey === tooltip){
-            return <div>{line.name}<br/>{line.value}</div>
-        }
+
+  const CustomTooltip = ({ active, payload }) => {
+    if (!active || !tooltip) return null;
+    for (const line of payload) {
+      if (line.dataKey === tooltip) {
+        return (
+          <div>
+            <p>{line.name}</p>
+            <p>{line.value}</p>
+          </div>
+        );
+      }
     }
-    return null
-  }
+    return null;
+  };
 
   const renderChart = (
-
     <>
-    <p> Co2 Emission by country</p>
-    <LineChart
+      <p> Co2 Emission by country</p>
+      <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         data={data2}
         width={800}
         height={400}
       >
-        <Tooltip content={<CustomTooltip/>} />
+        <Tooltip content={<CustomTooltip />} />
         <XAxis dataKey="MtCO2/year"></XAxis>
-        <YAxis/>
+        <YAxis />
         {keyArray.map((keyId, i) => {
           return (
             <Line
@@ -76,19 +79,13 @@ export default function StackedLineChart() {
               dataKey={keyId}
               dot={false}
               name={keyId}
-              onMouseOver={()=> tooltip=keyId}
+              onMouseOver={() => (tooltip = keyId)}
             ></Line>
           );
         })}
       </LineChart>
-    
     </>
-  )
-
-  return (
-    <div>
-       {isLoading ? <Spinner /> : renderChart}
-    </div>
   );
-}
 
+  return <div>{isLoading ? <Spinner /> : renderChart}</div>;
+}
