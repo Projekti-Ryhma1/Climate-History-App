@@ -48,5 +48,3 @@ export default function Create_user() {
         </form>
       );
 }
-
-//setPassword(bcrypt.hashSync(e.target.value, 10))
