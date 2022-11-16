@@ -1,11 +1,12 @@
 import './App.css';
-import StackedAreaChart from './modules/StackedAreaChart';
+
+import StackedLineChart from './modules/StackedLineChart';
 
 function App() {
   return (
     <div className="App">
       <h2>Hello world</h2>
-        <StackedAreaChart></StackedAreaChart>
+       <StackedLineChart></StackedLineChart>
           </div>
   );
 }
