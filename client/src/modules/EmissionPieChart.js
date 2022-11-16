@@ -1,6 +1,14 @@
 import {LabelList ,Cell, Pie, PieChart, Tooltip } from "recharts";
 import "./EmissionPieChart.css"
 
+
+/** TODO
+ *  axios calls to get data from database
+ *  show indepth information on sector on click
+ *  use spinner when loading etc 
+ *  make it look nice?
+ */
+
 export default function EmissionPieChart() {
   const COLORS = ["#ffff00", "#FF8042", "#996633", "#009900"];
   const renderPie = (
