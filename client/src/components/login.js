@@ -1,38 +1,29 @@
 import React, { useState } from "react";
 import './login.css';
 import axios from 'axios';
-const bcrypt = require('bcryptjs');
 // dotenv = require('dotenv'); //WIP
 //const jwt = require('jsonwebtoken'); //WIP
 //dotenv.config(); //WIP
 
-const URL = 'http://localhost:3001/user/';
+const URL = 'http://localhost:3001/user/login';
 
 export default function Login() {
   const [username, setUserName] = useState(0);
   const [password, setPassword] = useState(0);
   
-  function SendLoginData() {
-    axios.get(URL+username,{
+  async function SendLoginData() {
+    axios.post(URL,{
       username: username,
       password: password
       
     }).then(resp => {
-      console.log("Hashed password: "+password); // Test
-      console.log(resp.data[0]); //Test -> shows user data from the database
-      console.log(resp.data[0].username+" -> "+username);
-
-      if(bcrypt.compareSync(resp.data[0].password,password)) {
-        alert("Password was correct! \n Username: "+resp.data[0].username+"\n Email: "+resp.data[0].email);
-        console.log("Password is correct");
-      }
-      else {
-        alert("Password was incorrect");
-        console.log("Password is incorrect!");
-      }
-
+      console.log("maito");
+      console.log(resp); //Test -> shows user data from the database
+      alert(resp.data);
+      
   }).catch(error=> {
     alert(error);
+    console.log(error);
   })
   }
 
@@ -45,7 +36,7 @@ export default function Login() {
           </div>
           <div class="password">
           <label>Password:</label>
-            <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(bcrypt.hashSync(e.target.value, 10))}/>
+            <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(e.target.value)}/>
           </div>
         <div>
         <button id="loginButton" onClick={SendLoginData}>Login</button>

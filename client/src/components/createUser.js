@@ -3,22 +3,21 @@ import './login.css';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
 
-const URL = 'http://localhost:3001/createuser';
+const URL = 'http://localhost:3001/user/create';
 
 export default function Create_user() {
     const [username, setUserName] = useState(0);
     const [password, setPassword] = useState(0);
     const [email, setEmail] = useState(0);
 
-    function SendUserData() {
-        axios.post(URL,{
+    async function SendUserData() {
+        axios.post(URL, {
           username: username,
           password: password,
           email: email
         }).then(resp => {
           alert("User created!");
           console.log("User created!");
-          console.log(resp.data);
     
       })
       .catch(function (error) {
@@ -49,3 +48,5 @@ export default function Create_user() {
         </form>
       );
 }
+
+//setPassword(bcrypt.hashSync(e.target.value, 10))

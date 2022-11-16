@@ -20,8 +20,8 @@ app.use(bodyParser.json());
 
 //Route for climatedata from database
 app.use("/data", dataRouter);
-app.use("/user", loginRoute);
-app.use("/createuser", createUser);
+app.use("/user/login", loginRoute);
+app.use("/user/create", createUser);
 
 app.set("port", process.env.PORT || 3001);
 app.listen(port);
