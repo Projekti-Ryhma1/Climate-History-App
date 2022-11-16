@@ -8,10 +8,20 @@ export default function PreferencesDisplayContent(){
     const [username, setUsername] = useState ("example");
     const [preferences, setPreferences] = useState(null);
 
+    async function savePreferences(){
+        //const address = "http://localhost/userpreferences/preference";
+        console.log("hello world")
+    }
+
+    const callSavePreferences = () => {
+        console.log("Testing prop functions");
+        savePreferences();
+    }
+
     useEffect(() => {
         if(sessionStorage.getItem("preferences") !== null){
             setPreferences(JSON.parse(sessionStorage.getItem("preferences")));
-            console.log("Items loaded from session storage storage")
+            console.log("Items loaded from session storage")
         } else {   
             const address = "http://localhost:3001/userpreferences/user/" + username;
             axios.get(address)
@@ -41,7 +51,7 @@ export default function PreferencesDisplayContent(){
                 <PreferencesSwitchGroup label="Chart 3 toggle" name="settingFourRadios" checked={preferences[1].preferenceValue} id="4"/>
                 <PreferencesSwitchGroup label="chart 4 toggle" name="settingFiveRadios" checked={preferences[0].preferenceValue} id="5"/>
                 <PreferencesSwitchGroup label="chart 5 toggle" name="settingSixRadios" checked={preferences[0].preferenceValue} id="6"/>
-                <PrefenrecesButtonGroup/>
+                <PrefenrecesButtonGroup savePreferences={callSavePreferences}/>
             </div>
             
         )
