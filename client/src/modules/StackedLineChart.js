@@ -4,6 +4,12 @@ import axios from "axios";
 import Spinner from "./Spinner";
 import "./ClimateLineChart.css"
 
+/** TODO
+ *  Modify tooltiplabel to look nicer
+ *  sort tooltip lag/bug
+ *  zoom?
+ */
+
 export default function StackedLineChart() {
   const [isLoading, setIsLoading] = useState(true);
   const [data2, setData2] = useState([]);
