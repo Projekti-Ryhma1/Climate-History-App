@@ -33,10 +33,10 @@ export default function StackedLineChart() {
   const colours = ["#880808", "#0437F2"];
   let keyArray = [];
   for (let key in data2.at()) {
-    keyArray.push(key);
+    keyArray.push(key); //get keys for data2 and create new array with keys
   }
   let newColours = [];
-  keyArray.splice(0, 1);
+  keyArray.splice(0, 1); // remoce "MtCO2/year" from the array
   for (let i = 0; i < keyArray.length; i++) {
     newColours = newColours.concat(colours);
   }
