@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './login.css';
 import axios from 'axios';
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcryptjs';
 
 const URL = 'http://localhost:3001/createuser';
 
