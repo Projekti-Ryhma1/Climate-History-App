@@ -87,6 +87,7 @@ export default function EmissionPieChart() {
           fill="#999"
         > 
           <RenderSubSectors/>
+          {/* need to render subsector dynamically based on active sector */}
         </text>
       </g>
     );
