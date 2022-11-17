@@ -3,6 +3,11 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 export default function PreferencesSwitchGroup(props){
+
+    const handleChange = () => {
+
+
+    }
     return(
         <div className="div-switch-group">
                 <Form className="mb-3">
@@ -11,6 +16,7 @@ export default function PreferencesSwitchGroup(props){
                             <Form.Check 
                                 defaultChecked={props.checked}
                                 type="switch"
+                                onChange={props.saveChange}
                                 id={props.id+"enabled"}
                                 label={props.label}
                                 name={props.name}
