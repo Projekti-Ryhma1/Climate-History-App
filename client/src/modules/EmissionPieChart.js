@@ -13,11 +13,8 @@ export default function EmissionPieChart() {
   const COLORS = ["#ffff00", "#FF8042", "#996633", "#009900"];
   const [activeIndex, setActiveIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [data4, setdata4] = useState([]);
-
   const renderActiveShape = (props) => {
     const RADIAN = Math.PI / 180;
-    console.log(props);
     const {
       name,
       cx,
@@ -43,7 +40,6 @@ export default function EmissionPieChart() {
     const textAnchor = cos >= 0 ? "start" : "end";
     return (
       <g>
-       
         <Sector
           cx={cx}
           cy={cy}
@@ -75,7 +71,7 @@ export default function EmissionPieChart() {
           fill="#333"
         >{`${name}`}</text>
         <text
-          x={ex + (cos >= 0 ? 1 : -1) * 12}
+          x={ex + (cos >= 0 ? 1 : -1) * 10}
           y={ey}
           dy={18}
           textAnchor={textAnchor}
@@ -83,12 +79,27 @@ export default function EmissionPieChart() {
         >
           {`(C02 Emissions ${(percent * 100).toFixed(2)}%)`}
         </text>
+        <text
+          x={ex + (cos >= 0 ? 1 : -1) * 10}
+          y={ey}
+          dy={40}
+          textAnchor={textAnchor}
+          fill="#999"
+        > 
+          <RenderSubSectors/>
+        </text>
       </g>
     );
   };
+  const RenderSubSectors = () =>{
+    return(<>
+      {data4.at(0).Sub_sector}
+      {data4.at(0).Emissions}
+      </>
+    );
+  }
   const onPieEnter = useCallback(
     (_, index) => {
-      console.log(index);
       setActiveIndex(index);
     },
     [setActiveIndex]
@@ -134,5 +145,92 @@ const data3 = [
   {
     name: "Agriculture, Forestry & Land Use",
     emissions: 18.4,
+  },
+];
+const data4 = [
+  {
+    Sub_sector: "Transport",
+    Emissions: "16.2",
+    sector: "Energy",
+  },
+  {
+    Sub_sector: "Energy in buildings (elec and heat)",
+    Emissions: "17.5",
+    sector: "Energy",
+  },
+  {
+    Sub_sector: "Energy in industry",
+    Emissions: "24.2",
+    sector: "Energy",
+  },
+  {
+    Sub_sector: "Energy in Agri & Fishing",
+    Emissions: "1.7",
+    sector: "Energy",
+  },
+  {
+    Sub_sector: "Unallocated fuel combustion",
+    Emissions: "7.8",
+    sector: "Energy",
+  },
+  {
+    Sub_sector: "Fugitive emissions from energy",
+    Emissions: "5.8",
+    sector: "Energy",
+  },
+  {
+    Sub_sector: "Cement",
+    Emissions: "3",
+    sector: "Industrial processes",
+  },
+  {
+    Sub_sector: "Chemical & petrochemical (industrial)",
+    Emissions: "2.2",
+    sector: "Industrial processes",
+  },
+  {
+    Sub_sector: "Livestock & Manure",
+    Emissions: "5.8",
+    sector: "Agriculture, Forestry & Land Use",
+  },
+  {
+    Sub_sector: "Rice Cultivation",
+    Emissions: "1.3",
+    sector: "Agriculture, Forestry & Land Use",
+  },
+  {
+    Sub_sector: "Agricultural Soils",
+    Emissions: "4.1",
+    sector: "Agriculture, Forestry & Land Use",
+  },
+  {
+    Sub_sector: "Crop Burning",
+    Emissions: "3.5",
+    sector: "Agriculture, Forestry & Land Use",
+  },
+  {
+    Sub_sector: "Forest Land",
+    Emissions: "2.2",
+    sector: "Agriculture, Forestry & Land Use",
+  },
+  {
+    Sub_sector: "Cropland",
+    Emissions: "1.4",
+    sector: "Agriculture, Forestry & Land Use",
+  },
+  {
+    Sub_sector: "Grassland",
+    Emissions: "0.1",
+    sector: "Agriculture, Forestry & Land Use",
+  },
+  {
+    Sub_sector: "Landfills",
+    Emissions: "1.9",
+    sector: "Waste",
+  },
+  {
+    Sub_sector: "Wastewater",
+    Emissions: "1.3",
+    sector: "Waste",
   },
 ];
