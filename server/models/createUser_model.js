@@ -1,13 +1,13 @@
 const db = require('../database');
 
-const user = {
-  add: function(user, callback) {
-    return db.query(
-      'insert into users value (?,?,?)',
-      [user.username, user.password, user.email],
-    callback
-    );
-  }
+createUser = (username, password, email) => {
+  const query = "insert into users value (?,?,?)";
+  return new Promise((resolve, reject) => {
+    db.query(query,[username, password, email], (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
 };
 
-module.exports = user;
+module.exports = {createUser}
