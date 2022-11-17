@@ -11,8 +11,33 @@ export default function PreferencesDisplayContent(){
     var changeList = [];
 
     async function savePreferences(){
-        //const address = "http://localhost/userpreferences/preference";
+        const address = "http://localhost:3001/userpreferences/preference";
+
         console.log("hello world")
+/*         axios.post(address, {
+            preferenceValue: document.getElementById(changeList[i]).checked,
+            username: username,
+            preferenceID: changeList[i]
+        }) */
+
+        changeList.forEach(element => {
+/*             console.log(document.getElementById(element).checked);
+            console.log(username);
+            console.log(element); */
+            console.log("Making post request");
+
+            axios.post(address, {
+                preferenceValue: document.getElementById(element).checked,
+                username: username,
+                preferenceID: element
+            })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        });
     }
 
     const callSavePreferences = () => {
@@ -21,18 +46,6 @@ export default function PreferencesDisplayContent(){
     }
 
     const saveChange = e => {
-/*         console.log(e.target.id); */
-/*         if(changeList === undefined || changeList.length == 0){
-            changeList.push(e.target.id);
-        } */
-/*         changeList.forEach(element => {
-            if(element !== e.target.id){
-                changeList.push(e.target.id);
-                console.log("unique");
-            }else{
-                console.log("duplicate");
-            }
-        }); */
 
         if(changeList.includes(e.target.id)){
             changeList.splice(changeList.indexOf(e.target.id), 1);
@@ -77,13 +90,13 @@ export default function PreferencesDisplayContent(){
                 <PreferencesSwitchGroup label="Anomaly chart" name="settingTwoRadios" 
                 checked={preferences[1].preferenceValue} id="2" saveChange={saveChange}/>                
                 <PreferencesSwitchGroup label="chart 2 toggle" name="settingThreeRadios" 
-                checked={preferences[1].preferenceValue} id="3" saveChange={saveChange}/>                
+                checked={preferences[2].preferenceValue} id="3" saveChange={saveChange}/>                
                 <PreferencesSwitchGroup label="Chart 3 toggle" name="settingFourRadios" 
-                checked={preferences[1].preferenceValue} id="4" saveChange={saveChange}/>               
+                checked={preferences[3].preferenceValue} id="4" saveChange={saveChange}/>               
                 <PreferencesSwitchGroup label="chart 4 toggle" name="settingFiveRadios" 
-                checked={preferences[0].preferenceValue} id="5" saveChange={saveChange}/>               
+                checked={preferences[4].preferenceValue} id="5" saveChange={saveChange}/>               
                 <PreferencesSwitchGroup label="chart 5 toggle" name="settingSixRadios" 
-                checked={preferences[0].preferenceValue} id="6" saveChange={saveChange}/>
+                checked={preferences[5].preferenceValue} id="6" saveChange={saveChange}/>
                 
                 <PrefenrecesButtonGroup savePreferences={callSavePreferences}/>
             </div>
