@@ -4,7 +4,7 @@ import "./EmissionPieChart.css";
 
 /** TODO
  *  axios calls to get data from database
- *  show indepth information on sector on click
+ *  show indepth information on Sector on click
  *  use spinner when loading etc
  *  make it look nice?
  */
@@ -15,15 +15,11 @@ export default function EmissionPieChart() {
   const [isLoading, setIsLoading] = useState(true);
   const [data4, setdata4] = useState([]);
 
-  const renderLabel = (entry) => {
-    return entry.Sector;
-  };
-  const renderPercentage = (data3) => {
-    let percentageToString = data3.emissions;
-    return percentageToString.toFixed(1).replace(".", ",").toString() + "%";
-  };
   const renderActiveShape = (props) => {
+    const RADIAN = Math.PI / 180;
+    console.log(props);
     const {
+      name,
       cx,
       cy,
       midAngle,
@@ -36,20 +32,58 @@ export default function EmissionPieChart() {
       percent,
       value,
     } = props;
-
+    const sin = Math.sin(-RADIAN * midAngle);
+    const cos = Math.cos(-RADIAN * midAngle);
+    const sx = cx + (outerRadius + 10) * cos;
+    const sy = cy + (outerRadius + 10) * sin;
+    const mx = cx + (outerRadius + 30) * cos;
+    const my = cy + (outerRadius + 30) * sin;
+    const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+    const ey = my;
+    const textAnchor = cos >= 0 ? "start" : "end";
     return (
-      <>
-        <g></g>
+      <g>
+       
         <Sector
           cx={cx}
           cy={cy}
           innerRadius={innerRadius}
-          outerRadius={outerRadius + 10}
+          outerRadius={outerRadius}
           startAngle={startAngle}
           endAngle={endAngle}
           fill={fill}
         />
-      </>
+        <Sector
+          cx={cx}
+          cy={cy}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          innerRadius={outerRadius + 6}
+          outerRadius={outerRadius + 10}
+          fill={fill}
+        />
+        <path
+          d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+          stroke={fill}
+          fill="none"
+        />
+        <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+        <text
+          x={ex + (cos >= 0 ? 1 : -1) * 10}
+          y={ey}
+          textAnchor={textAnchor}
+          fill="#333"
+        >{`${name}`}</text>
+        <text
+          x={ex + (cos >= 0 ? 1 : -1) * 12}
+          y={ey}
+          dy={18}
+          textAnchor={textAnchor}
+          fill="#999"
+        >
+          {`(C02 Emissions ${(percent * 100).toFixed(2)}%)`}
+        </text>
+      </g>
     );
   };
   const onPieEnter = useCallback(
@@ -71,21 +105,13 @@ export default function EmissionPieChart() {
           dataKey="emissions"
           cx="50%"
           cy="50%"
-          label={renderLabel}
+          /* label={renderLabel} */
           paddingAngle="1"
           onMouseEnter={onPieEnter}
         >
           {data3.map((entry, index) => (
-            <Cell key={entry.Sector} fill={COLORS[index % COLORS.length]} />
+            <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
           ))}
-          <LabelList
-            fill="#4d4d4d" // Percentage colour
-            dataKey={renderPercentage}
-            position="inside"
-            angle="0"
-            stroke="none" // Border of letters
-            className="label-percentage"
-          />
         </Pie>
       </PieChart>
     </div>
@@ -94,19 +120,19 @@ export default function EmissionPieChart() {
 
 const data3 = [
   {
-    Sector: "Energy",
+    name: "Energy",
     emissions: 73.2,
   },
   {
-    Sector: "Industrial processes",
+    name: "Industrial processes",
     emissions: 5.2,
   },
   {
-    Sector: "Waste",
+    name: "Waste",
     emissions: 3.2,
   },
   {
-    Sector: "Agriculture, Forestry & Land Use",
+    name: "Agriculture, Forestry & Land Use",
     emissions: 18.4,
   },
 ];
