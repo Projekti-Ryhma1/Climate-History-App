@@ -8,10 +8,10 @@ const login = {
     return db.query('select password from users where email=?', [email], callback);
   },
 
-  getUserInfoByName: function(username, callback) {
+  getUserByName: function(username, callback) {
     return db.query('select * from users where username=?', [username], callback);
   },
-  getUserInfoByEmail: function(email, callback) {
+  getUserByEmail: function(email, callback) {
     return db.query('select * from users where email=?', [email], callback);
   },
 };

@@ -11,30 +11,33 @@ export default function Login() {
   const [username, setUserName] = useState(0);
   const [password, setPassword] = useState(0);
   
-  async function SendLoginData() {
-    axios.post(URL,{
+  async function SendLoginData(e) {
+    e.preventDefault(); //Prevents refreshing page when button is clicked
+    axios.post(URL, {
       username: username,
       password: password
       
     }).then(resp => {
-      console.log("maito");
-      console.log(resp); //Test -> shows user data from the database
-      alert(resp.data);
+        console.log(resp); //Test -> shows user data from the database
+        alert(resp.data);
       
+      //window.location.reload(); //Refreshes the page
   }).catch(error=> {
-    alert(error);
+    const respData = error.response.data;
+    alert(respData);
     console.log(error);
+    //window.location.reload(); //Refreshes the page
   })
   }
 
     return (
       <form>
         <h2>Login</h2>
-        <div class="name">
+        <div className="name">
           <label>User name:</label>
               <input type="text" id="userName" maxLength={20} required onChange={e=> setUserName(e.target.value)}/>
           </div>
-          <div class="password">
+          <div className="password">
           <label>Password:</label>
             <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(e.target.value)}/>
           </div>

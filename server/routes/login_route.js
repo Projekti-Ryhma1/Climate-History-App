@@ -18,12 +18,13 @@ router.post('/',
                   response.send("Password is correct");
                 }
                 else {
-                    console.log("Password in incorrect!");
+                    console.log("Password is incorrect!");
+                    response.status(500).json("Password is incorrect");
                 }			
               }          
             else{
-              console.log("Username or email does not exists");
-              response.send("Password is incorrect");
+              console.log("Username does not exists!");
+              response.status(500).json("Username does not exists");
             }
           }
           }
@@ -32,7 +33,7 @@ router.post('/',
     else{
       console.log("Wrong username or password");
       console.log(request.body);
-      response.send(request.body);
+      response.status(500).json("Wrong username or password");
     }
   }
 );

@@ -15,30 +15,56 @@ export default function Create_user() {
           username: username,
           password: password,
           email: email
-        }).then(resp => {
-          alert("User created!");
-          console.log("User created!");
-    
+        }).then((resp) => {
+          console.log(resp.data);
+          if(resp.data.serverStatus==2) {
+          alert("User created successfully!");
+          console.log("User created successfully!");
+          console.log(resp.data);
+          }
+          else {
+          if(resp.data.sqlMessage.includes('users.PRIMARY')){
+            alert("Username is already taken!");
+            console.log("Username is already taken!");         
+          }
+          else {
+            alert("Email is already in taken!");
+            console.log("Email is already taken!");
+          }
+        }
+        
       })
-      .catch(function (error) {
-        alert(error);
-        console.log(error);
+      .catch(error => {
+          const respData = error.response.data;
+          console.log(respData);
+          if (respData.includes('users.PRIMARY')) {
+            console.log("Username is already taken!");
+            alert("Username is already taken!");
+          }
+          else if (respData.includes('users.email')) {
+            console.log("Email is already taken!");
+            alert("Email is already in taken!");
+          }
+          else{
+            console.log(error);
+            alert(error);          
+          }
       })
+      
       };
-
 
     return (
         <form>
           <h2>Create User</h2>
-          <div class="name">
+          <div className="name">
             <label>User name:</label>
                 <input type="text" id="userName" maxLength={20} required onChange={e=> setUserName(e.target.value)}/>
             </div>
-            <div class="password">
+            <div className="password">
             <label>Password:</label>
               <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(bcrypt.hashSync(e.target.value, 10))}/>
             </div>
-            <div class="email">
+            <div className="email">
             <label>Email:</label>
                 <input type="text" id="userEmail" maxLength={20} required onChange={e=> setEmail(e.target.value)}/>
             </div>
