@@ -3,39 +3,38 @@ const router = express.Router();
 const login = require('../models/login_model');
 const bcrypt = require('bcryptjs');
 
-router.post('/',
-  function(request, response) {
-    if(request.body.username && request.body.password){
-        login.getPasswordByName(request.body.username, function(error, result) {
-          if(error){
-            response.json(error);
-          }
-          else{
-            if (result.length > 0) {
-              const matches = bcrypt.compareSync(request.body.password,result[0].password);
-              if(matches) {
-                  console.log("Password is correct!");
-                  response.send("Password is correct");
-                }
-                else {
-                    console.log("Password is incorrect!");
-                    response.status(500).json("Password is incorrect");
-                }			
-              }          
-            else{
-              console.log("Username does not exists!");
-              response.status(500).json("Username does not exists");
-            }
-          }
-          }
-        );
+router.post('/', async(req, res) => {
+  try {
+    const username = req.body.username;
+    const password = req.body.password;
+    let result = await login.userLogin(username).then(function(resp){
+      return resp;
+  });
+
+    bcrypt.compare(password, result[0].password, function(err, resp) {
+      if (err){
+        throw err;
       }
-    else{
-      console.log("Wrong username or password");
-      console.log(request.body);
-      response.status(500).json("Wrong username or password");
+      else if (resp) {
+        res.status(200).json("Password is correct");;
+        console.log("Password is correct");
+      } else {
+        res.status(403).json("Password was incorrect");
+        console.log("Password is incorrect");
+      }
+    });
+
+  } catch (error) {
+    if(error instanceof(TypeError)) {
+      console.log("Username was not found");
+      res.status(404).json("Username was not found");
+    }
+    else {
+      console.log("Server error");
+      res.status(500);
     }
   }
-);
+  }
+  );
 
 module.exports = router;
