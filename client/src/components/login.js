@@ -18,7 +18,7 @@ export default function Login() {
       password: password
       
     }).then(resp => {
-        console.log(resp); //Test -> shows user data from the database
+        console.log(resp);
         alert(resp.data);
       
       //window.location.reload(); //Refreshes the page

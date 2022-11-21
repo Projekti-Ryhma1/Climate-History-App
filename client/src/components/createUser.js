@@ -17,7 +17,7 @@ export default function Create_user() {
           email: email
         }).then((resp) => {
           console.log(resp.data);
-          if(resp.data.serverStatus==2) {
+          if(resp.data.serverStatus===2) {
           alert("User created successfully!");
           console.log("User created successfully!");
           console.log(resp.data);
