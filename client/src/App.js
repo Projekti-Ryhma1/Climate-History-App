@@ -2,7 +2,6 @@ import './App.css';
 import { Route, Routes} from 'react-router-dom';
 import CreateUser from './components/createUser';
 import Login from './components/login';
-import CreateUser from './components/createUser';
 
 function App() {
   return (
