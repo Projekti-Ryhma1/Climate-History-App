@@ -1,5 +1,12 @@
 import { useState, useCallback } from "react";
-import { LabelList, Cell, Pie, PieChart, Sector } from "recharts";
+import {
+  LabelList,
+  Cell,
+  Pie,
+  PieChart,
+  Sector,
+  ResponsiveContainer,
+} from "recharts";
 import "./EmissionPieChart.css";
 
 /** TODO
@@ -131,24 +138,26 @@ export default function EmissionPieChart() {
   );
   const renderPie = <></>;
   return (
-    <div className="container-chart-pie">   
-      <PieChart width={1000} height={500}>
-        <Pie
-          activeIndex={activeIndex}
-          activeShape={renderActiveShape}
-          data={data3}
-          dataKey="emissions"
-          cx="50%"
-          cy="50%"
-          /* label={renderLabel} */
-          paddingAngle="1"
-          onMouseEnter={onPieEnter}
-        >
-          {data3.map((entry, index) => (
-            <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-      </PieChart>
+    <div className="container-chart-pie">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart width={1000} height={500}>
+          <Pie
+            activeIndex={activeIndex}
+            activeShape={renderActiveShape}
+            data={data3}
+            dataKey="emissions"
+            cx="50%"
+            cy="50%"
+            /* label={renderLabel} */
+            paddingAngle="1"
+            onMouseEnter={onPieEnter}
+          >
+            {data3.map((entry, index) => (
+              <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
       <SubSectorInfo sector={sectorName}></SubSectorInfo>
     </div>
   );
