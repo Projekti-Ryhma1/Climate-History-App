@@ -13,6 +13,7 @@ export default function EmissionPieChart() {
   const COLORS = ["#ffff00", "#FF8042", "#996633", "#009900"];
   const [activeIndex, setActiveIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [sectorName, setSectorName] = useState("");
   const renderActiveShape = (props) => {
     const RADIAN = Math.PI / 180;
     const {
@@ -39,7 +40,7 @@ export default function EmissionPieChart() {
     const ey = my;
     const textAnchor = cos >= 0 ? "start" : "end";
     return (
-      <g>
+      <>
         <Sector
           cx={cx}
           cy={cy}
@@ -79,29 +80,52 @@ export default function EmissionPieChart() {
         >
           {`(C02 Emissions ${(percent * 100).toFixed(2)}%)`}
         </text>
-        <text
-          x={ex + (cos >= 0 ? 1 : -1) * 10}
-          y={ey}
-          dy={40}
-          textAnchor={textAnchor}
-          fill="#999"
-        > 
-          <RenderSubSectors/>
-          {/* need to render subsector dynamically based on active sector */}
-        </text>
-      </g>
-    );
-  };
-  const RenderSubSectors = () =>{
-    return(<>
-      {data4.at(0).Sub_sector}
-      {data4.at(0).Emissions}
       </>
     );
-  }
+  };
+  const SubSectorInfo = (props) => {
+    let subSectors = [];
+    data4.map((data4) => {
+      if (data4.sector == props.sector) {
+        subSectors.push(data4);
+      }
+    });
+    console.log(subSectors);
+    return (
+      <div>
+        <h3>Sub sector</h3>
+        <ul>
+          {subSectors.map((subSectors) => (
+            <li key={subSectors.Sub_sector}>
+              {subSectors.Sub_sector}
+              {subSectors.Emissions}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   const onPieEnter = useCallback(
     (_, index) => {
       setActiveIndex(index);
+      switch (index) {
+        case 0:
+          setSectorName("Energy");
+          break;
+        case 1:
+          setSectorName("Industrial processes");
+          break;
+        case 2:
+          setSectorName("Waste");
+          break;
+        case 3:
+          setSectorName("Agriculture, Forestry & Land Use");
+          break;
+        default:
+          setSectorName("Energy");
+          break;
+      }
     },
     [setActiveIndex]
   );
@@ -109,7 +133,7 @@ export default function EmissionPieChart() {
   return (
     <div className="container-chart">
       <p>Emission by Sector</p>
-      <PieChart width={800} height={500}>
+      <PieChart width={1000} height={500}>
         <Pie
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
@@ -126,6 +150,7 @@ export default function EmissionPieChart() {
           ))}
         </Pie>
       </PieChart>
+      <SubSectorInfo sector={sectorName}></SubSectorInfo>
     </div>
   );
 }
