@@ -1,4 +1,5 @@
 .container-chart-pie {
+  position: relative;
   margin: auto;
   padding: 10px;
   display: flex;
@@ -7,6 +8,7 @@
 }
 .container-chart-subsector {
   flex: 1;
+  text-align: left;
 }
 .subsector-list {
   list-style-type: none;

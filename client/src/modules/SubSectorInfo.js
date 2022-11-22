@@ -8,12 +8,12 @@ export default function SubSectorInfo(props){
     console.log(subSectors);
     return (
       <div className="container-chart-subsector">
-        <h3>Sub sector</h3>
+        <h3>Sub sector emissions</h3>
         <ul className="subsector-list">
           {subSectors.map((subSectors) => (
             <li key={subSectors.Sub_sector}>
-              {subSectors.Sub_sector}
-              {subSectors.Emissions}
+              {subSectors.Sub_sector}  &nbsp;
+              {subSectors.Emissions}%
             </li>
           ))}
         </ul>
