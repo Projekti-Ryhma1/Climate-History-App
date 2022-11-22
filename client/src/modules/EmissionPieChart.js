@@ -92,9 +92,9 @@ export default function EmissionPieChart() {
     });
     console.log(subSectors);
     return (
-      <div>
+      <div className="container-chart-subsector">
         <h3>Sub sector</h3>
-        <ul>
+        <ul className="subsector-list">
           {subSectors.map((subSectors) => (
             <li key={subSectors.Sub_sector}>
               {subSectors.Sub_sector}
@@ -131,8 +131,7 @@ export default function EmissionPieChart() {
   );
   const renderPie = <></>;
   return (
-    <div className="container-chart">
-      <p>Emission by Sector</p>
+    <div className="container-chart-pie">   
       <PieChart width={1000} height={500}>
         <Pie
           activeIndex={activeIndex}

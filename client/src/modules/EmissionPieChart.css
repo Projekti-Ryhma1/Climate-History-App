@@ -1,12 +1,21 @@
-.container-chart {
-    margin: auto;
-    padding: 10px;
-  }
-  .recharts-wrapper {
-    margin: auto;
-  }
-  .label-percentage {
-    font-family: arial;
-    font-size: 12px;
-  }
-  
+.container-chart-pie {
+  margin: auto;
+  padding: 10px;
+  display: flex;
+}
+.container-chart-subsector {
+  flex: 1;
+}
+.subsector-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.recharts-wrapper {
+  flex: 1;
+  margin: auto;
+}
+.label-percentage {
+  font-family: arial;
+  font-size: 12px;
+}
