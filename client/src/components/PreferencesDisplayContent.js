@@ -7,23 +7,15 @@ export default function PreferencesDisplayContent(){
     const [isLoading, setIsLoading] = useState(true);
     const [username, setUsername] = useState ("example");
     const [preferences, setPreferences] = useState(null);
+    const [clickedSave, setClickedSave] = useState(false);
 
     var changeList = [];
 
     async function savePreferences(){
         const address = "http://localhost:3001/userpreferences/preference";
-
-        console.log("hello world")
-/*         axios.post(address, {
-            preferenceValue: document.getElementById(changeList[i]).checked,
-            username: username,
-            preferenceID: changeList[i]
-        }) */
+        const preferencesArray = [...preferences];
 
         changeList.forEach(element => {
-/*             console.log(document.getElementById(element).checked);
-            console.log(username);
-            console.log(element); */
             console.log("Making post request");
 
             axios.post(address, {
@@ -33,29 +25,46 @@ export default function PreferencesDisplayContent(){
             })
             .then((response) => {
                 console.log(response);
+                
+                preferencesArray[parseInt(element)-1] = {username:username, preferenceID:element, preferenceValue:Number(document.getElementById(element).checked)};
+                setPreferences(preferencesArray.map(element => {
+                    
+                    setClickedSave(true);
+                    return{ ...element, preferenceValue: element.preferenceValue}
+            }));
             })
             .catch(error => {
                 console.log(error);
             });
         });
+        changeList = [];
     }
 
     const callSavePreferences = () => {
-        console.log("Testing prop functions");
         savePreferences();
     }
 
     const saveChange = e => {
-
         if(changeList.includes(e.target.id)){
             changeList.splice(changeList.indexOf(e.target.id), 1);
         }else{
             changeList.push(e.target.id);
         }
-    
-
         console.log(changeList);
     }
+
+    const saveSessionPreference = () => {
+        sessionStorage.setItem("preferences", JSON.stringify(preferences));
+    }
+
+     useEffect(() => {
+        if(clickedSave){
+            console.log(preferences);
+            saveSessionPreference();
+            setClickedSave(false);
+            console.log("Save button was clicked and on state change values were saved to session storage");
+        }
+    }, [preferences]) 
 
     useEffect(() => {
         if(sessionStorage.getItem("preferences") !== null){
@@ -84,7 +93,7 @@ export default function PreferencesDisplayContent(){
     else{
         return(
             <div className="div-centered">
-                 
+
                 <PreferencesSwitchGroup label="Charts side by side" name="settingOneRadios" 
                 checked={preferences[0].preferenceValue} id="1" saveChange={saveChange}/>
                 <PreferencesSwitchGroup label="Anomaly chart" name="settingTwoRadios" 
