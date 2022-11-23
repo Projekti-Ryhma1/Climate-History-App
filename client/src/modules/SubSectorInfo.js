@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function SubSectorInfo(props) {
-  const [isLoading, setIsLoading] = useState(true);
   const [subSectorData, setSubSectorData] = useState([]);
 
   useEffect(() => {
@@ -21,13 +20,13 @@ export default function SubSectorInfo(props) {
           alert(error);
         });
     }
-    setTimeout(() => {
-      //give 0.5s time for data to load
-      setIsLoading(false);
-    }, 500);
   }, []);
 
-  let subSectors = [];
+
+  /**
+   * sort data so that it shows correct subsector data compared to parents active sector
+   */
+  let subSectors = [];  
   subSectorData.map((data4) => {
     if (data4.sector === props.sector) {
       subSectors.push(data4);
