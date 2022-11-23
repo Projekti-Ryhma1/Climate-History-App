@@ -4,6 +4,12 @@ import axios from "axios";
 import Spinner from "./Spinner";
 import "./ClimateLineChart.css"
 
+/** TODO
+ *  Modify tooltiplabel to look nicer
+ *  sort tooltip lag/bug
+ *  zoom?
+ */
+
 export default function StackedLineChart() {
   const [isLoading, setIsLoading] = useState(true);
   const [data2, setData2] = useState([]);
@@ -33,10 +39,10 @@ export default function StackedLineChart() {
   const colours = ["#880808", "#0437F2"];
   let keyArray = [];
   for (let key in data2.at()) {
-    keyArray.push(key);
+    keyArray.push(key); //get keys for data2 and create new array with keys
   }
   let newColours = [];
-  keyArray.splice(0, 1);
+  keyArray.splice(0, 1); // remoce "MtCO2/year" from the array
   for (let i = 0; i < keyArray.length; i++) {
     newColours = newColours.concat(colours);
   }

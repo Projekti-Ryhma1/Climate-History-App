@@ -1,0 +1,27 @@
+.container-chart-pie {
+  position: relative;
+  margin: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  height: 500px;
+}
+.container-chart-subsector {
+  flex: 1;
+  text-align: left;
+}
+.subsector-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  min-width: 400px;
+  text-align: left;
+}
+.recharts-wrapper {
+  flex: 1;
+  margin: auto;
+}
+.label-percentage {
+  font-family: arial;
+  font-size: 12px;
+}

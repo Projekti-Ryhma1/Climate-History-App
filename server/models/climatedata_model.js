@@ -29,10 +29,32 @@ getCO2EmissionByCountry = () => {
     });
   });
 };
+getCO2EmissionBySector = () => {
+  const query =
+    "SELECT * FROM emissions_by_sector";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
+getCO2EmissionBySubSector = () => {
+  const query =
+    "SELECT * FROM emissions_by_subsector";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
 
 
 module.exports = {
   getGlobalTempAnomaly,
   getNorthHemis2000YearTemp,
-  getCO2EmissionByCountry
+  getCO2EmissionByCountry,
+  getCO2EmissionBySector,
+  getCO2EmissionBySubSector
 };
