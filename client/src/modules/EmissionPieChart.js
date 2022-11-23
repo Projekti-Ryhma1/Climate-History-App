@@ -1,13 +1,8 @@
-import { useState, useCallback } from "react";
-import {
-  LabelList,
-  Cell,
-  Pie,
-  PieChart,
-  Sector,
-  ResponsiveContainer,
-} from "recharts";
+import axios from "axios";
+import { useState, useCallback, useEffect } from "react";
+import { Cell, Pie, PieChart, Sector, ResponsiveContainer } from "recharts";
 import "./EmissionPieChart.css";
+import Spinner from "./Spinner";
 import SubSectorInfo from "./SubSectorInfo";
 
 /** TODO
@@ -22,10 +17,32 @@ export default function EmissionPieChart() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [sectorName, setSectorName] = useState("");
+  const [sectorData, setSectorData] = useState([]);
+
+  useEffect(() => {
+    if (localStorage.getItem("sectorData") !== null) {
+      setSectorData(JSON.parse(localStorage.getItem("sectorData")));
+    } else {
+      const address = "http://localhost:3001/data/sector_emissions";
+      axios
+        .get(address)
+        .then((response) => {
+          setSectorData(response.data);
+          localStorage.setItem("sectorData", JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+    setTimeout(() => {
+      //give 0.5s time for data to load
+      setIsLoading(false);
+    }, 500);
+  }, []);
+
   const renderActiveShape = (props) => {
     const RADIAN = Math.PI / 180;
     const {
-      name,
       cx,
       cy,
       midAngle,
@@ -34,9 +51,7 @@ export default function EmissionPieChart() {
       startAngle,
       endAngle,
       fill,
-      payload,
       percent,
-      value,
     } = props;
     const sin = Math.sin(-RADIAN * midAngle);
     const cos = Math.cos(-RADIAN * midAngle);
@@ -78,7 +93,7 @@ export default function EmissionPieChart() {
           y={ey}
           textAnchor={textAnchor}
           fill="#333"
-        >{`${name}`}</text>
+        >{`${sectorName}`}</text>
         <text
           x={ex + (cos >= 0 ? 1 : -1) * 10}
           y={ey}
@@ -91,7 +106,6 @@ export default function EmissionPieChart() {
       </>
     );
   };
-
 
   const onPieEnter = useCallback(
     (_, index) => {
@@ -116,48 +130,32 @@ export default function EmissionPieChart() {
     },
     [setActiveIndex]
   );
-  const renderPie = <></>;
-  return (
-    <div className="container-chart-pie">
+  const renderPie = (
+    <>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart width={1000} height={500}>
           <Pie
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
-            data={data3}
+            data={sectorData}
             dataKey="emissions"
             cx="50%"
             cy="50%"
-            /* label={renderLabel} */
             paddingAngle="1"
             onMouseEnter={onPieEnter}
           >
-            {data3.map((entry, index) => (
+            {sectorData.map((entry, index) => (
               <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
         </PieChart>
       </ResponsiveContainer>
       <SubSectorInfo sector={sectorName}></SubSectorInfo>
+    </>
+  );
+  return (
+    <div className="container-chart-pie">
+      {isLoading ? <Spinner /> : renderPie}
     </div>
   );
 }
-
-const data3 = [
-  {
-    name: "Energy",
-    emissions: 73.2,
-  },
-  {
-    name: "Industrial processes",
-    emissions: 5.2,
-  },
-  {
-    name: "Waste",
-    emissions: 3.2,
-  },
-  {
-    name: "Agriculture, Forestry & Land Use",
-    emissions: 18.4,
-  },
-];
