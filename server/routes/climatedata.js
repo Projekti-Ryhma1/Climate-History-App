@@ -27,4 +27,20 @@ router.get("/co2_emissions_national", async (req, res) => {
     res.sendStatus(500);
   }
 });
+router.get("/sector_emissions", async (req, res) => {
+  try {
+    res.status(200).json(await database.getCO2EmissionBySector());
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
+router.get("/subsector_emissions", async (req, res) => {
+  try {
+    res.status(200).json(await database.getCO2EmissionBySubSector());
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
 module.exports = router;
