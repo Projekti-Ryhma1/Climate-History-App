@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import './login.css';
 import axios from 'axios';
-// dotenv = require('dotenv'); //WIP
-//const jwt = require('jsonwebtoken'); //WIP
-//dotenv.config(); //WIP
 
 const URL = 'http://localhost:3001/user/login';
 
@@ -19,11 +16,11 @@ export default function Login() {
       
     }).then(resp => {
         console.log(resp);
-        alert(resp.data);
+        alert(resp.data.message);
       
       //window.location.reload(); //Refreshes the page
   }).catch(error=> {
-    const respData = error.response.data;
+    const respData = error.response.data.message;
     alert(respData);
     console.log(error);
     //window.location.reload(); //Refreshes the page

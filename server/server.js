@@ -3,7 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const port = 3001;
-
+const jwt = require('jsonwebtoken');
+const cookieParser = require("cookie-parser");
 const dataRouter = require("./routes/climatedata");
 const loginRoute = require("./routes/login_route");
 const createUser = require("./routes/createUser_route");
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 //Route for climatedata from database
 app.use("/data", dataRouter);
