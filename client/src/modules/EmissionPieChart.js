@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useCallback, useEffect } from "react";
-import { Cell, Pie, PieChart, Sector, ResponsiveContainer } from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import "./EmissionPieChart.css";
 import Spinner from "./Spinner";
 import SubSectorInfo from "./SubSectorInfo";
