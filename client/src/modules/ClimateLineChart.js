@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import "./ClimateLineChart.css";
+import Button from 'react-bootstrap/Button';;
 
 export default function ClimateLineChart() {
   const [isLoading, setIsLoading] = useState(true);
@@ -106,9 +107,9 @@ export default function ClimateLineChart() {
         <YAxis data={data} type="number" domain={["auto", "auto"]} />
         <Legend />
       </LineChart>
-      <button onClick={handleClick}>
+      <Button onClick={handleClick}>
         Toggle Northern Temperature 2000 Years
-      </button>
+      </Button>
     </>
   );
 
