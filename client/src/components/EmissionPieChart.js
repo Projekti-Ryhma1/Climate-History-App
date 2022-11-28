@@ -7,10 +7,7 @@ import SubSectorInfo from "./SubSectorInfo";
 import RenderActiveShape from "./RenderActiveShape";
 
 /** TODO
- *  axios calls to get data from database
- *  show indepth information on Sector on click
- *  use spinner when loading etc
- *  make it look nice?
+ *  Make subsector info a modal window or something nicer?
  */
 
 export default function EmissionPieChart() {
@@ -79,7 +76,7 @@ export default function EmissionPieChart() {
             onMouseEnter={onPieEnter}
           >
             {sectorData.map((entry, index) => (
-              <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
+              <Cell key={++index} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
         </PieChart>

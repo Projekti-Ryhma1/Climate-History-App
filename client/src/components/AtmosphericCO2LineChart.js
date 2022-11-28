@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import axios from "axios";
-import Spinner from "./Spinner";
+import Spinner from "../components/Spinner"
 import Button from 'react-bootstrap/Button';
 
 export default function AtmosphericCO2LineChart() {
