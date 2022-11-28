@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import AtmosphericCO2LineChart from './modules/AtmosphericCO2LineChart';
 import ClimateLineChart from './modules/ClimateLineChart';
@@ -13,6 +14,9 @@ function App() {
        <EmissionPieChart/>
        <ClimateLineChart/>
        <StackedLineChart/>
+       <Routes>
+        {/* <Route/>s here! */}
+       </Routes>
           </div>
   );
 }
