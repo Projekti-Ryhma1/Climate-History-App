@@ -8,6 +8,7 @@ const URL = 'http://localhost:3001/login';
 export default function Login(props) {
   const [username, setUserName] = useState(0);
   const [password, setPassword] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
   
   async function SendLoginData(e) {
     e.preventDefault(); //Prevents refreshing page when button is clicked
@@ -18,13 +19,12 @@ export default function Login(props) {
       password: password
     }).then(resp => {
         const token = resp.data.token;
-        console.log(resp.data);
         props.login(token);
         alert(resp.data.message);
 
   }).catch(error=> {
     const respData = error.response.data.message;
-    alert(respData);
+    setErrorMessage(respData);
     console.log(error);
   })
   }
@@ -43,6 +43,9 @@ export default function Login(props) {
         <div>
         <button id="loginButton" onClick={ SendLoginData }>Login</button>
         </div>
+        <div>
+            <p>{ errorMessage }</p>
+          </div>
       </form>
     );
   };

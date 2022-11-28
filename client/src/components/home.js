@@ -1,7 +1,6 @@
 import React from 'react';
 
-//TEST CAN BE DELETED
-export default function Home(props) {
+export default function Home(props) { //TEST//TEST
 return (
     <form>
         <div>

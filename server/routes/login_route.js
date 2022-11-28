@@ -34,7 +34,7 @@ router.post('/', async(req, res) => {
         const newToken = jwt.sign(payload, process.env.JWT_TOKEN, options); // Generate token
         console.log("token: "+newToken);
 
-        res.status(200).send({ code: 0, message: 'Password is correct', token: newToken });
+        res.status(200).send({ code: 0, message: 'User logged in successfully', token: newToken });
         console.log("Password is correct");
       } else {
         res.status(403).send({ code: 1, message: 'Password is incorrect'});
@@ -52,7 +52,7 @@ router.post('/', async(req, res) => {
       res.status(500);
     }
   }} else{
-    console.log("Username or password empty!");
+    console.log("Username or password empty");
   }
 
 });
