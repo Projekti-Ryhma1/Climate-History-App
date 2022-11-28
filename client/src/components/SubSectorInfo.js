@@ -12,7 +12,6 @@ export default function SubSectorInfo(props) {
       axios
         .get(address)
         .then((response) => {
-          console.log(response.data);
           setSubSectorData(response.data);
           localStorage.setItem("subSectorData", JSON.stringify(response.data));
         })
@@ -32,7 +31,6 @@ export default function SubSectorInfo(props) {
       subSectors.push(data4);
     }
   });
-  console.log(subSectors);
   return (
     <div className="container-chart-subsector">
       <h3>Sub sector emissions</h3>
