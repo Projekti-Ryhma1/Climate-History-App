@@ -1,0 +1,10 @@
+.page-footer{
+    background-color: rgba(33, 37,43, 1);
+    color: white;   
+}
+a{
+    color: rgba(255,255,255,0.55);
+}
+a:hover{
+    color:rgba(255,255,255,0.75);
+}
