@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import { useState } from 'react';
 import { Route, Routes} from 'react-router-dom';
@@ -6,6 +7,10 @@ import SignUp from './components/signUp';
 import Home from './components/home';
 import { useCookies } from 'react-cookie';
 import jwtDecode from 'jwt-decode';
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
+import Emissions from './pages/Emissions';
+import TempCo2 from './pages/TempCo2';
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
@@ -30,12 +35,16 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="App">
+      <NavBar/>
       <Routes>
         <Route path="/" element={<Home userLoggedIn={jwt_token!= null}/>} />
         { authRoutes }
         <Route path="*" element={<Home userLoggedIn={jwt_token!= null}/>} />
+        <Route path='/' element={<TempCo2/>} />
+        <Route path='/emissions' element={<Emissions/>} />
       </Routes>
+      <Footer />
     </div>
   );
 }
