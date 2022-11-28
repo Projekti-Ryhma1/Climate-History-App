@@ -20,8 +20,7 @@ getNorthHemis2000YearTemp = () => {
   });
 };
 getCO2EmissionByCountry = () => {
-  const query =
-    "SELECT * FROM national_carbon_emissions_2021";
+  const query = "SELECT * FROM national_carbon_emissions_2021";
   return new Promise((resolve, reject) => {
     database.query(query, (error, result) => {
       if (error) reject(error);
@@ -30,8 +29,7 @@ getCO2EmissionByCountry = () => {
   });
 };
 getCO2EmissionBySector = () => {
-  const query =
-    "SELECT * FROM emissions_by_sector";
+  const query = "SELECT * FROM emissions_by_sector";
   return new Promise((resolve, reject) => {
     database.query(query, (error, result) => {
       if (error) reject(error);
@@ -40,8 +38,25 @@ getCO2EmissionBySector = () => {
   });
 };
 getCO2EmissionBySubSector = () => {
-  const query =
-    "SELECT * FROM emissions_by_subsector";
+  const query = "SELECT * FROM emissions_by_subsector";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
+getMaunaLoaCO2Annual = () => {
+  const query = "SELECT * FROM mauna_loa_annual_co2";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
+getMaunaLoaCO2Monthly = () => {
+  const query = "SELECT * FROM mauna_loa_monthly_co2";
   return new Promise((resolve, reject) => {
     database.query(query, (error, result) => {
       if (error) reject(error);
@@ -50,11 +65,12 @@ getCO2EmissionBySubSector = () => {
   });
 };
 
-
 module.exports = {
   getGlobalTempAnomaly,
   getNorthHemis2000YearTemp,
   getCO2EmissionByCountry,
   getCO2EmissionBySector,
-  getCO2EmissionBySubSector
+  getCO2EmissionBySubSector,
+  getMaunaLoaCO2Annual,
+  getMaunaLoaCO2Monthly
 };
