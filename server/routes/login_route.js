@@ -6,10 +6,10 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
 
 router.post('/', async(req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  if(username.length>0 && password.length>0){
   try {
-    console.log(req.body);
-    const username = req.body.username;
-    const password = req.body.password;
     console.log("Username: "+username+" Password: "+password);
     let result = await login.userLogin(username).then(function(resp){
       return resp;
@@ -19,11 +19,22 @@ router.post('/', async(req, res) => {
         throw err;
       }
       else if (resp) {
-        const token = jwt.sign({username: username}, process.env.JWT_TOKEN, { expiresIn: '3456000s' }); //Generate token
-        console.log("token: "+token);
-        res.cookie('token',token, { httpOnly: true, secure: false, maxAge: 3600000 }); // INFO: If using Postman -> set "secure" to "true" (otherwise set "true")
+        const maxAge = 86400; // 86400 = 1day
 
-        res.status(200).send({ code: 0, message: 'Password is correct'});
+        const payload = {
+          username: username,
+          email: result[0].email,
+          cookieMaxAge: maxAge, // How long react-cookie token is active
+          httpOnly: false,
+          secure: false
+        }
+        const options = {
+          expiresIn: maxAge,
+        }
+        const newToken = jwt.sign(payload, process.env.JWT_TOKEN, options); // Generate token
+        console.log("token: "+newToken);
+
+        res.status(200).send({ code: 0, message: 'Password is correct', token: newToken });
         console.log("Password is correct");
       } else {
         res.status(403).send({ code: 1, message: 'Password is incorrect'});
@@ -40,8 +51,15 @@ router.post('/', async(req, res) => {
       console.log("Server error");
       res.status(500);
     }
+  }} else{
+    console.log("Username or password empty!");
   }
-  }
-  );
+
+});
+
+router.post('/user', async(req, res) => {
+  res.send(req.user);
+
+});
 
 module.exports = router;

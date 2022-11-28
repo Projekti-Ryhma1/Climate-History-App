@@ -10,4 +10,4 @@ createUser = (username, password, email) => {
   });
 };
 
-module.exports = {createUser}
+module.exports = { createUser }

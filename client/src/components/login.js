@@ -1,29 +1,31 @@
 import React, { useState } from "react";
 import './login.css';
 import axios from 'axios';
+//import cookies from 'react-cookie';
 
-const URL = 'http://localhost:3001/user/login';
+const URL = 'http://localhost:3001/login';
 
-export default function Login() {
+export default function Login(props) {
   const [username, setUserName] = useState(0);
   const [password, setPassword] = useState(0);
   
   async function SendLoginData(e) {
     e.preventDefault(); //Prevents refreshing page when button is clicked
+    
     axios.post(URL, {
+      credentials: 'include',
       username: username,
       password: password
-      
     }).then(resp => {
-        console.log(resp);
+        const token = resp.data.token;
+        console.log(resp.data);
+        props.login(token);
         alert(resp.data.message);
-      
-      //window.location.reload(); //Refreshes the page
+
   }).catch(error=> {
     const respData = error.response.data.message;
     alert(respData);
     console.log(error);
-    //window.location.reload(); //Refreshes the page
   })
   }
 
@@ -39,7 +41,7 @@ export default function Login() {
             <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(e.target.value)}/>
           </div>
         <div>
-        <button id="loginButton" onClick={SendLoginData}>Login</button>
+        <button id="loginButton" onClick={ SendLoginData }>Login</button>
         </div>
       </form>
     );
