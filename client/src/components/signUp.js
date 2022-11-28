@@ -3,9 +3,9 @@ import './login.css';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
 
-const URL = 'http://localhost:3001/user/create';
+const URL = 'http://localhost:3001/signup';
 
-export default function Create_user() {
+export default function SignUp() {
     const [username, setUserName] = useState(0);
     const [password, setPassword] = useState(0);
     const [email, setEmail] = useState(0);
@@ -69,7 +69,7 @@ export default function Create_user() {
                 <input type="text" id="userEmail" maxLength={20} required onChange={e=> setEmail(e.target.value)}/>
             </div>
           <div>
-          <button id="loginButton" onClick={SendUserData}>Create</button>
+          <button id="loginButton" onClick={ SendUserData }>Create</button>
           </div>
         </form>
       );
