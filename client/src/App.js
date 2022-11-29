@@ -1,11 +1,10 @@
 import './App.css';
 import { useState } from 'react';
 import { Route, Routes} from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
+import { useCookies } from 'react-cookie';
 import Login from './components/login';
 import SignUp from './components/signUp';
-import Home from './components/home';
-import { useCookies } from 'react-cookie';
-import jwtDecode from 'jwt-decode';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import Emissions from './pages/Emissions';
@@ -38,7 +37,6 @@ function App() {
       <NavBar/>
       <Routes>
         { authRoutes }
-        <Route path="*" element={<Home userLoggedIn={jwt_token!= null}/>} />
         <Route path='/' element={<TempCo2/>} />
         <Route path='/emissions' element={<Emissions/>} />
       </Routes>
