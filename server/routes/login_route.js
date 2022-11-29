@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 router.post('/', async(req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  console.log(username);
   if(username.length>0 && password.length>0){
   try {
     console.log("Username: "+username+" Password: "+password);
