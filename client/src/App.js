@@ -1,8 +1,8 @@
 import './App.css';
 import { useState } from 'react';
 import { Route, Routes} from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
 import { useCookies } from 'react-cookie';
+import jwtDecode from 'jwt-decode';
 import Login from './components/login';
 import SignUp from './components/signUp';
 import NavBar from './components/NavBar';
