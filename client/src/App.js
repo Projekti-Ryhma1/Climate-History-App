@@ -1,4 +1,3 @@
-import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import { useState } from 'react';
 import { Route, Routes} from 'react-router-dom';
@@ -38,7 +37,6 @@ function App() {
     <div className="App">
       <NavBar/>
       <Routes>
-        <Route path="/" element={<Home userLoggedIn={jwt_token!= null}/>} />
         { authRoutes }
         <Route path="*" element={<Home userLoggedIn={jwt_token!= null}/>} />
         <Route path='/' element={<TempCo2/>} />
