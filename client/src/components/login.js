@@ -21,6 +21,7 @@ export default function Login(props) {
         const token = resp.data.token;
         props.login(token);
         alert(resp.data.message);
+        window.location = "/";
 
   }).catch(error=> {
     const respData = error.response.data.message;
