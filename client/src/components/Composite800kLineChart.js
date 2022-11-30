@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react";
-import { Legend, Line, LineChart, XAxis, YAxis, CartesianGrid } from "recharts";
+import { Legend, Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 import Spinner from "./Spinner";
+import axios from "axios";
 
 export default function Composite800kLineChart(){
     const [isLoading, setIsLoading] = useState(true);
-    
-    const data = [{year:50, co2ppm: 0.2352, co21sppm: 0.12},
-        {year:-50, co2ppm: 0.4352, co21sppm: 0.25},
-        {year:-25, co2ppm: 0.3352, co21sppm: 0.14},
-        {year:0, co2ppm: 0.42, co21sppm: 0.22},
-        {year:80, co2ppm: 0.635, co21sppm: 0.17},
-        {year:6000, co2ppm: 0.252, co21sppm: 0.20},
-        {year:30000, co2ppm: 0.1352, co21sppm: 0.24},
-        {year:150000, co2ppm: 0.472, co21sppm: 0.32},
-        {year:799999, co2ppm: 0.3852, co21sppm: 0.5}];
-    
+    const [compositeData, setCompositeData] = useState([])
+
         useEffect(() => {
+            if(localStorage.getItem("antarcticcomposite") !== null){
+                setCompositeData(JSON.parse(localStorage.getItem("antarcticcomposite")));
+            } else {
+                const address = "http://localhost:3001/data/antarctic_composite";
+                axios.get(address)
+                .then((response) => {
+                    setCompositeData(response.data);
+                    localStorage.setItem("antarcticcomposite", JSON.stringify(response.data));
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
             setTimeout(() => {
                 setIsLoading(false);
             }, 500);
@@ -25,17 +30,25 @@ export default function Composite800kLineChart(){
         <>
             <p>Hello world chart</p>
             <LineChart
-                data={data}
+                margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
+                data={compositeData}
                 width={800}
                 height={400}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <Line dataKey="co2ppm" dot={false}/>
-                    <Line dataKey="co21sppm" dot={false}/>
-                    <XAxis
-                    dataKey="year"
-                    type="number"
-                    domain={[850000, -100]} />
-                </LineChart>
+                    <Line 
+                    dataKey="co2 ppmv" 
+                    name="CO2 ppmv"
+                    dot={false}/>
+                    <YAxis type="number"/>
+                    <XAxis dataKey="year"
+                    reversed={true}
+                    angle={-55}
+                    tickMargin={20}
+                    interval={75}
+                    />
+                    <Tooltip />
+                    <Legend verticalAlign="top" height={26}/>
+            </LineChart>
         </>
     );
 
