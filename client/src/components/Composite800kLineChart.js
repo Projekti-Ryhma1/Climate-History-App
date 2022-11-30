@@ -36,15 +36,17 @@ export default function Composite800kLineChart(){
                 height={400}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <Line 
-                    dataKey="co2 ppmv" 
-                    name="CO2 ppmv"
-                    dot={false}/>
+                        dataKey="co2 ppmv" 
+                        name="CO2 ppmv"
+                        dot={false}
+                    />
                     <YAxis type="number"/>
-                    <XAxis dataKey="year"
-                    reversed={true}
-                    angle={-55}
-                    tickMargin={20}
-                    interval={75}
+                    <XAxis 
+                        dataKey="year"
+                        reversed={true}
+                        angle={-55}
+                        tickMargin={20}
+                        interval={75}
                     />
                     <Tooltip />
                     <Legend verticalAlign="top" height={26}/>
