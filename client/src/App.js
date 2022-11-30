@@ -1,9 +1,10 @@
 import './App.css';
 import { useState } from 'react';
-import { Route, Routes} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import jwtDecode from 'jwt-decode';
 import Login from './components/login';
+import Logout from './components/logout';
 import SignUp from './components/signUp';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
@@ -28,8 +29,14 @@ function App() {
 
   if(jwt_token!= null) {
     // Active routes when user is logged in
-    authRoutes = <> </>
-    
+    authRoutes = <>
+        <Route path="/logout" element={<Logout logout={(isLoggingOut) => {
+        if(isLoggingOut) {
+          removeCookie('token',{path:'/'});
+        }
+        }}/>} />
+    </>
+
   }
 
   return (
