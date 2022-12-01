@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 import Emissions from './pages/Emissions';
 import TempCo2 from './pages/TempCo2';
 import Preferences from './pages/Preferences';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);

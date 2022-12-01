@@ -1,7 +1,8 @@
-import PreferencesSwitchGroup from "./PreferencesSwitchGroup"
-import PrefenrecesButtonGroup from "./PreferencesButtonGroup"
+import PreferencesSwitchGroup from "./PreferencesSwitchGroup";
+import PrefenrecesButtonGroup from "./PreferencesButtonGroup";
 import axios from "axios";
-import {useEffect, useState} from "react"
+import {useEffect, useState} from "react";
+import Spinner from "./Spinner";
 
 export default function PreferencesDisplayContent(){
     const [isLoading, setIsLoading] = useState(true);
@@ -88,7 +89,7 @@ export default function PreferencesDisplayContent(){
     }, [])
     
     if(isLoading){
-        return "Loading..."
+        return <Spinner />
     }
     else{
         return(
