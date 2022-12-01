@@ -17,6 +17,7 @@ export default function NavBar() {
 
     userRoutes = <>
             <Nav.Link href="/logout">Logout ( {username} )</Nav.Link>
+            <Nav.Link href="/preferences">Preferences</Nav.Link>
     </>
   }
 
