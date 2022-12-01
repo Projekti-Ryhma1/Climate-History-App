@@ -35,6 +35,7 @@ function App() {
         <Route path="/logout" element={<Logout logout={(isLoggingOut) => {
         if(isLoggingOut) {
           removeCookie('token',{path:'/'});
+          sessionStorage.removeItem("preferences");
           window.location = "/";
         }
         }}/>} />
