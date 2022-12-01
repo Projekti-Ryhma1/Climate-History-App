@@ -4,9 +4,8 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import Spinner from "./Spinner";
 
-export default function PreferencesDisplayContent(){
+export default function PreferencesDisplayContent(props){
     const [isLoading, setIsLoading] = useState(true);
-    const [username, setUsername] = useState ("example");
     const [preferences, setPreferences] = useState(null);
     const [clickedSave, setClickedSave] = useState(false);
 
@@ -18,16 +17,15 @@ export default function PreferencesDisplayContent(){
 
         changeList.forEach(element => {
             console.log("Making post request");
-
             axios.post(address, {
                 preferenceValue: document.getElementById(element).checked,
-                username: username,
+                username: props.username,
                 preferenceID: element
             })
             .then((response) => {
                 console.log(response);
                 
-                preferencesArray[parseInt(element)-1] = {username:username, preferenceID:element, preferenceValue:Number(document.getElementById(element).checked)};
+                preferencesArray[parseInt(element)-1] = {username:props.username, preferenceID:element, preferenceValue:Number(document.getElementById(element).checked)};
                 setPreferences(preferencesArray.map(element => {
                     
                     setClickedSave(true);
@@ -63,7 +61,6 @@ export default function PreferencesDisplayContent(){
             console.log(preferences);
             saveSessionPreference();
             setClickedSave(false);
-            console.log("Save button was clicked and on state change values were saved to session storage");
         }
     }, [preferences]) 
 
@@ -72,14 +69,14 @@ export default function PreferencesDisplayContent(){
             setPreferences(JSON.parse(sessionStorage.getItem("preferences")));
             console.log("Items loaded from session storage")
         } else {   
-            const address = "http://localhost:3001/userpreferences/user/" + username;
+            const address = "http://localhost:3001/userpreferences/user/" + props.username;
             axios.get(address)
             .then((response) => {
                 console.log("Loaded data from database");
                 setPreferences(response.data); 
                 sessionStorage.setItem("preferences", JSON.stringify(response.data));
             }).catch(error => {
-                alert("Retrieving user preferences failed " + error);
+                alert(error);
             });
         }
 
