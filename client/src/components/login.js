@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import './login.css';
 import axios from 'axios';
-//import cookies from 'react-cookie';
 
 const URL = 'http://localhost:3001/login';
 

@@ -33,10 +33,10 @@ function App() {
         <Route path="/logout" element={<Logout logout={(isLoggingOut) => {
         if(isLoggingOut) {
           removeCookie('token',{path:'/'});
+          window.location = "/";
         }
         }}/>} />
     </>
-
   }
 
   return (
