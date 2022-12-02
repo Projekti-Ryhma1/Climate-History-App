@@ -37,7 +37,7 @@ router.post('/', async(req, res) => {
         res.status(200).send({ code: 0, message: 'User logged in successfully', token: newToken });
         console.log("Password is correct");
       } else {
-        res.status(403).send({ code: 1, message: 'Password is incorrect'});
+        res.status(400).send({ code: 1, message: 'Password is incorrect'});
         console.log("Password is incorrect");
       }
     });
@@ -45,20 +45,17 @@ router.post('/', async(req, res) => {
   } catch (error) {
     if(error instanceof(TypeError)) {
       console.log("Username was not found");
-      res.status(403).send({ code: 2, message: 'Username was not found'});
+      res.status(400).send({ code: 2, message: 'Username was not found'});
     }
     else {
       console.log("Server error");
-      res.status(500);
+      res.status(500).send({ code: 3, message: '500 Server Error'});
     }
-  }} else{
+
+  }} else {
     console.log("Username or password empty");
+    res.status(400).send({ code: 4, message: 'Username or password empty'});
   }
-
-});
-
-router.post('/user', async(req, res) => {
-  res.send(req.user);
 
 });
 

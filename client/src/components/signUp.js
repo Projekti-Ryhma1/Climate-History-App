@@ -6,9 +6,9 @@ import bcrypt from 'bcryptjs';
 const URL = 'http://localhost:3001/signup';
 
 export default function SignUp() {
-    const [username, setUserName] = useState(0);
-    const [password, setPassword] = useState(0);
-    const [email, setEmail] = useState(0);
+    const [username, setUserName] = useState();
+    const [password, setPassword] = useState();
+    const [email, setEmail] = useState();
     const [errorMessage, setErrorMessage] = useState("");
 
     async function SendUserData(e) {
@@ -19,8 +19,8 @@ export default function SignUp() {
           email: email
         }).then((resp) => {
           if(resp.data.serverStatus===2) {
-          alert("User created successfully!");
-          console.log("User created successfully!");
+          alert("User created successfully");
+          console.log("User created successfully");
           window.location = "/login";
           }
           else {
