@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import axios from "axios";
-import Spinner from "../components/Spinner"
-import Button from 'react-bootstrap/Button';
+import Spinner from "../components/Spinner";
+import Button from "react-bootstrap/Button";
 
 export default function AtmosphericCO2LineChart() {
   const [showMonthlyData, setShowMonthlyData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [maunaLoaAnnual, setMaunaLoaAnnual] = useState([]);
   const [maunaLoaMonthly, setMaunaLoaMonthly] = useState([]);
+  const [antarcticIce, setAntarcticIce] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("maunaloaannual") !== null) {
@@ -37,6 +38,20 @@ export default function AtmosphericCO2LineChart() {
             "maunaloamonthly",
             JSON.stringify(response.data)
           );
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+    if (localStorage.getItem("antarcticice") !== null) {
+      setAntarcticIce(JSON.parse(localStorage.getItem("antarcticice")));
+    } else {
+      const address = "http://localhost:3001/data/antarctic_ice_core";
+      axios
+        .get(address)
+        .then((response) => {
+          setAntarcticIce(response.data);
+          localStorage.setItem("antarcticice", JSON.stringify(response.data));
         })
         .catch((error) => {
           alert(error);
@@ -82,16 +97,46 @@ export default function AtmosphericCO2LineChart() {
           dataKey="average"
           name="CO2 Concentration monthly"
           dot={false}
-          activeDot={true}
         />
         <XAxis
           xAxisId="annual"
           hide={showMonthlyData}
           dataKey="year"
-          allowDuplicatedCategory={false}
+          type="number"
+          domain={["dataMin", "dataMax"]}
+          angle={-55}
+          tickMargin={20}
+          interval= "preserveStartEnd"
+          scale="linear"
         />
         <XAxis xAxisId="monthly" hide={!showMonthlyData} dataKey="year" />
-        <YAxis type="number" domain={["auto", "auto"]} />
+        <YAxis data={maunaLoaAnnual} type="number" domain={[280, "auto"]} />
+
+
+
+        <Tooltip />
+        <Legend />
+      </LineChart>
+      <LineChart
+       margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
+       width={800}
+       height={400}>
+        <YAxis data={antarcticIce} type="number" domain={["auto", "auto"]} />
+
+        <Line
+          xAxisId="MeanAirAge"
+          data={antarcticIce}
+          type="monotone"
+          dataKey="C02ratio2"
+          name="C02ratio2"
+        />
+        <XAxis
+          type="number"
+          domain={["dataMin", 2021]}
+          data={antarcticIce}
+          xAxisId="MeanAirAge"
+          dataKey="Meanairage2"
+        />
         <Tooltip />
         <Legend />
       </LineChart>
