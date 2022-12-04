@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  CartesianGrid,
+} from "recharts";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 import Button from "react-bootstrap/Button";
@@ -79,20 +87,80 @@ export default function AtmosphericCO2LineChart() {
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         width={800}
         height={400}
+        data={antarcticIce}
+      >
+        <YAxis type="number" domain={["auto", "auto"]} />
+
+        <Line
+          xAxisId={2}
+          type="monotone"
+          dataKey="C02Ratio2"
+          name="C02Ratio2"
+          dot={false}
+          stroke="red"
+        />
+        <Line
+          xAxisId={1}
+          type="monotone"
+          dataKey="C02Ratio"
+          name="C02Ratio"
+          dot={false}
+          stroke="green"
+        />
+        <Line
+          xAxisId={3}
+          type="monotone"
+          dataKey="C02Ratio3"
+          name="C02Ratio3"
+          dot={false}
+          stroke="blue"
+        />
+        <XAxis
+          type="number"
+          domain={["dataMin - 826" , "dataMax"]}
+          xAxisId={2}
+          dataKey="MeanAirAge2"
+          
+        />
+        <XAxis
+          type="number"
+          domain={["dataMin - 834" , "dataMax + 9"]}
+          xAxisId={1}
+          dataKey="MeanAirAge"
+          interval="preserveStartEnd"
+        />
+        <XAxis
+          type="number"
+          domain={["dataMin" , "dataMax + 19"]}
+          xAxisId={3}
+          dataKey="MeanAirAge3"
+          interval="preserveStartEnd"
+        />
+        <Tooltip />
+        <Legend />
+      </LineChart>
+      <LineChart
+        margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
+        width={800}
+        height={400}
       >
         <Line
+          yAxisId="maunaLoa"
           xAxisId="annual"
           data={maunaLoaAnnual}
-          hide={showMonthlyData}
+          stroke="red"
+          strokeWidth={2}
           type="monotone"
           dataKey="mean"
           name="CO2 Concentration annual"
           dot={false}
         />
         <Line
+          yAxisId="maunaLoa"
           xAxisId="monthly"
           data={maunaLoaMonthly}
-          hide={!showMonthlyData}
+          stroke="green"
+          strokeWidth={2}
           type="monotone"
           dataKey="average"
           name="CO2 Concentration monthly"
@@ -100,43 +168,17 @@ export default function AtmosphericCO2LineChart() {
         />
         <XAxis
           xAxisId="annual"
-          hide={showMonthlyData}
           dataKey="year"
           type="number"
-          domain={["dataMin", "dataMax"]}
-          angle={-55}
-          tickMargin={20}
-          interval= "preserveStartEnd"
+          domain={[1958, 2022]}
+          interval="preserveStartEnd"
           scale="linear"
         />
-        <XAxis xAxisId="monthly" hide={!showMonthlyData} dataKey="year" />
-        <YAxis data={maunaLoaAnnual} type="number" domain={[280, "auto"]} />
+        <XAxis xAxisId="monthly" dataKey="year" interval="preserveStartEnd" />
+        <YAxis yAxisId="maunaLoa" type="number" domain={[300, 430]} />
 
+        <CartesianGrid strokeDasharray="3 3" />
 
-
-        <Tooltip />
-        <Legend />
-      </LineChart>
-      <LineChart
-       margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
-       width={800}
-       height={400}>
-        <YAxis data={antarcticIce} type="number" domain={["auto", "auto"]} />
-
-        <Line
-          xAxisId="MeanAirAge"
-          data={antarcticIce}
-          type="monotone"
-          dataKey="C02ratio2"
-          name="C02ratio2"
-        />
-        <XAxis
-          type="number"
-          domain={["dataMin", 2021]}
-          data={antarcticIce}
-          xAxisId="MeanAirAge"
-          dataKey="Meanairage2"
-        />
         <Tooltip />
         <Legend />
       </LineChart>
