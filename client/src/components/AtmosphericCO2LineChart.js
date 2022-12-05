@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  CartesianGrid,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, Legend, CartesianGrid } from "recharts";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 import Button from "react-bootstrap/Button";
@@ -84,13 +76,15 @@ export default function AtmosphericCO2LineChart() {
   }
   function handleIceCoreData() {
     if (showIceData) {
+      //hide monthly data
       setShowMonthlyData(false);
-
+      //if is showing ice data hide it & set xaxis to correct year
       setXAxisMin(1958);
       setShowIceData(false);
     } else {
+      //hide monthly data
       setShowMonthlyData(false);
-
+      //if not showing ice data show it & set xaxis to correct year
       setXAxisMin(1006);
       setShowIceData(true);
     }
@@ -103,6 +97,7 @@ export default function AtmosphericCO2LineChart() {
         width={800}
         height={400}
       >
+        <YAxis type="number" domain={["auto", 420]} />
         <Line
           xAxisId="annual"
           data={maunaLoaAnnual}
@@ -138,7 +133,6 @@ export default function AtmosphericCO2LineChart() {
           interval="preserveStartEnd"
           hide={true}
         />
-        <YAxis type="number" domain={[300, 430]} />
 
         <Line
           hide={!showIceData}
@@ -146,7 +140,7 @@ export default function AtmosphericCO2LineChart() {
           xAxisId={1}
           type="monotone"
           dataKey="C02Ratio"
-          name="C02Ratio"
+          name="Ice Core DE08 CO2"
           dot={false}
           stroke="green"
           strokeWidth={2}
@@ -157,7 +151,7 @@ export default function AtmosphericCO2LineChart() {
           xAxisId={2}
           type="monotone"
           dataKey="C02Ratio2"
-          name="C02Ratio2"
+          name="Ice Core DE08-2 CO2"
           dot={false}
           stroke="red"
           strokeWidth={2}
@@ -168,7 +162,7 @@ export default function AtmosphericCO2LineChart() {
           xAxisId={3}
           type="monotone"
           dataKey="C02Ratio3"
-          name="C02Ratio3"
+          name="Ice Core DSS"
           dot={false}
           stroke="#2167de"
           strokeWidth={2}
