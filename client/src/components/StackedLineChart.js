@@ -12,19 +12,19 @@ import "./ClimateLineChart.css"
 
 export default function StackedLineChart() {
   const [isLoading, setIsLoading] = useState(true);
-  const [data2, setData2] = useState([]);
+  const [nationalEmissions, setnationalEmissions] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("data2") !== null) {
-      setData2(JSON.parse(localStorage.getItem("data2")));
+    if (localStorage.getItem("nationalEmissions") !== null) {
+      setnationalEmissions(JSON.parse(localStorage.getItem("nationalEmissions")));
     } else {
       const address = "http://localhost:3001/data/co2_emissions_national";
       axios
         .get(address)
         .then((response) => {
           console.log(response.data);
-          setData2(response.data);
-          localStorage.setItem("data2", JSON.stringify(response.data));
+          setnationalEmissions(response.data);
+          localStorage.setItem("nationalEmissions", JSON.stringify(response.data));
         })
         .catch((error) => {
           alert(error);
@@ -38,8 +38,8 @@ export default function StackedLineChart() {
 
   const colours = ["#880808", "#0437F2"];
   let keyArray = [];
-  for (let key in data2.at()) {
-    keyArray.push(key); //get keys for data2 and create new array with keys
+  for (let key in nationalEmissions.at()) {
+    keyArray.push(key); //get keys for nationalEmissions and create new array with keys
   }
   let newColours = [];
   keyArray.splice(0, 1); // remoce "MtCO2/year" from the array
@@ -68,7 +68,7 @@ export default function StackedLineChart() {
       <p> Co2 Emission by country</p>
       <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
-        data={data2}
+        data={nationalEmissions}
         width={800}
         height={400}
       >
