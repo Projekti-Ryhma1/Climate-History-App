@@ -1,16 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const signUp = require('../models/signUp_model');
+const prefs = require("../models/preferencesdata_model");
 
 router.post('/', async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const email = req.body.email;
-  const noEmptyValues = username.length > 0 && password.length > 0;
+  const noEmptyValues = username.length > 0 && password.length > 0 && email.length > 0;
   if (noEmptyValues && username.length < 10) {
     try {
       console.log(req.body);
-      res.status(200).json(await signUp.createUser(username, password, email));
+      const userData = await signUp.createUser(username, password, email);
+      const prefData = await prefs.createUserPreferences(username);
+      console.log("prefData");
+      console.log(prefData.errorMessage);
+      res.status(200).json(userData);
     } catch (error) {
       const errorMessage = error.sqlMessage;
 
@@ -35,5 +40,7 @@ router.post('/', async (req, res) => {
     res.status(400).send({ code: 0, message: "Username is too long" });
   }
 });
+
+
 
 module.exports = router;

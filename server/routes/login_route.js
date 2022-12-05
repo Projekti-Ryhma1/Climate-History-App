@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const login = require('../models/login_model');
+const prefs = require("../models/preferencesdata_model");
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -8,10 +10,16 @@ router.post('/', async(req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   console.log(username);
-  if(username.length>0 && password.length>0){
+  if(username.length>0 && password.length>0) {
   try {
-    console.log("Username: "+username+" Password: "+password);
-    let result = await login.userLogin(username).then(function(resp){
+    const checkPreferences = await login.userCheckPreferences(username);
+
+    if(checkPreferences.length===0) { //If user preference data is not found
+      console.log("No preferences found with username: "+username+". Created new user preferences to database");
+      await prefs.createUserPreferences(username);// Create new user preference data
+    }
+
+    let result = await login.userLogin(username).then(function(resp) {
       return resp;
   });
     bcrypt.compare(password, result[0].password, function(err, resp) {
