@@ -73,6 +73,15 @@ getAntarcticComposite = () => {
     });
   });
 };
+getAntarcticIceCore = () => {
+  const query = "SELECT * FROM ICECOREV4";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
 
 module.exports = {
   getGlobalTempAnomaly,
@@ -82,5 +91,6 @@ module.exports = {
   getCO2EmissionBySubSector,
   getMaunaLoaCO2Annual,
   getMaunaLoaCO2Monthly,
-  getAntarcticComposite
+  getAntarcticComposite,
+  getAntarcticIceCore
 };

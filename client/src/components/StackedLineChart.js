@@ -1,8 +1,16 @@
 import { useState, useEffect } from "react";
-import { Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+} from "recharts";
 import axios from "axios";
 import Spinner from "./Spinner";
-import "./ClimateLineChart.css"
+import "./ClimateLineChart.css";
 
 /** TODO
  *  Modify tooltiplabel to look nicer
@@ -12,19 +20,24 @@ import "./ClimateLineChart.css"
 
 export default function StackedLineChart() {
   const [isLoading, setIsLoading] = useState(true);
-  const [data2, setData2] = useState([]);
+  const [nationalEmissions, setnationalEmissions] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("data2") !== null) {
-      setData2(JSON.parse(localStorage.getItem("data2")));
+    if (localStorage.getItem("nationalEmissions") !== null) {
+      setnationalEmissions(
+        JSON.parse(localStorage.getItem("nationalEmissions"))
+      );
     } else {
       const address = "http://localhost:3001/data/co2_emissions_national";
       axios
         .get(address)
         .then((response) => {
           console.log(response.data);
-          setData2(response.data);
-          localStorage.setItem("data2", JSON.stringify(response.data));
+          setnationalEmissions(response.data);
+          localStorage.setItem(
+            "nationalEmissions",
+            JSON.stringify(response.data)
+          );
         })
         .catch((error) => {
           alert(error);
@@ -36,10 +49,19 @@ export default function StackedLineChart() {
     }, 500);
   }, []);
 
-  const colours = ["#880808", "#0437F2"];
+  const colours = [
+    "#FF0100",
+    "#00FEFF",
+    "#F8FF00",
+    "#0700FF",
+    "#71FF00",
+    "#8E00FF",
+    "#00FF11",
+    "#FF00EE",
+  ];
   let keyArray = [];
-  for (let key in data2.at()) {
-    keyArray.push(key); //get keys for data2 and create new array with keys
+  for (let key in nationalEmissions.at()) {
+    keyArray.push(key); //get keys for nationalEmissions and create new array with keys
   }
   let newColours = [];
   keyArray.splice(0, 1); // remoce "MtCO2/year" from the array
@@ -68,12 +90,19 @@ export default function StackedLineChart() {
       <p> Co2 Emission by country</p>
       <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
-        data={data2}
+        data={nationalEmissions}
         width={800}
         height={400}
       >
+        {/* <Legend verticalAlign="bottom" /> */}
+        <CartesianGrid strokeDasharray="3 3" />
         <Tooltip content={<CustomTooltip />} />
-        <XAxis dataKey="MtCO2/year"></XAxis>
+        <XAxis
+          dataKey="MtCO2/year"
+          interval={0}
+          angle={-55}
+          textAnchor="end"
+        ></XAxis>
         <YAxis />
         {keyArray.map((keyId, i) => {
           return (

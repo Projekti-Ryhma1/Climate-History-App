@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Legend, CartesianGrid } from "recharts";
 import axios from "axios";
-import Spinner from "../components/Spinner"
-import Button from 'react-bootstrap/Button';
+import Spinner from "../components/Spinner";
+import Button from "react-bootstrap/Button";
 
 export default function AtmosphericCO2LineChart() {
   const [showMonthlyData, setShowMonthlyData] = useState(false);
+  const [showIceData, setShowIceData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [maunaLoaAnnual, setMaunaLoaAnnual] = useState([]);
   const [maunaLoaMonthly, setMaunaLoaMonthly] = useState([]);
+  const [antarcticIce, setAntarcticIce] = useState([]);
+  const [xAxisMin, setXAxisMin] = useState(1958);
 
   useEffect(() => {
     if (localStorage.getItem("maunaloaannual") !== null) {
@@ -42,19 +45,48 @@ export default function AtmosphericCO2LineChart() {
           alert(error);
         });
     }
+    if (localStorage.getItem("antarcticice") !== null) {
+      setAntarcticIce(JSON.parse(localStorage.getItem("antarcticice")));
+    } else {
+      const address = "http://localhost:3001/data/antarctic_ice_core";
+      axios
+        .get(address)
+        .then((response) => {
+          setAntarcticIce(response.data);
+          localStorage.setItem("antarcticice", JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
     setTimeout(() => {
       //give 0.5s time for data to load
       setIsLoading(false);
     }, 500);
   }, []);
 
-  function handleClick() {
+  function handleMonthlyData() {
     if (showMonthlyData) {
       //if is showing monthly data hide it
       setShowMonthlyData(false);
     } else {
       //if not showing monthly data show it
       setShowMonthlyData(true);
+    }
+  }
+  function handleIceCoreData() {
+    if (showIceData) {
+      //hide monthly data
+      setShowMonthlyData(false);
+      //if is showing ice data hide it & set xaxis to correct year
+      setXAxisMin(1958);
+      setShowIceData(false);
+    } else {
+      //hide monthly data
+      setShowMonthlyData(false);
+      //if not showing ice data show it & set xaxis to correct year
+      setXAxisMin(1006);
+      setShowIceData(true);
     }
   }
 
@@ -65,37 +97,108 @@ export default function AtmosphericCO2LineChart() {
         width={800}
         height={400}
       >
+        <YAxis type="number" domain={["auto", 420]} />
         <Line
           xAxisId="annual"
           data={maunaLoaAnnual}
-          hide={showMonthlyData}
+          stroke="#8809F6"
+          strokeWidth={2}
           type="monotone"
           dataKey="mean"
           name="CO2 Concentration annual"
           dot={false}
         />
         <Line
+          hide={!showMonthlyData}
           xAxisId="monthly"
           data={maunaLoaMonthly}
-          hide={!showMonthlyData}
+          stroke="green"
+          strokeWidth={2}
           type="monotone"
           dataKey="average"
           name="CO2 Concentration monthly"
           dot={false}
-          activeDot={true}
         />
         <XAxis
+          hide={showIceData}
           xAxisId="annual"
-          hide={showMonthlyData}
           dataKey="year"
-          allowDuplicatedCategory={false}
+          type="number"
+          domain={[xAxisMin, 2022]}
+          interval="preserveStartEnd"
         />
-        <XAxis xAxisId="monthly" hide={!showMonthlyData} dataKey="year" />
-        <YAxis type="number" domain={["auto", "auto"]} />
-        <Tooltip />
+        <XAxis
+          xAxisId="monthly"
+          dataKey="year"
+          interval="preserveStartEnd"
+          hide={true}
+        />
+
+        <Line
+          hide={!showIceData}
+          data={antarcticIce}
+          xAxisId={1}
+          type="monotone"
+          dataKey="C02Ratio"
+          name="Ice Core DE08 CO2"
+          dot={false}
+          stroke="green"
+          strokeWidth={2}
+        />
+        <Line
+          hide={!showIceData}
+          data={antarcticIce}
+          xAxisId={2}
+          type="monotone"
+          dataKey="C02Ratio2"
+          name="Ice Core DE08-2 CO2"
+          dot={false}
+          stroke="red"
+          strokeWidth={2}
+        />
+        <Line
+          hide={!showIceData}
+          data={antarcticIce}
+          xAxisId={3}
+          type="monotone"
+          dataKey="C02Ratio3"
+          name="Ice Core DSS"
+          dot={false}
+          stroke="#2167de"
+          strokeWidth={2}
+        />
+        <XAxis
+          hide={true}
+          type="number"
+          domain={["dataMin - 834", "dataMax + 53"]}
+          xAxisId={1}
+          dataKey="MeanAirAge"
+          interval="preserveStartEnd"
+        />
+        <XAxis
+          hide={true}
+          type="number"
+          domain={["dataMin - 826", "dataMax + 44"]}
+          xAxisId={2}
+          dataKey="MeanAirAge2"
+        />
+        <XAxis
+          hide={!showIceData}
+          type="number"
+          domain={["dataMin", "dataMax + 63"]}
+          xAxisId={3}
+          dataKey="MeanAirAge3"
+          interval="preserveStartEnd"
+        />
+
+        <CartesianGrid strokeDasharray="3 3" />
+
         <Legend />
       </LineChart>
-      <Button onClick={handleClick}>Show monthly data</Button>
+      <Button onClick={handleMonthlyData} disabled={showIceData}>
+        Show monthly data
+      </Button>
+      <Button onClick={handleIceCoreData}>Show ice core data</Button>
     </>
   );
   return (
