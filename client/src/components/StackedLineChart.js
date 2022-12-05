@@ -1,8 +1,16 @@
 import { useState, useEffect } from "react";
-import { Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+} from "recharts";
 import axios from "axios";
 import Spinner from "./Spinner";
-import "./ClimateLineChart.css"
+import "./ClimateLineChart.css";
 
 /** TODO
  *  Modify tooltiplabel to look nicer
@@ -16,7 +24,9 @@ export default function StackedLineChart() {
 
   useEffect(() => {
     if (localStorage.getItem("nationalEmissions") !== null) {
-      setnationalEmissions(JSON.parse(localStorage.getItem("nationalEmissions")));
+      setnationalEmissions(
+        JSON.parse(localStorage.getItem("nationalEmissions"))
+      );
     } else {
       const address = "http://localhost:3001/data/co2_emissions_national";
       axios
@@ -24,7 +34,10 @@ export default function StackedLineChart() {
         .then((response) => {
           console.log(response.data);
           setnationalEmissions(response.data);
-          localStorage.setItem("nationalEmissions", JSON.stringify(response.data));
+          localStorage.setItem(
+            "nationalEmissions",
+            JSON.stringify(response.data)
+          );
         })
         .catch((error) => {
           alert(error);
@@ -36,7 +49,16 @@ export default function StackedLineChart() {
     }, 500);
   }, []);
 
-  const colours = ["#880808", "#0437F2"];
+  const colours = [
+    "#FF0100",
+    "#00FEFF",
+    "#F8FF00",
+    "#0700FF",
+    "#71FF00",
+    "#8E00FF",
+    "#00FF11",
+    "#FF00EE",
+  ];
   let keyArray = [];
   for (let key in nationalEmissions.at()) {
     keyArray.push(key); //get keys for nationalEmissions and create new array with keys
@@ -72,8 +94,15 @@ export default function StackedLineChart() {
         width={800}
         height={400}
       >
+        {/* <Legend verticalAlign="bottom" /> */}
+        <CartesianGrid strokeDasharray="3 3" />
         <Tooltip content={<CustomTooltip />} />
-        <XAxis dataKey="MtCO2/year"></XAxis>
+        <XAxis
+          dataKey="MtCO2/year"
+          interval={0}
+          angle={-55}
+          textAnchor="end"
+        ></XAxis>
         <YAxis />
         {keyArray.map((keyId, i) => {
           return (
