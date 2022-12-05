@@ -14,10 +14,12 @@ import Button from "react-bootstrap/Button";
 
 export default function AtmosphericCO2LineChart() {
   const [showMonthlyData, setShowMonthlyData] = useState(false);
+  const [showIceData, setShowIceData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [maunaLoaAnnual, setMaunaLoaAnnual] = useState([]);
   const [maunaLoaMonthly, setMaunaLoaMonthly] = useState([]);
   const [antarcticIce, setAntarcticIce] = useState([]);
+  const [xAxisMin, setXAxisMin] = useState(1958);
 
   useEffect(() => {
     if (localStorage.getItem("maunaloaannual") !== null) {
@@ -71,13 +73,26 @@ export default function AtmosphericCO2LineChart() {
     }, 500);
   }, []);
 
-  function handleClick() {
+  function handleMonthlyData() {
     if (showMonthlyData) {
       //if is showing monthly data hide it
       setShowMonthlyData(false);
     } else {
       //if not showing monthly data show it
       setShowMonthlyData(true);
+    }
+  }
+  function handleIceCoreData() {
+    if (showIceData) {
+      setShowMonthlyData(false);
+
+      setXAxisMin(1958);
+      setShowIceData(false);
+    } else {
+      setShowMonthlyData(false);
+
+      setXAxisMin(1006);
+      setShowIceData(true);
     }
   }
 
@@ -87,68 +102,11 @@ export default function AtmosphericCO2LineChart() {
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         width={800}
         height={400}
-        data={antarcticIce}
-      >
-        <YAxis type="number" domain={["auto", "auto"]} />
-
-        <Line
-          xAxisId={2}
-          type="monotone"
-          dataKey="C02Ratio2"
-          name="C02Ratio2"
-          dot={false}
-          stroke="red"
-        />
-        <Line
-          xAxisId={1}
-          type="monotone"
-          dataKey="C02Ratio"
-          name="C02Ratio"
-          dot={false}
-          stroke="green"
-        />
-        <Line
-          xAxisId={3}
-          type="monotone"
-          dataKey="C02Ratio3"
-          name="C02Ratio3"
-          dot={false}
-          stroke="blue"
-        />
-        <XAxis
-          type="number"
-          domain={["dataMin - 826" , "dataMax"]}
-          xAxisId={2}
-          dataKey="MeanAirAge2"
-          
-        />
-        <XAxis
-          type="number"
-          domain={["dataMin - 834" , "dataMax + 9"]}
-          xAxisId={1}
-          dataKey="MeanAirAge"
-          interval="preserveStartEnd"
-        />
-        <XAxis
-          type="number"
-          domain={["dataMin" , "dataMax + 19"]}
-          xAxisId={3}
-          dataKey="MeanAirAge3"
-          interval="preserveStartEnd"
-        />
-        <Tooltip />
-        <Legend />
-      </LineChart>
-      <LineChart
-        margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
-        width={800}
-        height={400}
       >
         <Line
-          yAxisId="maunaLoa"
           xAxisId="annual"
           data={maunaLoaAnnual}
-          stroke="red"
+          stroke="#8809F6"
           strokeWidth={2}
           type="monotone"
           dataKey="mean"
@@ -156,7 +114,7 @@ export default function AtmosphericCO2LineChart() {
           dot={false}
         />
         <Line
-          yAxisId="maunaLoa"
+          hide={!showMonthlyData}
           xAxisId="monthly"
           data={maunaLoaMonthly}
           stroke="green"
@@ -167,22 +125,86 @@ export default function AtmosphericCO2LineChart() {
           dot={false}
         />
         <XAxis
+          hide={showIceData}
           xAxisId="annual"
           dataKey="year"
           type="number"
-          domain={[1958, 2022]}
+          domain={[xAxisMin, 2022]}
           interval="preserveStartEnd"
-          scale="linear"
         />
-        <XAxis xAxisId="monthly" dataKey="year" interval="preserveStartEnd" />
-        <YAxis yAxisId="maunaLoa" type="number" domain={[300, 430]} />
+        <XAxis
+          xAxisId="monthly"
+          dataKey="year"
+          interval="preserveStartEnd"
+          hide={true}
+        />
+        <YAxis type="number" domain={[300, 430]} />
+
+        <Line
+          hide={!showIceData}
+          data={antarcticIce}
+          xAxisId={1}
+          type="monotone"
+          dataKey="C02Ratio"
+          name="C02Ratio"
+          dot={false}
+          stroke="green"
+          strokeWidth={2}
+        />
+        <Line
+          hide={!showIceData}
+          data={antarcticIce}
+          xAxisId={2}
+          type="monotone"
+          dataKey="C02Ratio2"
+          name="C02Ratio2"
+          dot={false}
+          stroke="red"
+          strokeWidth={2}
+        />
+        <Line
+          hide={!showIceData}
+          data={antarcticIce}
+          xAxisId={3}
+          type="monotone"
+          dataKey="C02Ratio3"
+          name="C02Ratio3"
+          dot={false}
+          stroke="#2167de"
+          strokeWidth={2}
+        />
+        <XAxis
+          hide={true}
+          type="number"
+          domain={["dataMin - 834", "dataMax + 53"]}
+          xAxisId={1}
+          dataKey="MeanAirAge"
+          interval="preserveStartEnd"
+        />
+        <XAxis
+          hide={true}
+          type="number"
+          domain={["dataMin - 826", "dataMax + 44"]}
+          xAxisId={2}
+          dataKey="MeanAirAge2"
+        />
+        <XAxis
+          hide={!showIceData}
+          type="number"
+          domain={["dataMin", "dataMax + 63"]}
+          xAxisId={3}
+          dataKey="MeanAirAge3"
+          interval="preserveStartEnd"
+        />
 
         <CartesianGrid strokeDasharray="3 3" />
 
-        <Tooltip />
         <Legend />
       </LineChart>
-      <Button onClick={handleClick}>Show monthly data</Button>
+      <Button onClick={handleMonthlyData} disabled={showIceData}>
+        Show monthly data
+      </Button>
+      <Button onClick={handleIceCoreData}>Show ice core data</Button>
     </>
   );
   return (
