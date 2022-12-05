@@ -9,26 +9,26 @@ export default function ClimateLineChart() {
   const [isLoading, setIsLoading] = useState(true);
   const [hideLine, setHideLine] = useState(true);
   const [xAxisMin, setXAxisMin] = useState(1850);
-  const [data, setData] = useState([]);
-  const [data1, setData1] = useState([]);
+  const [globalMonthly, setGlobalMonthly] = useState([]);
+  const [northernHemisphere2000yr, setNorthernHemisphere2000yr] = useState([]);
   useEffect(() => {
-    if (localStorage.getItem("data") !== null) {
-      setData(JSON.parse(localStorage.getItem("data")));
+    if (localStorage.getItem("globalMonthly") !== null) {
+      setGlobalMonthly(JSON.parse(localStorage.getItem("globalMonthly")));
     } else {
       const address = "http://localhost:3001/data/global_monthly";
       axios
         .get(address)
         .then((response) => {
           console.log(response.data);
-          setData(response.data);
-          localStorage.setItem("data", JSON.stringify(response.data));
+          setGlobalMonthly(response.data);
+          localStorage.setItem("globalMonthly", JSON.stringify(response.data));
         })
         .catch((error) => {
           alert(error);
         });
     }
-    if (localStorage.getItem("data1") !== null) {
-      setData1(JSON.parse(localStorage.getItem("data1")));
+    if (localStorage.getItem("northernHemisphere2000yr") !== null) {
+      setNorthernHemisphere2000yr(JSON.parse(localStorage.getItem("northernHemisphere2000yr")));
     } else {
       const address1 =
         "http://localhost:3001/data/northern_hemisphere_2000_year";
@@ -36,8 +36,8 @@ export default function ClimateLineChart() {
         .get(address1)
         .then((response) => {
           console.log(response.data);
-          setData1(response.data);
-          localStorage.setItem("data1", JSON.stringify(response.data));
+          setNorthernHemisphere2000yr(response.data);
+          localStorage.setItem("northernHemisphere2000yr", JSON.stringify(response.data));
         })
         .catch((error) => {
           alert(error);
@@ -58,11 +58,6 @@ export default function ClimateLineChart() {
       setXAxisMin(1850);
     }
   }
-
-  /**
-   * Showind data on both lines works but X axis doesnt scale properly needs fixing
-   */
-
   const renderChart = (
     <>
       <p>Global Temperature Anomaly</p>
@@ -74,7 +69,7 @@ export default function ClimateLineChart() {
         <Line
           stroke="#483BF6"
           xAxisId={"global"}
-          data={data}
+          data={globalMonthly}
           type="monotone"
           dataKey="global_anomaly"
           dot={false}
@@ -84,7 +79,7 @@ export default function ClimateLineChart() {
           hide={hideLine}
           xAxisId={"northern"}
           stroke="#000000"
-          data={data1}
+          data={northernHemisphere2000yr}
           type="monotone"
           dataKey="T"
           dot={false}
@@ -104,7 +99,7 @@ export default function ClimateLineChart() {
           type="number"
           domain={[0, 2022]}
         />
-        <YAxis data={data} type="number" domain={["auto", "auto"]} />
+        <YAxis data={globalMonthly} type="number" domain={["auto", "auto"]} />
         <Legend />
       </LineChart>
       <Button onClick={handleClick}>
