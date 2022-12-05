@@ -12,11 +12,13 @@ router.post('/', async(req, res) => {
   console.log(username);
   if(username.length>0 && password.length>0) {
   try {
-    const checkPreferences = await login.userCheckPreferences(username);
+    const checkPreferences = await prefs.getUserPreferences(username);
 
-    if(checkPreferences.length===0) { //If user preference data is not found
+    if(checkPreferences.length===0) {
       console.log("No preferences found with username: "+username+". Created new user preferences to database");
-      await prefs.createUserPreferences(username);// Create new user preference data
+      await prefs.createUserPreferences(username);// Create new preferences for the user in the database
+    } else {
+      console.log("Preferences found for username: "+username);
     }
 
     let result = await login.userLogin(username).then(function(resp) {
