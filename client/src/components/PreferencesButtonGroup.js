@@ -11,13 +11,18 @@ export default function PreferencesButtonGroup(props){
 
     async function deleteUser(){
         const address = 'http://localhost:3001/deleteuser';
-
         axios.delete(address, {
-            username: props.username
-        })
+            data: {
+                username: props.username
+            }
+        })  
         .then((response) => {
-            console.log(response)
-            if(response==500){ console.log("user deletetion failed"); }
+            console.log(response.status)
+            if(response.status==200){
+                console.log("user deleted");
+            }
+            else { console.log("user deletetion failed"); }
+            
         })
         handleClose();
     }
