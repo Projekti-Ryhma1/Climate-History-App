@@ -12,14 +12,7 @@ router.post('/', async(req, res) => {
   console.log(username);
   if(username.length>0 && password.length>0) {
   try {
-    const checkPreferences = await prefs.getUserPreferences(username);
-
-    if(checkPreferences.length===0) {
-      console.log("No preferences found with username: "+username+". Created new user preferences to database");
-      await prefs.createUserPreferences(username);// Create new preferences for the user in the database
-    } else {
-      console.log("Preferences found for username: "+username);
-    }
+    const checkPreferences = await prefs.getUserPreferences(username); //Checks if user has preferences in database
 
     let result = await login.userLogin(username).then(function(resp) {
       return resp;
@@ -29,8 +22,16 @@ router.post('/', async(req, res) => {
         throw err;
       }
       else if (resp) {
-        const maxAge = 86400; // 86400 = 1day
+        // Checks if database has no preferences for the user (preferences are created at the same time as user in "signUp_route")
+        if(checkPreferences.length===0) {
+          console.log("No preferences found with username: "+username+". Created new user preferences to database");
+          prefs.createUserPreferences(username);// Create new preferences for the user in the database
+        } else {
+          console.log("Preferences found for username: "+username);
+        }
 
+        // Creates jsonwebtoken for the cookies with payload that contains data which can be accessed by decrypting token value
+        const maxAge = 86400; // 86400 = 1day
         const payload = {
           username: username,
           email: result[0].email,
@@ -39,7 +40,7 @@ router.post('/', async(req, res) => {
           secure: false
         }
         const options = {
-          expiresIn: maxAge,
+          expiresIn: maxAge, // When token expires
         }
         const newToken = jwt.sign(payload, process.env.JWT_TOKEN, options); // Generate token
         console.log("token: "+newToken);
