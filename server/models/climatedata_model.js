@@ -68,7 +68,7 @@ getAntarcticComposite = () => {
   const query = "SELECT * FROM 800kicecoredata";
   return new Promise((resolve, reject) => {
     database.query(query, (error, result) => {
-      if(error) reject(eror);
+      if(error) reject(error);
       resolve(result);
     });
   });
@@ -82,6 +82,16 @@ getAntarcticIceCore = () => {
     });
   });
 };
+getEvoGlobalTemp2mYears = () => {
+  const query = "SELECT * FROM evolution_of_global_temp_over_2m_years";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
+
 
 module.exports = {
   getGlobalTempAnomaly,
@@ -92,5 +102,6 @@ module.exports = {
   getMaunaLoaCO2Annual,
   getMaunaLoaCO2Monthly,
   getAntarcticComposite,
-  getAntarcticIceCore
+  getAntarcticIceCore,
+  getEvoGlobalTemp2mYears
 };
