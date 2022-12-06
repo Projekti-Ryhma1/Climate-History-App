@@ -9,15 +9,23 @@ export default function PreferencesButtonGroup(props){
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    function deleteUser(){
-        console.log("We deleted the user account");
+    async function deleteUser(){
+        const address = 'http://localhost:3001/deleteuser';
+
+        axios.delete(address, {
+            username: props.username
+        })
+        .then((response) => {
+            console.log(response)
+            if(response==500){ console.log("user deletetion failed"); }
+        })
         handleClose();
     }
     return(
         <div className="div-button-group">
             <Button>Exit button</Button>
             <Button onClick={props.savePreferences}>Save button</Button>
-            <Button variant="primary" onClick={handleShow}> Launch demo modal </Button>
+            <Button variant="danger" onClick={handleShow}> Delete user </Button>
             <Modal 
             show={show} 
             backdrop="static" 
