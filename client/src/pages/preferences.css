@@ -1,0 +1,14 @@
+.div-centered {
+    text-align: left; 
+    margin: auto; 
+    width: 50em;
+  }
+  
+  .div-switch-group{
+    width: 50%;
+    margin: auto;
+  }
+  
+  .div-button-group{
+    margin: 0 10 0 0;
+  }
