@@ -82,6 +82,15 @@ getAntarcticIceCore = () => {
     });
   });
 };
+getHumanEvolutionAndActivities = () => {
+  const query = "SELECT * FROM human_evolution_and_activities";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
 
 module.exports = {
   getGlobalTempAnomaly,
@@ -92,5 +101,6 @@ module.exports = {
   getMaunaLoaCO2Annual,
   getMaunaLoaCO2Monthly,
   getAntarcticComposite,
-  getAntarcticIceCore
+  getAntarcticIceCore,
+  getHumanEvolutionAndActivities
 };
