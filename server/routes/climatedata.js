@@ -59,6 +59,22 @@ router.get("/mauna_loa_monthly", async (req, res) => {
     res.sendStatus(500);
   }
 });
+router.get("/antarctic_composite", async (req, res) => {
+  try{
+    res.status(200).json(await database.getAntarcticComposite());
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
+router.get("/antarctic_ice_core", async (req, res) => {
+  try {
+    res.status(200).json(await database.getAntarcticIceCore());
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
 
 
 module.exports = router;
