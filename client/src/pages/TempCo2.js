@@ -12,6 +12,7 @@ export default function TempCo2(){
             <ClimateLineChart/>
             <StackedLineChart/>
             <EvoGlobalTempBiaxiallinechart/>
+            <></>
         </div>
     )
 }

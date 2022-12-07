@@ -1,0 +1,24 @@
+.biaxialline-chart  {
+    margin: auto;
+}
+
+.biaxialline-chart #headline  {
+    font-size: 20px;
+}
+
+.biaxialline-chart #description {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    word-wrap: break-word;
+    max-width: 800px;
+    font-size: 16px;
+    color: black;
+
+}
+
+.biaxialline-chart #lineChart {
+    text-align: right;
+    color: red;
+}
