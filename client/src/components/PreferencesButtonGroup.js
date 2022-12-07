@@ -1,6 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function PreferencesButtonGroup(props){
@@ -8,6 +9,8 @@ export default function PreferencesButtonGroup(props){
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const navigate=useNavigate();
 
     async function deleteUser(){
         const address = 'http://localhost:3001/deleteuser';
@@ -20,9 +23,9 @@ export default function PreferencesButtonGroup(props){
             console.log(response.status)
             if(response.status==200){
                 console.log("user deleted");
+                navigate("/logout");
             }
             else { console.log("user deletetion failed"); }
-            
         })
         handleClose();
     }

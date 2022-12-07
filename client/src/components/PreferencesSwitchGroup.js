@@ -17,27 +17,8 @@ export default function PreferencesSwitchGroup(props){
                                 name={props.name}
                             />
                         </Col>
-{/*                         <Col>
-                            <Button variant="primary" onClick={() =>consolePrint(props.id)} data={props.id} id="1235">
-                                    Click me
-                            </Button>
-                        </Col> */}
                     </Row>
                 </Form>
         </div>
     )
 }
-
-/* function consolePrint(test){
-    //const $ = document.querySelectorAll('input[type="radio"]')
-    const $ = document.querySelectorAll('input[id="'+test+'enabled"]')
-
-    for(var i = 0; i < $.length; i++)
-    {
-        if($[i].checked)
-        {
-            console.log("Checked Radio Found!");
-            console.log(document.getElementById("1235").data)
-        }
-    }
-} */
