@@ -5,8 +5,8 @@ import axios from 'axios';
 const URL = 'http://localhost:3001/login';
 
 export default function Login(props) {
-  const [username, setUserName] = useState(0);
-  const [password, setPassword] = useState(0);
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   
   async function SendLoginData(e) {
