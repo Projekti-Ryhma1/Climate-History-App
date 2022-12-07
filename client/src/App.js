@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import Emissions from './pages/Emissions';
 import TempCo2 from './pages/TempCo2';
 import Preferences from './pages/Preferences';
+import CustomView from './pages/CustomView';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           { path: '/', httpOnly: decodedToken.httpOnly, secure: decodedToken.secure, maxAge: decodedToken.cookieMaxAge });
         }}/>} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/custom/:username" element={<CustomView/>} />
   </>
 
   if(jwt_token!= null) {
@@ -39,6 +41,7 @@ function App() {
           window.location = "/";
         }
         }}/>} />
+        <Route path="/custom/:username" element={<CustomView/>} />
     </>
   }
 
