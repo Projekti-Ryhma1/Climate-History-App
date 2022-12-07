@@ -1,6 +1,7 @@
 import PreferencesDisplayContent from '../components/PreferencesDisplayContent'; 
 import { useCookies } from 'react-cookie';
 import jwtDecode from 'jwt-decode';
+import './preferences.css';
 
 export default function Preferences(){
     const[cookies] = useCookies(['token']);
