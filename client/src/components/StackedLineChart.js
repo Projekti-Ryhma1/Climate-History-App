@@ -32,7 +32,6 @@ export default function StackedLineChart() {
       axios
         .get(address)
         .then((response) => {
-          console.log(response.data);
           setnationalEmissions(response.data);
           localStorage.setItem(
             "nationalEmissions",
