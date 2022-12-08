@@ -58,6 +58,22 @@ export default function EvoGlobalTempBiaxiallinechart() {
     }, 500); */
   }, []);
 
+  const CustomTooltip = ({ payload, label, active }) => {
+    if (active) {
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`${label}`}</p>
+          <p className="intro">Event</p>
+          <p className="desc">{payload[0].payload.event}</p>
+        </div>
+      );
+    }
+  };
+  const tooltipFormatter = ({ value, name }) => {
+    if (name === "Human Activities") return <CustomTooltip />;
+    return;
+  };
+
   const renderChart = (
     <>
       <p id="headline">
@@ -69,8 +85,7 @@ export default function EvoGlobalTempBiaxiallinechart() {
         height={420}
         margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
       >
-         <XAxis
-          
+        <XAxis
           data={humanActivities}
           dataKey="years"
           type="number"
@@ -78,7 +93,7 @@ export default function EvoGlobalTempBiaxiallinechart() {
           allowDataOverflow={true}
         ></XAxis>
         <Scatter
-        yAxisId={2}
+          yAxisId={2}
           data={humanActivities}
           name="Human Activities"
           dataKey="loc"
@@ -97,7 +112,10 @@ export default function EvoGlobalTempBiaxiallinechart() {
         <CartesianGrid />
         <YAxis yAxisId={1} orientation="left" />
         <YAxis yAxisId={2} orientation="right" domain={["auto", 420]} />
-        <Tooltip />
+        <Tooltip
+          tooltipFormatter={tooltipFormatter}
+          content={<CustomTooltip />}
+        />
         <Legend verticalAlign="top" />
         <Line
           data={evoData}
