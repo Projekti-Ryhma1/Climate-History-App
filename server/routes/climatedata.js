@@ -76,5 +76,13 @@ router.get("/antarctic_ice_core", async (req, res) => {
   }
 });
 
+router.get("/evo_of_global_temp_2m_years", async (req, res) => {
+  try {
+    res.status(200).json(await database.getEvoGlobalTemp2mYears());
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;
