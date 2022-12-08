@@ -142,11 +142,18 @@ export default function AtmosphericCO2LineChart() {
         width={800}
         height={400}
       >
-         <Tooltip
+        <Tooltip
           tooltipFormatter={tooltipFormatter}
           content={<CustomTooltip />}
         />
-        <XAxis hide={true} data={humanActivities} dataKey="years" type="number"  domain={[xAxisMin, 2022]} allowDataOverflow={true} ></XAxis>
+        <XAxis
+          hide={true}
+          data={humanActivities}
+          dataKey="years"
+          type="number"
+          domain={[xAxisMin, 2022]}
+          allowDataOverflow={true}
+        ></XAxis>
         <Scatter
           data={humanActivities}
           name="Human Activities"
