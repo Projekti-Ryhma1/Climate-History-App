@@ -56,6 +56,5 @@ export default function EvoGlobalTempBiaxiallinechart() {
         <div className="biaxialline-chart">
             { isLoading ? <Spinner /> : renderChart }
         </div>
-
     );
 }
