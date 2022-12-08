@@ -54,31 +54,33 @@ export default function CustomView(){
             <Row>
                 <ClipBoardCopy copyText={urlText}/>
             </Row>
-            { preferences[1].preferenceValue == true &&
-            <Row>
-                <AtmosphericCO2LineChart/>
-            </Row>
-            }
-            { preferences[2].preferenceValue == true &&
-            <Row>
-                <ClimateLineChart/>
-            </Row>
-            }  
-            { preferences[3].preferenceValue == true &&
-            <Row>
-                <StackedLineChart/>
-            </Row>
-            }
-            { preferences[4].preferenceValue == true &&
-            <Row>
-                <Composite800kLineChart/>
-            </Row>
-            }
-            { preferences[5].preferenceValue == true &&
-            <Row>
-                <EmissionPieChart/>
-            </Row>
-            }
+            <Row lg="2" md="1" sm="1">
+                { preferences[1].preferenceValue == true &&
+                    <Col>
+                    <AtmosphericCO2LineChart/>
+                    </Col>
+                }
+                { preferences[2].preferenceValue == true &&
+                    <Col>
+                    <ClimateLineChart/>
+                    </Col>
+                }  
+                { preferences[3].preferenceValue == true &&
+                    <Col>
+                    <StackedLineChart/>
+                    </Col>
+                }
+                { preferences[4].preferenceValue == true &&
+                    <Col>
+                    <Composite800kLineChart/>
+                    </Col>
+                }
+                { preferences[5].preferenceValue == true &&
+                    <Col>
+                    <EmissionPieChart/>
+                    </Col>
+                }
+                </Row>
         </Container>
     );
 }
