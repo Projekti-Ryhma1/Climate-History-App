@@ -68,7 +68,7 @@ getAntarcticComposite = () => {
   const query = "SELECT * FROM 800kicecoredata";
   return new Promise((resolve, reject) => {
     database.query(query, (error, result) => {
-      if(error) reject(error);
+      if (error) reject(error);
       resolve(result);
     });
   });
@@ -83,7 +83,8 @@ getAntarcticIceCore = () => {
   });
 };
 getEvoGlobalTemp2mYears = () => {
-  const query = "SELECT * FROM evolution_of_global_temp_over_2m_years ORDER BY 'time (kyr BP)' desc;";
+  const query =
+    "SELECT * FROM evolution_of_global_temp_over_2m_years ORDER BY 'time (kyr BP)' desc;";
   return new Promise((resolve, reject) => {
     database.query(query, (error, result) => {
       if (error) reject(error);
@@ -91,7 +92,15 @@ getEvoGlobalTemp2mYears = () => {
     });
   });
 };
-
+getHumanEvolutionAndActivities = () => {
+  const query = "SELECT * FROM human_evolution_and_activities";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
 
 module.exports = {
   getGlobalTempAnomaly,
@@ -103,5 +112,6 @@ module.exports = {
   getMaunaLoaCO2Monthly,
   getAntarcticComposite,
   getAntarcticIceCore,
-  getEvoGlobalTemp2mYears
+  getEvoGlobalTemp2mYears,
+  getHumanEvolutionAndActivities,
 };
