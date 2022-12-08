@@ -21,7 +21,20 @@ updateUserPreference = (preferenceValue, username, preferenceID) => {
     });
 };
 
+// Login- and signUp routes ->
+createUserPreferences = (username) => {
+    const query = "INSERT INTO preferences (username, preferenceID, preferenceValue) "+
+    "VALUES (?,1,1),(?,2,1),(?,3,1),(?,4,1),(?,5,1),(?,6,1);";
+    return new Promise((resolve, reject) => {
+      database.query(query,[username,username,username,username,username,username], (error, result) => {
+        if (error) reject(error);
+        resolve(result);
+      });
+    });
+  };
+
 module.exports = {
     getUserPreferences,
-    updateUserPreference
+    updateUserPreference,
+    createUserPreferences
 }

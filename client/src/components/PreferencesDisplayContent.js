@@ -105,7 +105,7 @@ export default function PreferencesDisplayContent(props){
                 <PreferencesSwitchGroup label="chart 5 toggle" name="settingSixRadios" 
                 checked={preferences[5].preferenceValue} id="6" saveChange={saveChange}/>
                 
-                <PrefenrecesButtonGroup savePreferences={callSavePreferences}/>
+                <PrefenrecesButtonGroup username={props.username} savePreferences={callSavePreferences}/>
             </div>
             
         )
