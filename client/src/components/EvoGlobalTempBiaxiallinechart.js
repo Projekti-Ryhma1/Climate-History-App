@@ -1,9 +1,8 @@
 import "./EvoGlobalTempBiaxiallinechart.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { CartesianGrid, Label, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import { Label, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 import Spinner from "./Spinner";
-import { alignPropType } from "react-bootstrap/esm/types";
 
 export default function EvoGlobalTempBiaxiallinechart() {
     const [isLoading, setIsLoading] = useState(true);
@@ -38,8 +37,8 @@ export default function EvoGlobalTempBiaxiallinechart() {
                 <Label value={"Time (ka)"} offset={-10} position="insideBottom"/>
             </XAxis>
             <YAxis hide="false" tickLine="false"/>
-            <YAxis id="temp" yAxisId={1} domain={["auto", "auto"]} padding={{ top: 190}}  tickLine="false"  orientation="right" />
-            <YAxis yAxisId={2} domain={["auto", "auto"]} padding={{ bottom: 190 }}  tickLine="false"  orientation="left"/>
+            <YAxis id="temp" yAxisId={1} domain={["auto", "auto"]} padding={{ top: 190}} tickLine="false"  orientation="right" />
+            <YAxis yAxisId={2} domain={["auto", "auto"]} padding={{ bottom: 190 }} tickLine="false"  orientation="left"/>
             <Tooltip />
             <Legend verticalAlign="top"/>
             <Line type="monotone" dataKey="50 %" name="Change in global temperature (°C)" stroke="#8884d8" dot={false} yAxisId={1}/>
