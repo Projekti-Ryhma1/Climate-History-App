@@ -1,11 +1,9 @@
 .biaxialline-chart  {
     margin: auto;
 }
-
 .biaxialline-chart #headline  {
     font-size: 20px;
 }
-
 .biaxialline-chart #description {
     margin: auto;
     margin-top: 20px;
@@ -17,7 +15,6 @@
     color: black;
 
 }
-
 .biaxialline-chart #lineChart {
     text-align: right;
     color: red;
