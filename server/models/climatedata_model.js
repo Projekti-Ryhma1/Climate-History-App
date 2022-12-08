@@ -82,6 +82,15 @@ getAntarcticIceCore = () => {
     });
   });
 };
+getVostok_Ice_Data = () => {
+  const query = "SELECT * FROM Vostok_ice_data";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
 
 module.exports = {
   getGlobalTempAnomaly,
@@ -92,5 +101,6 @@ module.exports = {
   getMaunaLoaCO2Annual,
   getMaunaLoaCO2Monthly,
   getAntarcticComposite,
-  getAntarcticIceCore
+  getAntarcticIceCore,
+  getVostok_Ice_Data
 };
