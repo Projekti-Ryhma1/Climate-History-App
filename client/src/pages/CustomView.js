@@ -10,10 +10,12 @@ import ClimateLineChart from "../components/ClimateLineChart";
 import StackedLineChart from "../components/StackedLineChart";
 import Composite800kLineChart from "../components/Composite800kLineChart";
 import EmissionPieChart from "../components/EmissionPieChart";
+import ClipBoardCopy from "../components/ClipBoardCopy";
 
 export default function CustomView(){
     const [isLoading, setIsLoading] = useState(true);
     const [preferences, setPreferences] = useState(null);
+    const [urlText, setUrlText] = useState("");
 
     let { username} =useParams();
 
@@ -22,6 +24,7 @@ export default function CustomView(){
     }, [preferences])
 
     useEffect(() => {  
+            setUrlText(window.location.href);
             const address = "http://localhost:3001/userpreferences/user/" + username;
             axios.get(address)
             .then((response) => {
@@ -44,9 +47,12 @@ export default function CustomView(){
         );
     }
     else return(
-        <Container>
+        <Container fluid>
             <Row>
-                <h1>Hello world from custom view {username}</h1>
+                <h1>Custom view of {username}</h1>
+            </Row>
+            <Row>
+                <ClipBoardCopy copyText={urlText}/>
             </Row>
             { preferences[1].preferenceValue == true &&
             <Row>
