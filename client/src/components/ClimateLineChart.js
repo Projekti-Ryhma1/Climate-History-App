@@ -19,7 +19,6 @@ export default function ClimateLineChart() {
       axios
         .get(address)
         .then((response) => {
-          console.log(response.data);
           setGlobalMonthly(response.data);
           localStorage.setItem("globalMonthly", JSON.stringify(response.data));
         })
@@ -35,7 +34,6 @@ export default function ClimateLineChart() {
       axios
         .get(address1)
         .then((response) => {
-          console.log(response.data);
           setNorthernHemisphere2000yr(response.data);
           localStorage.setItem("northernHemisphere2000yr", JSON.stringify(response.data));
         })
