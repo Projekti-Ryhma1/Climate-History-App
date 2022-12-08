@@ -15,7 +15,7 @@ import {
 import Spinner from "./Spinner";
 
 export default function EvoGlobalTempBiaxiallinechart() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [evoData, setEvoData] = useState([]);
   const [humanActivities, setHumanActivities] = useState([]);
 
@@ -49,13 +49,14 @@ export default function EvoGlobalTempBiaxiallinechart() {
           );
         })
         .catch((error) => {
+          setIsLoading(false);
           alert(error);
         });
     }
 
-    /* setTimeout(() => {
+    setTimeout(() => {
       setIsLoading(false);
-    }, 500); */
+    }, 500);
   }, []);
 
   const CustomTooltip = ({ payload, label, active }) => {
@@ -86,6 +87,7 @@ export default function EvoGlobalTempBiaxiallinechart() {
         margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
       >
         <XAxis
+          hide={true}
           data={humanActivities}
           dataKey="years"
           type="number"
@@ -124,6 +126,7 @@ export default function EvoGlobalTempBiaxiallinechart() {
           name="Change in global temperature (°C)"
           stroke="#8884d8"
           dot={false}
+          activeDot={false}
           yAxisId={1}
           xAxisId="evo"
         />
@@ -134,6 +137,7 @@ export default function EvoGlobalTempBiaxiallinechart() {
           name="carbon dioxide (ppm)"
           stroke="#82ca9d"
           dot={false}
+          activeDot={false}
           yAxisId={2}
           xAxisId="evo"
         />
