@@ -90,7 +90,14 @@ export default function StackedLineChart() {
 
   const renderChart = (
     <>
-      <p> Co2 Emission by country</p>
+      
+      <div>
+      <p className="headline" > Co2 Emission By Country</p>
+        <p className="description">
+          Shows the CO2 emissions of each country over time. Y-Axis is by million tonnes of CO2.
+          X-Axis is years.
+        </p>
+      </div>
       <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         data={nationalEmissions}
