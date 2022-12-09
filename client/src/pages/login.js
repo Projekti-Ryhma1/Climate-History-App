@@ -33,7 +33,7 @@ export default function Login(props) {
       <form>
         <h2>Login</h2>
         <div className="name">
-          <label>User name:</label>
+          <label>Username:</label>
               <input type="text" id="userName" maxLength={20} required onChange={e=> setUserName(e.target.value)}/>
           </div>
           <div className="password">
@@ -41,7 +41,7 @@ export default function Login(props) {
             <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(e.target.value)}/>
           </div>
         <div>
-        <button id="loginButton" onClick={ SendLoginData }>Login</button>
+        <button id="loginButton" onClick={ SendLoginData } disabled={username.length===0||password.length===0}>Login</button>
         </div>
         <div>
             <p>{ errorMessage }</p>

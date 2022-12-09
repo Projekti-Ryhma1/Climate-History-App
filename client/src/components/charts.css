@@ -27,7 +27,20 @@
 }
 .headline{
   color: #000;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 800px;
 }
 .description{
   color: #000;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 800px;
+}
+.recharts-responsive-container { /*Sets ResponsiveContainer*/
+  align-self: center;
+  max-width: 800px; /*Max width for the chart*/
+  margin: auto;
 }

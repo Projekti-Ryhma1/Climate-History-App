@@ -1,4 +1,4 @@
-import "./EvoGlobalTempBiaxiallinechart.css";
+import "./charts.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import {
@@ -78,7 +78,7 @@ export default function EvoGlobalTempBiaxiallinechart() {
 
   const renderChart = (
     <>
-      <p id="headline">
+      <p className="headline">
         Evolution of global temperature over the past two million years
       </p>
       <ResponsiveContainer width={'100%'} height={420}>
@@ -86,7 +86,7 @@ export default function EvoGlobalTempBiaxiallinechart() {
         id="lineChart"
         width={960}
         height={420}
-        margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
+        margin={{ top: 10, right: 0, left: 0, bottom: 15 }}
       >
         <XAxis
           hide={true}
@@ -111,7 +111,7 @@ export default function EvoGlobalTempBiaxiallinechart() {
           interval="preserveStartEnd"
           allowDuplicatedCategory={false}
         >
-          <Label value={"Time (ka)"} offset={-10} position="insideBottom" />
+          <Label value={"Time in years"} offset={-10} position="insideBottom" />
         </XAxis>
         <CartesianGrid />
         <YAxis yAxisId={1} orientation="left" />
@@ -146,7 +146,7 @@ export default function EvoGlobalTempBiaxiallinechart() {
       </ComposedChart>
       </ResponsiveContainer>
       <div>
-        <p id="description">
+        <p className="description">
           Shows the global temperature over the past 2 million years estimated
           from a database of over 20,000 sea surface temperature point
           reconstructions.

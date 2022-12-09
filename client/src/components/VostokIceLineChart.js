@@ -1,4 +1,5 @@
-import {LineChart, Line, XAxis, YAxis,Legend, } from 'recharts';
+import "./charts.css";
+import {LineChart, Line, XAxis, YAxis,Legend, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
 import Spinner from "./Spinner";
 import {useEffect, useState} from 'react';
@@ -30,6 +31,7 @@ export default function VostokIceLineChart() {
 const renderChart = (
   <>
     <p>Vostok Ice Data</p>
+    <ResponsiveContainer width={'100%'} height={400}>
     <LineChart
       margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
       width={800}
@@ -54,6 +56,7 @@ const renderChart = (
 
         <Legend />
       </LineChart>
+      </ResponsiveContainer>
       </>
       );
       return (

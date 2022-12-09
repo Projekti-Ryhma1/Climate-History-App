@@ -1,8 +1,8 @@
-import { Legend, Line, LineChart, XAxis, YAxis, CartesianGrid } from "recharts";
+import { Legend, Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer} from "recharts";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
-import "./ClimateLineChart.css";
+import "./charts.css";
 import Button from 'react-bootstrap/Button';;
 
 export default function ClimateLineChart() {
@@ -58,7 +58,8 @@ export default function ClimateLineChart() {
   }
   const renderChart = (
     <>
-      <p>Global Temperature Anomaly</p>
+      <p className="headline">Global Temperature Anomaly</p>
+      <ResponsiveContainer width={'100%'} height={400}>
       <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         width={800}
@@ -100,6 +101,7 @@ export default function ClimateLineChart() {
         <YAxis data={globalMonthly} type="number" domain={["auto", "auto"]} />
         <Legend />
       </LineChart>
+      </ResponsiveContainer>
       <Button onClick={handleClick}>
         Toggle Northern Temperature 2000 Years
       </Button>

@@ -8,6 +8,7 @@ import {
   CartesianGrid,
   Legend,
   Label,
+  ResponsiveContainer,
 } from "recharts";
 import axios from "axios";
 import Spinner from "./Spinner";
@@ -19,9 +20,12 @@ import "./charts.css";
  *  zoom?
  */
 
+const maxWindowWidth = 700; // Max size when Legend is not visible
+
 export default function StackedLineChart() {
   const [isLoading, setIsLoading] = useState(true);
   const [nationalEmissions, setnationalEmissions] = useState([]);
+  const [hideLegend, setHideLegend] = useState(window.innerWidth < maxWindowWidth);
 
   useEffect(() => {
     if (localStorage.getItem("nationalEmissions") !== null) {
@@ -43,6 +47,13 @@ export default function StackedLineChart() {
           alert(error);
         });
     }
+
+    window.addEventListener('resize', function () {
+      const windowSize = window.innerWidth;
+      setHideLegend(windowSize < maxWindowWidth);
+    });
+
+
     setTimeout(() => {
       //give 0.5s time for data to load
       setIsLoading(false);
@@ -89,6 +100,14 @@ export default function StackedLineChart() {
     return;
   };
 
+  function checkHeight() {
+    if(!hideLegend) {
+      return 1200;
+    } else {
+      return 400;
+    }
+  }
+
   const renderChart = (
     <>
       <div>
@@ -98,6 +117,7 @@ export default function StackedLineChart() {
           million tonnes of CO2. X-Axis is years.
         </p>
       </div>
+      <ResponsiveContainer width={'100%'} height={checkHeight()}>
       <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         data={nationalEmissions}
@@ -127,8 +147,9 @@ export default function StackedLineChart() {
             ></Line>
           );
         })}
-        <Legend verticalAlign="bottom" />
+        {!hideLegend&&<Legend/>}
       </LineChart>
+      </ResponsiveContainer>
     </>
   );
 

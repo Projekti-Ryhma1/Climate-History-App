@@ -58,7 +58,8 @@ export default function SignUp() {
                 <input type="text" id="userEmail" maxLength={20} required onChange={ e=> setEmail(e.target.value) }/>
             </div>
           <div>
-          <button id="loginButton" onClick={ SendUserData }>Create</button>
+          <button id="loginButton" onClick={ SendUserData }
+          disabled={username.length===0||password.length===0||email.length===0}>Create</button>
           </div>
           <div>
             <p>{ errorMessage }</p>
