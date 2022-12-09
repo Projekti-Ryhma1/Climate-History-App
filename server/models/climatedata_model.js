@@ -68,7 +68,7 @@ getAntarcticComposite = () => {
   const query = "SELECT * FROM 800kicecoredata";
   return new Promise((resolve, reject) => {
     database.query(query, (error, result) => {
-      if(error) reject(eror);
+      if (error) reject(error);
       resolve(result);
     });
   });
@@ -91,6 +91,25 @@ getVostok_Ice_Data = () => {
     });
   });
 };
+getEvoGlobalTemp2mYears = () => {
+  const query =
+    "SELECT * FROM evolution_of_global_temp_over_2m_years ORDER BY 'time (kyr BP)' desc;";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
+getHumanEvolutionAndActivities = () => {
+  const query = "SELECT * FROM human_evolution_and_activities";
+  return new Promise((resolve, reject) => {
+    database.query(query, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
 
 module.exports = {
   getGlobalTempAnomaly,
@@ -103,4 +122,6 @@ module.exports = {
   getAntarcticComposite,
   getAntarcticIceCore,
   getVostok_Ice_Data
+  getEvoGlobalTemp2mYears,
+  getHumanEvolutionAndActivities,
 };

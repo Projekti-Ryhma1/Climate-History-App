@@ -32,7 +32,6 @@ export default function StackedLineChart() {
       axios
         .get(address)
         .then((response) => {
-          console.log(response.data);
           setnationalEmissions(response.data);
           localStorage.setItem(
             "nationalEmissions",
@@ -92,17 +91,12 @@ export default function StackedLineChart() {
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         data={nationalEmissions}
         width={800}
-        height={400}
+        height={1200}
       >
         {/* <Legend verticalAlign="bottom" /> */}
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip content={<CustomTooltip />} />
-        <XAxis
-          dataKey="MtCO2/year"
-          interval={0}
-          angle={-55}
-          textAnchor="end"
-        ></XAxis>
+        <XAxis dataKey="MtCO2/year" interval="preserveEnd"></XAxis>
         <YAxis />
         {keyArray.map((keyId, i) => {
           return (
@@ -118,6 +112,7 @@ export default function StackedLineChart() {
             ></Line>
           );
         })}
+        <Legend></Legend>
       </LineChart>
     </>
   );

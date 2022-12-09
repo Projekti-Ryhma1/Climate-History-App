@@ -36,7 +36,6 @@ export default function SignUp() {
       };
 
       async function createPassword(psw) {
-        const cryptedPassword = "";
         if(psw.length>0) {
           setPassword(bcrypt.hashSync(psw, 10));
         }

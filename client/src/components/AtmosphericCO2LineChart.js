@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, Legend, CartesianGrid } from "recharts";
+import {
+  Line,
+  XAxis,
+  YAxis,
+  Legend,
+  CartesianGrid,
+  ComposedChart,
+  Scatter,
+  Tooltip,
+} from "recharts";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 import Button from "react-bootstrap/Button";
+import "../components/charts.css";
 
 export default function AtmosphericCO2LineChart() {
   const [showMonthlyData, setShowMonthlyData] = useState(false);
@@ -11,6 +21,7 @@ export default function AtmosphericCO2LineChart() {
   const [maunaLoaAnnual, setMaunaLoaAnnual] = useState([]);
   const [maunaLoaMonthly, setMaunaLoaMonthly] = useState([]);
   const [antarcticIce, setAntarcticIce] = useState([]);
+  const [humanActivities, setHumanActivities] = useState([]);
   const [xAxisMin, setXAxisMin] = useState(1958);
 
   useEffect(() => {
@@ -59,6 +70,24 @@ export default function AtmosphericCO2LineChart() {
           alert(error);
         });
     }
+    if (localStorage.getItem("humanActivities") !== null) {
+      setHumanActivities(JSON.parse(localStorage.getItem("humanActivities")));
+    } else {
+      const address = "http://localhost:3001/data/human_evolution_activities";
+      axios
+        .get(address)
+        .then((response) => {
+          setHumanActivities(response.data);
+          localStorage.setItem(
+            "humanActivities",
+            JSON.stringify(response.data)
+          );
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+
     setTimeout(() => {
       //give 0.5s time for data to load
       setIsLoading(false);
@@ -90,13 +119,46 @@ export default function AtmosphericCO2LineChart() {
     }
   }
 
+  const CustomTooltip = ({ payload, label, active }) => {
+    if (active) {
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`${label}`}</p>
+          <p className="intro">Event</p>
+          <p className="desc">{payload[0].payload.event}</p>
+        </div>
+      );
+    }
+  };
+  const tooltipFormatter = ({ value, name }) => {
+    if (name === "Human Activities") return <CustomTooltip />;
+    return;
+  };
+
   const renderChart = (
     <>
-      <LineChart
+      <ComposedChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         width={800}
         height={400}
       >
+        <Tooltip
+          tooltipFormatter={tooltipFormatter}
+          content={<CustomTooltip />}
+        />
+        <XAxis
+          hide={true}
+          data={humanActivities}
+          dataKey="years"
+          type="number"
+          domain={[xAxisMin, 2022]}
+          allowDataOverflow={true}
+        ></XAxis>
+        <Scatter
+          data={humanActivities}
+          name="Human Activities"
+          dataKey="loc"
+        ></Scatter>
         <YAxis type="number" domain={["auto", 420]} />
         <Line
           xAxisId="annual"
@@ -107,6 +169,7 @@ export default function AtmosphericCO2LineChart() {
           dataKey="mean"
           name="CO2 Concentration annual"
           dot={false}
+          activeDot={false}
         />
         <Line
           hide={!showMonthlyData}
@@ -118,6 +181,7 @@ export default function AtmosphericCO2LineChart() {
           dataKey="average"
           name="CO2 Concentration monthly"
           dot={false}
+          activeDot={false}
         />
         <XAxis
           hide={showIceData}
@@ -144,6 +208,7 @@ export default function AtmosphericCO2LineChart() {
           dot={false}
           stroke="green"
           strokeWidth={2}
+          activeDot={false}
         />
         <Line
           hide={!showIceData}
@@ -155,6 +220,7 @@ export default function AtmosphericCO2LineChart() {
           dot={false}
           stroke="red"
           strokeWidth={2}
+          activeDot={false}
         />
         <Line
           hide={!showIceData}
@@ -166,6 +232,7 @@ export default function AtmosphericCO2LineChart() {
           dot={false}
           stroke="#2167de"
           strokeWidth={2}
+          activeDot={false}
         />
         <XAxis
           hide={true}
@@ -194,7 +261,7 @@ export default function AtmosphericCO2LineChart() {
         <CartesianGrid strokeDasharray="3 3" />
 
         <Legend />
-      </LineChart>
+      </ComposedChart>
       <Button onClick={handleMonthlyData} disabled={showIceData}>
         Show monthly data
       </Button>
