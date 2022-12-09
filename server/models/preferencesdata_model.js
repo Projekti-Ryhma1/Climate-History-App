@@ -1,7 +1,17 @@
 const database = require("../database");
 
-getUserPreferences = (username) => {
-    const query = "SELECT * FROM preferences WHERE username = ?";
+getUserPreferences = (username, groupID) => {
+    const query = "SELECT * FROM preferences WHERE username = ? AND groupID = ?";
+    return new Promise((resolve, reject) => {
+        database.query(query, [username, groupID], (error, result) => {
+            if(error) reject(error);
+            resolve(result);
+        });
+    });
+};
+
+getUserGroupId = (username) => {
+    const query = "SELECT DISTINCT groupID FROM preferences WHERE username = ?";
     return new Promise((resolve, reject) => {
         database.query(query, [username], (error, result) => {
             if(error) reject(error);
@@ -9,6 +19,15 @@ getUserPreferences = (username) => {
         });
     });
 };
+
+getUserPreferenceInformation = async (username, groupID) => {
+    const preferences = await getUserPreferences(username, groupID);
+    const preferenceGroups = await getUserGroupId(username);
+
+    const preferenceArray = [preferences, preferenceGroups];
+
+    return preferenceArray;
+}
 
 updateUserPreference = (preferenceValue, username, preferenceID, groupID) => {
     const query = "UPDATE preferences SET preferenceValue = ? \
@@ -36,5 +55,6 @@ createUserPreferences = (username) => {
 module.exports = {
     getUserPreferences,
     updateUserPreference,
-    createUserPreferences
+    createUserPreferences,
+    getUserPreferenceInformation
 }

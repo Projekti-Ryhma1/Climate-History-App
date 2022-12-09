@@ -71,7 +71,6 @@ router.post('/', async(req, res) => {
 });
 
 router.get("/selectedPreference/:username", async(req, res) => {
-  console.log("We are in route, calling model for selected preference");
   try{
       res.status(200).json(await login.getUserSelectedPreference(req.params.username));
   } catch(error){

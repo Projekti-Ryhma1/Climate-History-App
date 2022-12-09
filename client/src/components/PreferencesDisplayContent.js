@@ -69,10 +69,11 @@ export default function PreferencesDisplayContent(props){
             setPreferences(JSON.parse(sessionStorage.getItem("preferences")));
             console.log("Items loaded from session storage")
         } else {   
-            const address = "http://localhost:3001/userpreferences/user/" + props.username;
+            const address = "http://localhost:3001/userpreferences/user/" + props.username +"/" + props.groupid;
             axios.get(address)
             .then((response) => {
-                console.log("Loaded data from database");
+                /* console.log("Loaded data from database " + response.data[0]); */
+                console.log(response.data);
                 setPreferences(response.data); 
                 sessionStorage.setItem("preferences", JSON.stringify(response.data));
             }).catch(error => {
@@ -93,17 +94,21 @@ export default function PreferencesDisplayContent(props){
             <div className="div-centered">
 
                 <PreferencesSwitchGroup label="Charts side by side" name="settingOneRadios" 
-                checked={preferences[0].preferenceValue} id="1" saveChange={saveChange}/>
+                checked={preferences[0][0].preferenceValue} id="1" saveChange={saveChange}/>
                 <PreferencesSwitchGroup label="Anomaly chart" name="settingTwoRadios" 
-                checked={preferences[1].preferenceValue} id="2" saveChange={saveChange}/>                
+                checked={preferences[0][1].preferenceValue} id="2" saveChange={saveChange}/>                
                 <PreferencesSwitchGroup label="chart 2 toggle" name="settingThreeRadios" 
-                checked={preferences[2].preferenceValue} id="3" saveChange={saveChange}/>                
+                checked={preferences[0][2].preferenceValue} id="3" saveChange={saveChange}/>                
                 <PreferencesSwitchGroup label="Chart 3 toggle" name="settingFourRadios" 
-                checked={preferences[3].preferenceValue} id="4" saveChange={saveChange}/>               
+                checked={preferences[0][3].preferenceValue} id="4" saveChange={saveChange}/>               
                 <PreferencesSwitchGroup label="chart 4 toggle" name="settingFiveRadios" 
-                checked={preferences[4].preferenceValue} id="5" saveChange={saveChange}/>               
+                checked={preferences[0][4].preferenceValue} id="5" saveChange={saveChange}/>               
                 <PreferencesSwitchGroup label="chart 5 toggle" name="settingSixRadios" 
-                checked={preferences[5].preferenceValue} id="6" saveChange={saveChange}/>
+                checked={preferences[0][5].preferenceValue} id="6" saveChange={saveChange}/>
+                <PreferencesSwitchGroup label="chart 5 toggle" name="settingSevenRadios" 
+                checked={preferences[0][6].preferenceValue} id="7" saveChange={saveChange}/>
+                <PreferencesSwitchGroup label="pie chart toggle" name="settingEightRadios" 
+                checked={preferences[0][7].preferenceValue} id="8" saveChange={saveChange}/>
                 
                 <PrefenrecesButtonGroup username={props.username} savePreferences={callSavePreferences}/>
             </div>

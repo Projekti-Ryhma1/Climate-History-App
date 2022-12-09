@@ -30,8 +30,9 @@ export default function Preferences(){
     }, [])
 
     useEffect(() => {
-        if(selectedVisualisation !== '' && user !== '')
+        if(selectedVisualisation !== null && user !== null)
         {
+            console.log(selectedVisualisation);
             setIsLoading(false); //Disable spinner
         }
     }, [selectedVisualisation, user])
