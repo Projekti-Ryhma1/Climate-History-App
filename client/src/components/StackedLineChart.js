@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import axios from "axios";
 import Spinner from "./Spinner";
-import "./ClimateLineChart.css";
+import "./charts.css";
 
 /** TODO
  *  Modify tooltiplabel to look nicer
@@ -69,19 +69,23 @@ export default function StackedLineChart() {
   }
 
   let tooltip;
-  const CustomTooltip = ({ active, payload }) => {
-    if (!active || !tooltip) return null;
+  const CustomTooltip = ({ active, payload}) => {
+     if (!active || !tooltip) return null;
     for (const line of payload) {
       if (line.dataKey === tooltip) {
         return (
-          <div>
-            <p>{line.name}</p>
-            <p>{line.value}</p>
+          <div className="custom-tooltip">
+            <p className="label">{line.name}</p>
+            <p className="desc">{line.value}</p>
           </div>
         );
       }
     }
-    return null;
+    return null; 
+  };
+  const tooltipFormatter = ({ value, name }) => {
+    if (name === tooltip) return <CustomTooltip />;
+    return;
   };
 
   const renderChart = (
@@ -93,9 +97,8 @@ export default function StackedLineChart() {
         width={800}
         height={1200}
       >
-        {/* <Legend verticalAlign="bottom" /> */}
         <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip tooltipFormatter={tooltipFormatter} content={<CustomTooltip />} />
         <XAxis dataKey="MtCO2/year" interval="preserveEnd"></XAxis>
         <YAxis />
         {keyArray.map((keyId, i) => {
