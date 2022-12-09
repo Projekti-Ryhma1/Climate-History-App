@@ -112,7 +112,7 @@ export default function StackedLineChart() {
         <XAxis dataKey="MtCO2/year" interval="preserveEnd">
           <Label value="YEAR" offset={-10} position="insideBottom" />
         </XAxis>
-        <YAxis label={{ value: 'MtCO2', angle: -90, position: 'insideLeft' }} />
+        <YAxis label={{ value: "MtCO2", angle: -90, position: "insideLeft" }} />
         {keyArray.map((keyId, i) => {
           return (
             <Line
@@ -127,7 +127,7 @@ export default function StackedLineChart() {
             ></Line>
           );
         })}
-        <Legend verticalAlign="bottom"/>
+        <Legend verticalAlign="bottom" />
       </LineChart>
     </>
   );
