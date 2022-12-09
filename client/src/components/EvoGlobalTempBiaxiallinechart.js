@@ -29,34 +29,95 @@ export default function EvoGlobalTempBiaxiallinechart() {
         }, 500);
     }, []);
 
-    const renderChart = (<>
-        <p id="headline">Evolution of global temperature over the past two million years</p>
-        <ResponsiveContainer width={'100%'} height={420}>
-            <LineChart id="lineChart" width={960} height={420} data={evoData}
-                margin={{ top: 10, right: 30, left: 20, bottom: 14 }}>
-                <XAxis dataKey="time (kyr BP)" domain={["auto", "auto"]} reversed="true" interval="preserveStartEnd">
-                    <Label value={"Time in years"} offset={-10} position="insideBottom" />
-                </XAxis>
-                <YAxis hide="false" tickLine="false" />
-                <YAxis id="temp" yAxisId={1} domain={["auto", "auto"]} padding={{ top: 190 }} tickLine="false" orientation="right" />
-                <YAxis yAxisId={2} domain={["auto", "auto"]} padding={{ bottom: 190 }} tickLine="false" orientation="left" />
-                <Tooltip />
-                <Legend verticalAlign="top" />
-                <Line type="monotone" dataKey="50 %" name="Change in global temperature (°C)" stroke="#8884d8" dot={false} yAxisId={1} />
-                <Line type="monotone" dataKey="carbon dioxide (ppm)" name="carbon dioxide (ppm)" stroke="#82ca9d" dot={false} yAxisId={2} />
-            </LineChart>
-        </ResponsiveContainer>
-        <div>
-            <p id="description">
-                Shows the global temperature over the past 2 million years estimated from a database of over 20,000 sea
-                surface temperature point reconstructions.
-            </p>
-        </div>
-    </>);
 
-    return (
-        <div className="biaxialline-chart">
-            {isLoading ? <Spinner /> : renderChart}
-        </div>
-    );
+
+  const tooltipFormatter = ({ value, name }) => {
+    if (name === "Human Activities") return <CustomTooltip />;
+    return;
+  };
+
+  const renderChart = (
+    <>
+      <p id="headline">
+        Evolution of global temperature over the past two million years
+      </p>
+      <ResponsiveContainer width={'100%'} height={420}>
+      <ComposedChart
+        id="lineChart"
+        width={960}
+        height={420}
+        margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
+      >
+        <XAxis
+          hide={true}
+          data={humanActivities}
+          dataKey="years"
+          type="number"
+          domain={[-2000000, 2022]}
+          allowDataOverflow={true}
+        ></XAxis>
+        <Scatter
+          yAxisId={2}
+          data={humanActivities}
+          name="Human Activities"
+          dataKey="loc"
+        ></Scatter>
+
+        <XAxis
+          xAxisId="evo"
+          dataKey="time (kyr BP)"
+          /* domain={["auto", "auto"]} */
+          reversed="true"
+          interval="preserveStartEnd"
+          allowDuplicatedCategory={false}
+        >
+          <Label value={"Time (ka)"} offset={-10} position="insideBottom" />
+        </XAxis>
+        <CartesianGrid />
+        <YAxis yAxisId={1} orientation="left" />
+        <YAxis yAxisId={2} orientation="right" domain={["auto", 420]} />
+        <Tooltip
+          tooltipFormatter={tooltipFormatter}
+          content={<CustomTooltip />}
+        />
+        <Legend verticalAlign="top" />
+        <Line
+          data={evoData}
+          type="monotone"
+          dataKey="50 %"
+          name="Change in global temperature (°C)"
+          stroke="#8884d8"
+          dot={false}
+          activeDot={false}
+          yAxisId={1}
+          xAxisId="evo"
+        />
+        <Line
+          data={evoData}
+          type="monotone"
+          dataKey="carbon dioxide (ppm)"
+          name="carbon dioxide (ppm)"
+          stroke="#82ca9d"
+          dot={false}
+          activeDot={false}
+          yAxisId={2}
+          xAxisId="evo"
+        />
+      </ComposedChart>
+      </ResponsiveContainer>
+      <div>
+        <p id="description">
+          Shows the global temperature over the past 2 million years estimated
+          from a database of over 20,000 sea surface temperature point
+          reconstructions.
+        </p>
+      </div>
+    </>
+  );
+
+  return (
+    <div className="biaxialline-chart">
+      {isLoading ? <Spinner /> : renderChart}
+    </div>
+  );
 }
