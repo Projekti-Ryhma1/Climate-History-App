@@ -1,36 +1,76 @@
 import "./EvoGlobalTempBiaxiallinechart.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { ResponsiveContainer, Label, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Scatter,
+  CartesianGrid,
+  Label,
+  Legend,
+  Line,
+  ComposedChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+} from "recharts";
 import Spinner from "./Spinner";
 
 export default function EvoGlobalTempBiaxiallinechart() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [evoData, setEvoData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [evoData, setEvoData] = useState([]);
+  const [humanActivities, setHumanActivities] = useState([]);
 
-    useEffect(() => {
-        if (localStorage.getItem("evoglobaltemp2myr")) {
-            setEvoData(JSON.parse(localStorage.getItem("evoglobaltemp2myr")));
+  useEffect(() => {
+    if (localStorage.getItem("evoglobaltemp2myr")) {
+      setEvoData(JSON.parse(localStorage.getItem("evoglobaltemp2myr")));
+    } else {
+      const address = "http://localhost:3001/data/evo_of_global_temp_2m_years";
 
-        } else {
-            const address = "http://localhost:3001/data/evo_of_global_temp_2m_years";
+      axios
+        .get(address)
+        .then((resp) => {
+          setEvoData(resp.data);
+          localStorage.setItem("evoglobaltemp2myr", JSON.stringify(resp.data));
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+    if (localStorage.getItem("humanActivities") !== null) {
+      setHumanActivities(JSON.parse(localStorage.getItem("humanActivities")));
+    } else {
+      const address = "http://localhost:3001/data/human_evolution_activities";
+      axios
+        .get(address)
+        .then((response) => {
+          setHumanActivities(response.data);
+          localStorage.setItem(
+            "humanActivities",
+            JSON.stringify(response.data)
+          );
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          alert(error);
+        });
+    }
 
-            axios.get(address)
-                .then(resp => {
-                    setEvoData(resp.data);
-                    localStorage.setItem("evoglobaltemp2myr", JSON.stringify(resp.data));
-                })
-                .catch(error => {
-                    alert(error);
-                })
-        }
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 500);
-    }, []);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
-
-
+  const CustomTooltip = ({ payload, label, active }) => {
+    if (active) {
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`${label}`}</p>
+          <p className="intro">Event</p>
+          <p className="desc">{payload[0].payload.event}</p>
+        </div>
+      );
+    }
+  };
   const tooltipFormatter = ({ value, name }) => {
     if (name === "Human Activities") return <CustomTooltip />;
     return;
