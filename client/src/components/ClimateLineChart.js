@@ -67,6 +67,8 @@ export default function ClimateLineChart() {
       <p className="headline">Global Temperature Anomaly</p>
       <ResponsiveContainer width={'100%'} height={400}>
       <LineChart
+      role="ClimateLineChart"
+     
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         width={800}
         height={400}
