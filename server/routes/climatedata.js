@@ -75,6 +75,14 @@ router.get("/antarctic_ice_core", async (req, res) => {
     res.sendStatus(500);
   }
 });
+router.get("/vostok_ice_data", async (req, res) => {
+  try {
+    res.status(200).json(await database.getVostok_Ice_Data());
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
 router.get("/human_evolution_activities", async (req, res) => {
   try {
     res.status(200).json(await database.getHumanEvolutionAndActivities());
