@@ -19,3 +19,9 @@
     text-align: right;
     color: red;
 }
+
+.recharts-responsive-container {
+    align-self: center;
+    max-width: 960px;
+    margin: auto;
+}
