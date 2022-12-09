@@ -83,7 +83,7 @@ getAntarcticIceCore = () => {
   });
 };
 getEvoGlobalTemp2mYears = () => {
-  const query = "SELECT * FROM evolution_of_global_temp_over_2m_years ORDER BY 'time (kyr BP)' desc;";
+  const query = "SELECT * FROM evolution_of_global_temp_over_2m_years";
   return new Promise((resolve, reject) => {
     database.query(query, (error, result) => {
       if (error) reject(error);

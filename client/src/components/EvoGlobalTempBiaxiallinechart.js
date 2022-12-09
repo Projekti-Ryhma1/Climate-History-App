@@ -29,28 +29,13 @@ export default function EvoGlobalTempBiaxiallinechart() {
         }, 500);
     }, []);
 
-    async function checkIfWindowScale() {
-        const width = window.innerWidth;
-        const maxWidth = 960;
-
-        if((width>maxWidth)) {
-            console.log("Max width");
-            return 960;
-        } else {
-            console.log("Scale width");
-            return window.innerWidth;
-        }
-
-
-    }
-
     const renderChart = (<>
         <p id="headline">Evolution of global temperature over the past two million years</p>
         <ResponsiveContainer width={'100%'} height={420}>
             <LineChart id="lineChart" width={960} height={420} data={evoData}
-                margin={{ top: 10, right: 30, left: 20, bottom: 10 }}>
+                margin={{ top: 10, right: 30, left: 20, bottom: 14 }}>
                 <XAxis dataKey="time (kyr BP)" domain={["auto", "auto"]} reversed="true" interval="preserveStartEnd">
-                    <Label value={"Time (ka)"} offset={-10} position="insideBottom" />
+                    <Label value={"Time in years"} offset={-10} position="insideBottom" />
                 </XAxis>
                 <YAxis hide="false" tickLine="false" />
                 <YAxis id="temp" yAxisId={1} domain={["auto", "auto"]} padding={{ top: 190 }} tickLine="false" orientation="right" />
