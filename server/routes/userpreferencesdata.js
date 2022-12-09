@@ -16,8 +16,9 @@ router.post("/preference", async(req, res) => {
     const preferenceValue = req.body.preferenceValue;
     const username = req.body.username;
     const preferenceID = req.body.preferenceID;
+    const groupID = req.body.groupID;
     try{
-        res.status(200).json(await database.updateUserPreference(preferenceValue, username, preferenceID));
+        res.status(200).json(await database.updateUserPreference(preferenceValue, username, preferenceID, groupID));
     } catch(error){
             console.error(error);
             res.sendStatus(500);
