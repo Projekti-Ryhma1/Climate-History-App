@@ -21,7 +21,8 @@ export default function VostokIceLineChart() {
       .catch((error) => {
         alert(error);
       });
-    }});
+    }},[]);
+
 
     setTimeout(() => {
       setIsLoading(false);

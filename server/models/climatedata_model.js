@@ -121,7 +121,7 @@ module.exports = {
   getMaunaLoaCO2Monthly,
   getAntarcticComposite,
   getAntarcticIceCore,
-  getVostok_Ice_Data
+  getVostok_Ice_Data,
   getEvoGlobalTemp2mYears,
   getHumanEvolutionAndActivities,
 };

@@ -12,13 +12,22 @@
   background-color: rgba(255, 255, 255, 0.8);
   padding: 10px;
 }
-
+.label {
+  color: #000;
+}
 .intro {
   border-top: 1px solid #f5f5f5;
   margin: 0;
+  color: #000;
 }
 
 .desc {
   margin: 0;
-  color: rgb(3, 62, 146);
+  color: rgb(0, 0, 0);
+}
+.headline{
+  color: #000;
+}
+.description{
+  color: #000;
 }
