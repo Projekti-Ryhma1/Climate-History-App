@@ -16,12 +16,9 @@ export default function CustomView(){
     const [isLoading, setIsLoading] = useState(true);
     const [preferences, setPreferences] = useState(null);
     const [urlText, setUrlText] = useState("");
+    const [largeDisplayCharts, setLargeDisplayCharts] = useState(1);
 
     let { username} =useParams();
-
-    useEffect(() => {
-        console.log(preferences);
-    }, [preferences])
 
     useEffect(() => {  
             setUrlText(window.location.href);
@@ -29,7 +26,8 @@ export default function CustomView(){
             axios.get(address)
             .then((response) => {
                 console.log("Loaded data from database");
-                setPreferences(response.data); 
+                setPreferences(response.data);
+                if(response.data[0].preferenceValue == true) { setLargeDisplayCharts(2); }
             }).catch(error => {
                 alert(error);
             });
@@ -54,7 +52,7 @@ export default function CustomView(){
             <Row>
                 <ClipBoardCopy copyText={urlText}/>
             </Row>
-            <Row lg="2" md="1" sm="1">
+            <Row lg={largeDisplayCharts} md="1" sm="1">
                 { preferences[1].preferenceValue == true &&
                     <Col>
                     <AtmosphericCO2LineChart/>
