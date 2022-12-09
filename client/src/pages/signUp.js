@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './signUp.css';
+import './login_signup.css';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
 
@@ -44,25 +44,25 @@ export default function SignUp() {
 
     return (
         <form>
-          <h2>Create User</h2>
-          <div className="name">
-            <label>User name:</label>
-                <input type="text" id="userName" maxLength={20} required onChange={e=> setUserName(e.target.value) }/>
+          <h2 className="user_headline">Create User</h2>
+          <div>
+            <label className="user_label">Username:</label>
+                <input className="user_input" type="text" maxLength={20} required onChange={e=> setUserName(e.target.value) }/>
             </div>
-            <div className="password">
-            <label>Password:</label>
-              <input type="password" id="userPassword" maxLength={20} required onChange={e=> createPassword(e.target.value) }/>
+            <div>
+            <label className="user_label">Password:</label>
+              <input className="user_input" type="password" maxLength={20} required onChange={e=> createPassword(e.target.value) }/>
             </div>
-            <div className="email">
-            <label>Email:</label>
-                <input type="text" id="userEmail" maxLength={20} required onChange={ e=> setEmail(e.target.value) }/>
+            <div>
+            <label className="user_label">Email:</label>
+                <input className="user_input" type="text" maxLength={20} required onChange={ e=> setEmail(e.target.value) }/>
             </div>
           <div>
-          <button id="loginButton" onClick={ SendUserData }
+          <button className="user_button" onClick={ SendUserData }
           disabled={username.length===0||password.length===0||email.length===0}>Create</button>
           </div>
           <div>
-            <p>{ errorMessage }</p>
+            <p className="user_errormsg">{ errorMessage }</p>
           </div>
         </form>
       );

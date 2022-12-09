@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './login.css';
+import './login_signup.css';
 import axios from 'axios';
 
 const URL = 'http://localhost:3001/login';
@@ -31,20 +31,20 @@ export default function Login(props) {
 
     return (
       <form>
-        <h2>Login</h2>
-        <div className="name">
-          <label>Username:</label>
-              <input type="text" id="userName" maxLength={20} required onChange={e=> setUserName(e.target.value)}/>
+        <h2 className="user_headline">Login</h2>
+        <div>
+          <label className="user_label">Username:</label>
+              <input className="user_input" type="text" maxLength={20} required onChange={e=> setUserName(e.target.value)}/>
           </div>
-          <div className="password">
-          <label>Password:</label>
-            <input type="password" id="userPassword" maxLength={20} required onChange={e=> setPassword(e.target.value)}/>
+          <div>
+          <label className="user_label">Password:</label>
+            <input className="user_input" type="password" maxLength={20} required onChange={e=> setPassword(e.target.value)}/>
           </div>
         <div>
-        <button id="loginButton" onClick={ SendLoginData } disabled={username.length===0||password.length===0}>Login</button>
+        <button className="user_button" onClick={ SendLoginData } disabled={username.length===0||password.length===0}>Login</button>
         </div>
         <div>
-            <p>{ errorMessage }</p>
+            <p className="user_errormsg">{ errorMessage }</p>
           </div>
       </form>
     );

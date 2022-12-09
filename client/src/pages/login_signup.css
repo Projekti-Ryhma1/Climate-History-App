@@ -1,0 +1,25 @@
+.user_headline {
+    margin: 10px;
+}
+
+.user_label {
+    margin:10px;
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+.user_input {
+    margin:10px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.user_button {
+    margin: 10px;
+    background-color: white;
+}
+
+.user_errormsg {
+    color: darkred;
+}
