@@ -7,6 +7,7 @@ import {
   YAxis,
   CartesianGrid,
   Legend,
+  Label,
 } from "recharts";
 import axios from "axios";
 import Spinner from "./Spinner";
@@ -69,8 +70,8 @@ export default function StackedLineChart() {
   }
 
   let tooltip;
-  const CustomTooltip = ({ active, payload}) => {
-     if (!active || !tooltip) return null;
+  const CustomTooltip = ({ active, payload }) => {
+    if (!active || !tooltip) return null;
     for (const line of payload) {
       if (line.dataKey === tooltip) {
         return (
@@ -81,7 +82,7 @@ export default function StackedLineChart() {
         );
       }
     }
-    return null; 
+    return null;
   };
   const tooltipFormatter = ({ value, name }) => {
     if (name === tooltip) return <CustomTooltip />;
@@ -90,12 +91,11 @@ export default function StackedLineChart() {
 
   const renderChart = (
     <>
-      
       <div>
-      <p className="headline" > Co2 Emission By Country</p>
+        <p className="headline"> Co2 Emission By Country</p>
         <p className="description">
-          Shows the CO2 emissions of each country over time. Y-Axis is by million tonnes of CO2.
-          X-Axis is years.
+          Shows the CO2 emissions of each country over time. Y-Axis is by
+          million tonnes of CO2. X-Axis is years.
         </p>
       </div>
       <LineChart
@@ -105,9 +105,14 @@ export default function StackedLineChart() {
         height={1200}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip tooltipFormatter={tooltipFormatter} content={<CustomTooltip />} />
-        <XAxis dataKey="MtCO2/year" interval="preserveEnd"></XAxis>
-        <YAxis />
+        <Tooltip
+          tooltipFormatter={tooltipFormatter}
+          content={<CustomTooltip />}
+        />
+        <XAxis dataKey="MtCO2/year" interval="preserveEnd">
+          <Label value="YEAR" offset={-10} position="insideBottom" />
+        </XAxis>
+        <YAxis label={{ value: 'MtCO2', angle: -90, position: 'insideLeft' }} />
         {keyArray.map((keyId, i) => {
           return (
             <Line
@@ -122,7 +127,7 @@ export default function StackedLineChart() {
             ></Line>
           );
         })}
-        <Legend></Legend>
+        <Legend verticalAlign="bottom"/>
       </LineChart>
     </>
   );
