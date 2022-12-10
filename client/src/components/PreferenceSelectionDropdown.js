@@ -8,6 +8,8 @@ export default function PreferenceSelectionDropdown (props) {
     const [number, setNumber] = useState([]);
     const [item, setItem] = useState('');
 
+    const [customViewKey] = useState(2);
+
 
 
     useEffect(() => {
@@ -24,7 +26,7 @@ export default function PreferenceSelectionDropdown (props) {
         setNumber(numbers);
 
         const items = numbers.map((number) => 
-        <Dropdown.Item key={number} eventKey={number}>Preference {number}</Dropdown.Item>
+            <Dropdown.Item key={number} eventKey={number}>Preference {number}</Dropdown.Item>
         );
 
         setItem(items);
@@ -40,11 +42,12 @@ export default function PreferenceSelectionDropdown (props) {
         );
     } else return(
         <>
-            <DropdownButton size="lg" title="Change Preference" onSelect={props.handleSelect}>
-            { customViewExists === true && 
-            <Dropdown.Item key={2} eventKey={2}>Custom View</Dropdown.Item>
-            }
+            <DropdownButton size="lg" title="Change Preference" onSelect={props.handleGroupSelect}>
+                { customViewExists === true && 
+                    <Dropdown.Item key={customViewKey} eventKey={customViewKey}>Custom View</Dropdown.Item>
+                }
                 {item}
+                <Dropdown.Item value={number+1} eventKey={'new'}>Create new preference</Dropdown.Item>
             </DropdownButton>
         </>
     );

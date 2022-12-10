@@ -52,9 +52,21 @@ createUserPreferences = (username) => {
     });
   };
 
+createNewUserPreferences = (username, groupID) => {
+    const query = "INSERT INTO preferences (username, preferenceID, preferenceValue, groupID) "+
+    "VALUES (?,1,1,?),(?,2,1,?),(?,3,1,?),(?,4,1,?),(?,5,1,?),(?,6,1,?),(?,7,1,?),(?,8,1,?);";
+    return new Promise((resolve, reject) => {
+      database.query(query,[username,groupID,username,groupID,username,groupID,username,groupID,username,groupID,username,groupID,username,groupID,username,groupID], (error, result) => {
+        if (error) reject(error);
+        resolve(result);
+      });
+    });
+  };
+
 module.exports = {
     getUserPreferences,
     updateUserPreference,
     createUserPreferences,
-    getUserPreferenceInformation
+    getUserPreferenceInformation,
+    createNewUserPreferences
 }

@@ -61,9 +61,60 @@ export default function PreferencesDisplayContent(props){
     }
 
     
-    const handleSelect=(e)=>{
-        console.log(e);
+    const handleGroupSelect=(e)=>{
+        let newGroupId = e; //set e value as default new groupID
+
+        if(e === "new") { 
+            console.log("clicked new preference " + JSON.stringify(preferences[1].max)); 
+
+            //Iterate through array finding first spot where var i is smaller than number in array
+            //If no slot is found inbetween we make new one at the end.
+            let foundEmpty = false;
+            for (var i = 1; i <= preferences[1].length; i++){
+                console.log(preferences[1][i-1].groupID + " this is the i " + i);
+                if(preferences[1][i-1].groupID > i){
+                    console.log(i);
+                    foundEmpty = true;
+                    newGroupId = i;
+                }
+            }
+            if(foundEmpty === false){
+                newGroupId = preferences[1].length+1;
+                console.log(newGroupId + " this is the new group id");
+                //made new group
+            }
+            //Make new preference group with newGroupId
+            const address = 'http://localhost:3001/userpreferences/newpreferences';
+            axios.post(address, {
+                username: props.username,
+                groupID: newGroupId
+            })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
         }
+        const address = 'http://localhost:3001/login/newSelectedPreference'
+        console.log(address + " username is " + props.username + " group id is " + newGroupId);
+        axios.post(address, {
+            username: props.username,
+            groupID: newGroupId
+        })
+        .then((response) => {
+            console.log(response);
+            sessionStorage.removeItem("preferences"); //Remove preferences from local storage after selection of new preference group is succesfull
+            window.location.reload(false); //Reload window to load the components again to get new preference group
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+        //Send query to change users selected groupID to event
+        //After selected group is changed remove local storage preferences and reload page
+        //Page reloading queries selected preference group again
+    }
 
      useEffect(() => {
         if(clickedSave){
@@ -107,7 +158,7 @@ export default function PreferencesDisplayContent(props){
                             <h2>Preference {props.groupid}</h2>
                         </Col>
                         <Col  xs lg="2">
-                            <PreferenceSelectionDropdown handleSelect={handleSelect} groups={preferences[1]}/>
+                            <PreferenceSelectionDropdown handleGroupSelect={handleGroupSelect} groups={preferences[1]}/>
                         </Col>
                     </Row>
                     <PreferencesSwitchGroup label="Charts side by side" name="settingOneRadios" 
@@ -128,7 +179,7 @@ export default function PreferencesDisplayContent(props){
                     checked={preferences[0][7].preferenceValue} id="8" saveChange={saveChange}/>
                     <Row className="justify-content-md-center">
                         <Col xs lg="4">
-                            <PrefenrecesButtonGroup username={props.username} savePreferences={callSavePreferences}/>
+                            <PrefenrecesButtonGroup username={props.username} groupid={props.groupid} savePreferences={callSavePreferences}/>
                         </Col>
                     </Row>
                 </Row>
