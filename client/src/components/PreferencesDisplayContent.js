@@ -3,6 +3,10 @@ import PrefenrecesButtonGroup from "./PreferencesButtonGroup";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import Spinner from "./Spinner";
+import PreferenceSelectionDropdown from "./PreferenceSelectionDropdown";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export default function PreferencesDisplayContent(props){
     const [isLoading, setIsLoading] = useState(true);
@@ -56,6 +60,11 @@ export default function PreferencesDisplayContent(props){
         sessionStorage.setItem("preferences", JSON.stringify(preferences));
     }
 
+    
+    const handleSelect=(e)=>{
+        console.log(e);
+        }
+
      useEffect(() => {
         if(clickedSave){
             console.log(preferences);
@@ -91,27 +100,39 @@ export default function PreferencesDisplayContent(props){
     }
     else{
         return(
-            <div className="div-centered">
-
-                <PreferencesSwitchGroup label="Charts side by side" name="settingOneRadios" 
-                checked={preferences[0][0].preferenceValue} id="1" saveChange={saveChange}/>
-                <PreferencesSwitchGroup label="Anomaly chart" name="settingTwoRadios" 
-                checked={preferences[0][1].preferenceValue} id="2" saveChange={saveChange}/>                
-                <PreferencesSwitchGroup label="chart 2 toggle" name="settingThreeRadios" 
-                checked={preferences[0][2].preferenceValue} id="3" saveChange={saveChange}/>                
-                <PreferencesSwitchGroup label="Chart 3 toggle" name="settingFourRadios" 
-                checked={preferences[0][3].preferenceValue} id="4" saveChange={saveChange}/>               
-                <PreferencesSwitchGroup label="chart 4 toggle" name="settingFiveRadios" 
-                checked={preferences[0][4].preferenceValue} id="5" saveChange={saveChange}/>               
-                <PreferencesSwitchGroup label="chart 5 toggle" name="settingSixRadios" 
-                checked={preferences[0][5].preferenceValue} id="6" saveChange={saveChange}/>
-                <PreferencesSwitchGroup label="chart 5 toggle" name="settingSevenRadios" 
-                checked={preferences[0][6].preferenceValue} id="7" saveChange={saveChange}/>
-                <PreferencesSwitchGroup label="pie chart toggle" name="settingEightRadios" 
-                checked={preferences[0][7].preferenceValue} id="8" saveChange={saveChange}/>
-                
-                <PrefenrecesButtonGroup username={props.username} savePreferences={callSavePreferences}/>
-            </div>
+            <Container>
+                <Row className="justify-content-md-center">
+                    <Row className="justify-content-md-center">
+                        <Col xs lg="2">
+                            <h2>Preference {props.groupid}</h2>
+                        </Col>
+                        <Col  xs lg="2">
+                            <PreferenceSelectionDropdown handleSelect={handleSelect} groups={preferences[1]}/>
+                        </Col>
+                    </Row>
+                    <PreferencesSwitchGroup label="Charts side by side" name="settingOneRadios" 
+                    checked={preferences[0][0].preferenceValue} id="1" saveChange={saveChange}/>
+                    <PreferencesSwitchGroup label="Anomaly chart" name="settingTwoRadios" 
+                    checked={preferences[0][1].preferenceValue} id="2" saveChange={saveChange}/>                
+                    <PreferencesSwitchGroup label="chart 2 toggle" name="settingThreeRadios" 
+                    checked={preferences[0][2].preferenceValue} id="3" saveChange={saveChange}/>                
+                    <PreferencesSwitchGroup label="Chart 3 toggle" name="settingFourRadios" 
+                    checked={preferences[0][3].preferenceValue} id="4" saveChange={saveChange}/>               
+                    <PreferencesSwitchGroup label="chart 4 toggle" name="settingFiveRadios" 
+                    checked={preferences[0][4].preferenceValue} id="5" saveChange={saveChange}/>               
+                    <PreferencesSwitchGroup label="chart 5 toggle" name="settingSixRadios" 
+                    checked={preferences[0][5].preferenceValue} id="6" saveChange={saveChange}/>
+                    <PreferencesSwitchGroup label="chart 5 toggle" name="settingSevenRadios" 
+                    checked={preferences[0][6].preferenceValue} id="7" saveChange={saveChange}/>
+                    <PreferencesSwitchGroup label="pie chart toggle" name="settingEightRadios" 
+                    checked={preferences[0][7].preferenceValue} id="8" saveChange={saveChange}/>
+                    <Row className="justify-content-md-center">
+                        <Col xs lg="4">
+                            <PrefenrecesButtonGroup username={props.username} savePreferences={callSavePreferences}/>
+                        </Col>
+                    </Row>
+                </Row>
+            </Container>
             
         )
     }
