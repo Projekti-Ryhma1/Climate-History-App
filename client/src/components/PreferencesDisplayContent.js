@@ -11,36 +11,35 @@ import Col from 'react-bootstrap/Col';
 export default function PreferencesDisplayContent(props){
     const [isLoading, setIsLoading] = useState(true);
     const [preferences, setPreferences] = useState(null);
-    const [clickedSave, setClickedSave] = useState(false);
 
     var changeList = [];
 
     async function savePreferences(){
         const address = "http://localhost:3001/userpreferences/preference";
-        const preferencesArray = [...preferences];
 
-        changeList.forEach(element => {
-            console.log("Making post request");
-            axios.post(address, {
-                preferenceValue: document.getElementById(element).checked,
-                username: props.username,
-                preferenceID: element
-            })
-            .then((response) => {
-                console.log(response);
-                
-                preferencesArray[parseInt(element)-1] = {username:props.username, preferenceID:element, preferenceValue:Number(document.getElementById(element).checked)};
-                setPreferences(preferencesArray.map(element => {
-                    
-                    setClickedSave(true);
-                    return{ ...element, preferenceValue: element.preferenceValue}
-            }));
-            })
-            .catch(error => {
-                console.log(error);
+        var finished = new Promise((resolve, reject) => {
+            changeList.forEach((element, index) => {
+                console.log("Making post request");
+                axios.post(address, {
+                    preferenceValue: document.getElementById(element).checked,
+                    username: props.username,
+                    preferenceID: element,
+                    groupID: props.groupid
+                })
+                .then((response) => {
+                    console.log(response);
+                    console.log(index + " " + changeList.length);
+                    if(index === changeList.length-1) resolve();
+                })
+                .catch(error => {
+                    console.log(error);
+                });
             });
         });
-        changeList = [];
+        finished.then(() => {
+            window.location = "/";
+        });
+
     }
 
     const callSavePreferences = () => {
@@ -55,25 +54,16 @@ export default function PreferencesDisplayContent(props){
         }
         console.log(changeList);
     }
-
-    const saveSessionPreference = () => {
-        sessionStorage.setItem("preferences", JSON.stringify(preferences));
-    }
-
     
     const handleGroupSelect=(e)=>{
         let newGroupId = e; //set e value as default new groupID
 
         if(e === "new") { 
-            console.log("clicked new preference " + JSON.stringify(preferences[1].max)); 
-
             //Iterate through array finding first spot where var i is smaller than number in array
             //If no slot is found inbetween we make new one at the end.
             let foundEmpty = false;
             for (var i = 1; i <= preferences[1].length; i++){
-                console.log(preferences[1][i-1].groupID + " this is the i " + i);
                 if(preferences[1][i-1].groupID > i){
-                    console.log(i);
                     foundEmpty = true;
                     newGroupId = i;
                 }
@@ -117,33 +107,21 @@ export default function PreferencesDisplayContent(props){
     }
 
      useEffect(() => {
-        if(clickedSave){
-            console.log(preferences);
-            saveSessionPreference();
-            setClickedSave(false);
+        if(preferences != null){
+            /* console.log("loading is false"); */
+            setIsLoading(false);
         }
     }, [preferences]) 
 
     useEffect(() => {
-        if(sessionStorage.getItem("preferences") !== null){
-            setPreferences(JSON.parse(sessionStorage.getItem("preferences")));
-            console.log("Items loaded from session storage")
-        } else {   
             const address = "http://localhost:3001/userpreferences/user/" + props.username +"/" + props.groupid;
             axios.get(address)
             .then((response) => {
-                /* console.log("Loaded data from database " + response.data[0]); */
-                console.log(response.data);
                 setPreferences(response.data); 
                 sessionStorage.setItem("preferences", JSON.stringify(response.data));
             }).catch(error => {
                 alert(error);
             });
-        }
-
-        setTimeout(() =>{
-            setIsLoading(false);
-        }, 500);
     }, [])
     
     if(isLoading){

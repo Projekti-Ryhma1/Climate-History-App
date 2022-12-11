@@ -1,7 +1,6 @@
 import PreferencesDisplayContent from '../components/PreferencesDisplayContent'; 
 import { useCookies } from 'react-cookie';
 import jwtDecode from 'jwt-decode';
-import './preferences.css';
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import Spinner from "../components/Spinner";
@@ -32,7 +31,7 @@ export default function Preferences(){
     useEffect(() => {
         if(selectedVisualisation !== null && user !== null)
         {
-            console.log(selectedVisualisation);
+/*             console.log(selectedVisualisation); */
             setIsLoading(false); //Disable spinner
         }
     }, [selectedVisualisation, user])
@@ -44,7 +43,6 @@ export default function Preferences(){
     } else {
     return(
         <div>
-            This is the preferences page
             <PreferencesDisplayContent username={user} groupid={selectedVisualisation}/>
         </div>
     )

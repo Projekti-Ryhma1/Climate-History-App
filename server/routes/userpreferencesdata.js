@@ -47,4 +47,16 @@ router.post("/newpreferences", async(req, res) => {
     }
 })
 
+router.delete("/deletePreferences", async(req, res) => {
+    console.log(req.body);
+    const username = req.body.username;
+    const groupID = req.body.groupID;
+    try{
+        res.status(200).json(await database.deleteUserPreferences(username, groupID));
+    } catch(error){
+            console.error(error);
+            res.sendStatus(500);
+    }
+})
+
 module.exports = router

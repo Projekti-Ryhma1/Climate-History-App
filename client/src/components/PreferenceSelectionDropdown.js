@@ -14,8 +14,9 @@ export default function PreferenceSelectionDropdown (props) {
 
     useEffect(() => {
         let numbers = [];
+        console.log(JSON.stringify(props) + " props from dropdown");
         props.groups.forEach(element => {
-            console.log(element.groupID);
+/*             console.log(element.groupID); */
             if(element.groupID == 2){
                 setCustomViewExists(true);
             }

@@ -63,10 +63,21 @@ createNewUserPreferences = (username, groupID) => {
     });
   };
 
+deleteUserPreferences = (username, groupID) => {
+  const query = "DELETE FROM preferences WHERE username = ? AND groupID = ?"
+  return new Promise((resolve, reject) => {
+    database.query(query, [username, groupID], (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
+};
+
 module.exports = {
     getUserPreferences,
     updateUserPreference,
     createUserPreferences,
     getUserPreferenceInformation,
-    createNewUserPreferences
+    createNewUserPreferences,
+    deleteUserPreferences
 }
