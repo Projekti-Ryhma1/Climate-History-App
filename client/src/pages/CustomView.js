@@ -4,12 +4,16 @@ import Col from 'react-bootstrap/Col';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 import {useEffect, useState} from "react";
+import { useCookies } from 'react-cookie';
+import jwtDecode from 'jwt-decode';
 import Spinner from "../components/Spinner";
 import AtmosphericCO2LineChart from "../components/AtmosphericCO2LineChart";
 import ClimateLineChart from "../components/ClimateLineChart";
 import StackedLineChart from "../components/StackedLineChart";
 import Composite800kLineChart from "../components/Composite800kLineChart";
 import EmissionPieChart from "../components/EmissionPieChart";
+import VostokIceLineChart from "../components/VostokIceLineChart";
+import EvoGlobalTempBiaxiallinechart from "../components/EvoGlobalTempBiaxiallinechart";
 import ClipBoardCopy from "../components/ClipBoardCopy";
 
 export default function CustomView(){
@@ -17,29 +21,73 @@ export default function CustomView(){
     const [preferences, setPreferences] = useState(null);
     const [urlText, setUrlText] = useState("");
     const [largeDisplayCharts, setLargeDisplayCharts] = useState(1);
+    const [notFound, setNotFound] = useState(true);
+    const [cookies] = useCookies(['token']);
+    const [createdNewPage, setCreatedNewPage] = useState(false);
 
-    let { username} =useParams();
+    const customViewGroup = 2;
+
+    let { username} = useParams();
+    let loggedUser;
+
+    if(cookies.token) {
+        let decodedToken = jwtDecode(cookies.token);
+        loggedUser = decodedToken.username;
+    }
+
+    async function makeNewCustomPreferences(){
+        console.log("Creating new custom view");
+        const address = 'http://localhost:3001/userpreferences/newpreferences';
+        //Create new preference group with default customView preference ID
+        axios.post(address, {
+            username: loggedUser,
+            groupID: customViewGroup
+        })
+        .then((response) => {
+            console.log(response);
+            setCreatedNewPage(true);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
 
     useEffect(() => {  
             setUrlText(window.location.href);
-            const address = "http://localhost:3001/userpreferences/user/" + username;
+            const address = "http://localhost:3001/userpreferences/user/" + username + "/" + customViewGroup;
             axios.get(address)
             .then((response) => {
-                console.log("Loaded data from database");
-                setPreferences(response.data);
-                if(response.data[0].preferenceValue == true) { setLargeDisplayCharts(2); }
+                if(response.data[0].length === 0){
+                    console.log("No data");
+                    if(username === loggedUser){
+                        makeNewCustomPreferences();
+                    }
+                }
+                else if(response.data[0].length != 0){
+                    setPreferences(response.data[0]);
+                    if(response.data[0][0].preferenceValue == true) { setLargeDisplayCharts(2); } //Set if charts are loaded side by side on large displays
+                }
             }).catch(error => {
                 alert(error);
             });
         setTimeout(() =>{
             setIsLoading(false);
         }, 500);
-    }, [])
+    }, [createdNewPage])
+
+    useEffect(() => {
+        try{
+            if(preferences.length != 0){
+                setNotFound(false);
+            }
+        } catch { console.log("Loading...")}
+
+    }, [preferences])
 
     if(isLoading){
         return <Spinner />
     }
-    else if(preferences.length == 0){
+    else if(notFound){
         return(
             <h1>Page not found</h1>
         );
@@ -76,6 +124,16 @@ export default function CustomView(){
                 { preferences[5].preferenceValue == true &&
                     <Col>
                     <EmissionPieChart/>
+                    </Col>
+                }
+                { preferences[6].preferenceValue == true &&
+                    <Col>
+                    <VostokIceLineChart/>
+                    </Col>
+                }
+                { preferences[7].preferenceValue == true &&
+                    <Col>
+                    <EvoGlobalTempBiaxiallinechart/>
                     </Col>
                 }
                 </Row>
