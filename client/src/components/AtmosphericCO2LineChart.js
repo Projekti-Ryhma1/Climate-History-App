@@ -28,7 +28,8 @@ export default function AtmosphericCO2LineChart() {
     if (localStorage.getItem("maunaloaannual") !== null) {
       setMaunaLoaAnnual(JSON.parse(localStorage.getItem("maunaloaannual")));
     } else {
-      const address = "http://localhost:3001/data/mauna_loa_annual";
+      const address =
+        process.env.REACT_APP_API_ADDRESS + "/data/mauna_loa_annual";
       axios
         .get(address)
         .then((response) => {
@@ -42,7 +43,8 @@ export default function AtmosphericCO2LineChart() {
     if (localStorage.getItem("maunaloamonthly") !== null) {
       setMaunaLoaMonthly(JSON.parse(localStorage.getItem("maunaloamonthly")));
     } else {
-      const address = "http://localhost:3001/data/mauna_loa_monthly";
+      const address =
+        process.env.REACT_APP_API_ADDRESS + "/data/mauna_loa_monthly";
       axios
         .get(address)
         .then((response) => {
@@ -59,7 +61,8 @@ export default function AtmosphericCO2LineChart() {
     if (localStorage.getItem("antarcticice") !== null) {
       setAntarcticIce(JSON.parse(localStorage.getItem("antarcticice")));
     } else {
-      const address = "http://localhost:3001/data/antarctic_ice_core";
+      const address =
+        process.env.REACT_APP_API_ADDRESS + "/data/antarctic_ice_core";
       axios
         .get(address)
         .then((response) => {
@@ -73,7 +76,8 @@ export default function AtmosphericCO2LineChart() {
     if (localStorage.getItem("humanActivities") !== null) {
       setHumanActivities(JSON.parse(localStorage.getItem("humanActivities")));
     } else {
-      const address = "http://localhost:3001/data/human_evolution_activities";
+      const address =
+        process.env.REACT_APP_API_ADDRESS + "/data/human_evolution_activities";
       axios
         .get(address)
         .then((response) => {

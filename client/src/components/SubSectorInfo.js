@@ -8,7 +8,8 @@ export default function SubSectorInfo(props) {
     if (localStorage.getItem("subSectorData") !== null) {
       setSubSectorData(JSON.parse(localStorage.getItem("subSectorData")));
     } else {
-      const address = "http://localhost:3001/data/subsector_emissions";
+      const address =
+        process.env.REACT_APP_API_ADDRESS + "/data/subsector_emissions";
       axios
         .get(address)
         .then((response) => {
@@ -21,11 +22,10 @@ export default function SubSectorInfo(props) {
     }
   }, []);
 
-
   /**
    * sort data so that it shows correct subsector data compared to parents active sector
    */
-  let subSectors = [];  
+  let subSectors = [];
   subSectorData.map((data4) => {
     if (data4.sector === props.sector) {
       subSectors.push(data4);
