@@ -14,10 +14,12 @@ export default function NavBar() {
   if(cookies.token) {
     let decodedToken = jwtDecode(cookies.token);
     let username = decodedToken.username;
+    let customViewPath = "/custom/" + username;
 
     userRoutes = <>
             <Nav.Link href="/logout">Logout ( {username} )</Nav.Link>
             <Nav.Link href="/preferences">Preferences</Nav.Link>
+            <Nav.Link href={customViewPath}>Custom View</Nav.Link>
     </>
   }
 
@@ -28,7 +30,6 @@ export default function NavBar() {
           <Nav className="me-auto">
             <Nav.Link href="/">Temperature & CO2 Concentrations</Nav.Link>
             <Nav.Link href="/emissions">Emissions</Nav.Link>
-            <Nav.Link href="#pricing">Custom Page</Nav.Link>
             { userRoutes }
           </Nav>
         </Container>
