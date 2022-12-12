@@ -1,5 +1,8 @@
 steps:
 - name: "gcr.io/cloud-builders/npm"
+  args: ['install']
+  dir: 'client'
+- name: "gcr.io/cloud-builders/npm"
   args: ['run',"build"]
   dir: 'client'
 - name: "gcr.io/cloud-builders/gcloud"
