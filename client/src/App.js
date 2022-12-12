@@ -21,42 +21,42 @@ const mobileWindowLimit = 830;
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const [jwt_token, setUserToken] = useState(cookies.token);
-  
+
   // Base value for active routes when user is logged out
   let authRoutes = <>
-        <Route path="/login" element={<Login login={(newToken) => {
-          setUserToken(newToken);
-          let decodedToken = jwtDecode(newToken);
-          console.log("Decoded Token", decodedToken);
-          setCookie('token', newToken,
-          { path: '/', httpOnly: decodedToken.httpOnly, secure: decodedToken.secure, maxAge: decodedToken.cookieMaxAge });
-        }}/>} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/custom/:username" element={<CustomView/>} />
+    <Route path="/login" element={<Login login={(newToken) => {
+      setUserToken(newToken);
+      let decodedToken = jwtDecode(newToken);
+      console.log("Decoded Token", decodedToken);
+      setCookie('token', newToken,
+        { path: '/', httpOnly: decodedToken.httpOnly, secure: decodedToken.secure, maxAge: decodedToken.cookieMaxAge });
+    }} />} />
+    <Route path="/signup" element={<SignUp />} />
+    <Route path="/custom/:username" element={<CustomView />} />
   </>
 
-  if(jwt_token!= null) {
+  if (jwt_token != null) {
     // Active routes when user is logged in
     authRoutes = <>
-        <Route path="/logout" element={<Logout logout={(isLoggingOut) => {
-        if(isLoggingOut) {
-          removeCookie('token',{path:'/'});
+      <Route path="/logout" element={<Logout logout={(isLoggingOut) => {
+        if (isLoggingOut) {
+          removeCookie('token', { path: '/' });
           sessionStorage.removeItem("preferences");
           window.location = "/";
         }
-        }}/>} />
-        <Route path="/custom/:username" element={<CustomView/>} />
+      }} />} />
+      <Route path="/custom/:username" element={<CustomView maxWindowWidth={mobileWindowLimit}/>} />
     </>
   }
 
   return (
     <div className="App">
-      <NavBar maxWindowWidth= {mobileWindowLimit}/>
+      <NavBar maxWindowWidth={mobileWindowLimit} />
       <Routes>
-        { authRoutes }
-        <Route path='/' element={<TempCo2 maxWindowWidth={mobileWindowLimit}/>} />
-        <Route path='/emissions' element={<Emissions maxWindowWidth={mobileWindowLimit}/>} />
-        <Route path="/preferences" element={<Preferences/>} />
+        {authRoutes}
+        <Route path='/' element={<TempCo2 maxWindowWidth={mobileWindowLimit} />} />
+        <Route path='/emissions' element={<Emissions maxWindowWidth={mobileWindowLimit} />} />
+        <Route path="/preferences" element={<Preferences />} />
       </Routes>
       <Footer />
     </div>

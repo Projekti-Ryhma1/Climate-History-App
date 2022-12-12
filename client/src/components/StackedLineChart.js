@@ -23,12 +23,10 @@ import "./charts.css";
 export default function StackedLineChart(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [nationalEmissions, setnationalEmissions] = useState([]);
-  const [hideLegend, setHideLegend] = useState(false);
+  const [hideLegend, setHideLegend] = useState(true);
 
   useEffect(() => {
-    window.addEventListener('resize', function () {
-      setHideLegend(window.innerWidth < props.maxWindowWidth);
-    });
+    setHideLegend(window.innerWidth < props.maxWindowWidth);
     
     if (localStorage.getItem("nationalEmissions") !== null) {
       setnationalEmissions(

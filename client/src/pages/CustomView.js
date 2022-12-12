@@ -16,7 +16,7 @@ import VostokIceLineChart from "../components/VostokIceLineChart";
 import EvoGlobalTempBiaxiallinechart from "../components/EvoGlobalTempBiaxiallinechart";
 import ClipBoardCopy from "../components/ClipBoardCopy";
 
-export default function CustomView(){
+export default function CustomView(props){
     const [isLoading, setIsLoading] = useState(true);
     const [preferences, setPreferences] = useState(null);
     const [urlText, setUrlText] = useState("");
@@ -24,6 +24,7 @@ export default function CustomView(){
     const [notFound, setNotFound] = useState(true);
     const [cookies] = useCookies(['token']);
     const [createdNewPage, setCreatedNewPage] = useState(false);
+    const [hideLegend, setHideLegend] = useState(true);
 
     const customViewGroup = 2;
 
@@ -52,7 +53,9 @@ export default function CustomView(){
         });
     }
 
-    useEffect(() => {  
+    useEffect(() => {
+          setHideLegend(window.innerWidth < props.maxWindowWidth);
+
             setUrlText(window.location.href);
             const address = "http://localhost:3001/userpreferences/user/" + username + "/" + customViewGroup;
             axios.get(address)
@@ -113,7 +116,7 @@ export default function CustomView(){
                 }  
                 { preferences[3].preferenceValue == true &&
                     <Col>
-                    <StackedLineChart/>
+                    <StackedLineChart maxWindowWidth={props.maxWindowWidth}/>
                     </Col>
                 }
                 { preferences[4].preferenceValue == true &&
