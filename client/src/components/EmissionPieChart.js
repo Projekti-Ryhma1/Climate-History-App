@@ -67,25 +67,14 @@ export default function EmissionPieChart(props) {
     [setActiveIndex]
   );
 
-  function renderSubSector(){
-    if(!isMobileView){
-    return( <>
-    <SubSectorInfo sector={sectorName}></SubSectorInfo>
-    </>
-    );
-    } else {
-      return( <>
-<div></div>
-        <SubSectorInfo sector={sectorName} margin={"auto"}></SubSectorInfo>
-        </>
-        );
-    }
-  }
-
   const renderPie = (
     <>
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={1000} height={500}>
+      <ResponsiveContainer width={300} height={200}>
+      <SubSectorInfo sector={sectorName} width={200} height={200}/>
+      </ResponsiveContainer>
+      <ResponsiveContainer width="100%" height={500}
+      >
+        <PieChart className="donut" width="50%" height={500} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
           <Pie
             activeIndex={activeIndex}
             activeShape={<RenderActiveShape sectorName={sectorName}/>}
@@ -95,6 +84,7 @@ export default function EmissionPieChart(props) {
             cy="50%"
             paddingAngle="1"
             onMouseEnter={onPieEnter}
+            
           >
             {sectorData.map((entry, index) => (
               <Cell key={++index} fill={COLORS[index % COLORS.length]} />
@@ -102,8 +92,8 @@ export default function EmissionPieChart(props) {
           </Pie>
         </PieChart>
       </ResponsiveContainer>
-      <SubSectorInfo sector={sectorName}></SubSectorInfo>
     </>
+    
   );
 
 

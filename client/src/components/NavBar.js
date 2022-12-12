@@ -11,10 +11,12 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 export default function NavBar(props) {
   const [cookies] = useCookies(['token']);
-  const [isMobileView, setMobileSize] = useState(false);
+  const [isMobileView, setMobileSize] = useState(window.innerWidth < props.maxWindowWidth); //Shows warning in VSCode??
   let username = "";
+  let customViewPath;
   if (cookies.token) {
     username = jwtDecode(cookies.token).username;
+    customViewPath = "/custom/" + username;
   }
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export default function NavBar(props) {
               <NavDropdown title={"User ( " + username + " )"}>
                 <ListGroup>
                   <ListGroup.Item action href="/preferences">Preferences</ListGroup.Item>
+                  <ListGroup.Item action href={customViewPath}>Custom View</ListGroup.Item>
                   <ListGroup.Item action href="/logout">Logout</ListGroup.Item>
                 </ListGroup>
               </NavDropdown>
