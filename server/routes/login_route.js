@@ -12,7 +12,7 @@ router.post('/', async(req, res) => {
   console.log(username);
   if(username.length>0 && password.length>0) {
   try {
-    const checkPreferences = await prefs.getUserPreferences(username); //Checks if user has preferences in database
+    const checkPreferences = await prefs.getUserPreferences(username, 1); //Checks if user has preferences in database. 1 is default preferences that cant be deleted
 
     let result = await login.userLogin(username).then(function(resp) {
       return resp;
@@ -68,6 +68,27 @@ router.post('/', async(req, res) => {
     res.status(400).send({ code: 4, message: 'Username or password empty'});
   }
 
+});
+
+router.get("/selectedPreference/:username", async(req, res) => {
+  try{
+      res.status(200).json(await login.getUserSelectedPreference(req.params.username));
+  } catch(error){
+      console.error(error);
+      res.sendStatus(500);
+  }
+});
+
+router.post("/newSelectedPreference", async(req, res) => {
+  console.log(req.body);
+  const username = req.body.username;
+  const groupID = req.body.groupID;
+  try{
+    res.status(200).json(await login.updateUserSelectedPreference(username, groupID));
+  } catch(error){
+      console.error(error);
+      res.sendStatus(500);
+  }
 });
 
 module.exports = router;

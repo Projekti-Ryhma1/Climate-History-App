@@ -7,10 +7,11 @@ import {
   YAxis,
   CartesianGrid,
   Legend,
+  Label,
 } from "recharts";
 import axios from "axios";
 import Spinner from "./Spinner";
-import "./ClimateLineChart.css";
+import "./charts.css";
 
 /** TODO
  *  Modify tooltiplabel to look nicer
@@ -28,11 +29,11 @@ export default function StackedLineChart() {
         JSON.parse(localStorage.getItem("nationalEmissions"))
       );
     } else {
-      const address = "http://localhost:3001/data/co2_emissions_national";
+      const address =
+        process.env.REACT_APP_API_ADDRESS + "/data/co2_emissions_national";
       axios
         .get(address)
         .then((response) => {
-          console.log(response.data);
           setnationalEmissions(response.data);
           localStorage.setItem(
             "nationalEmissions",
@@ -75,35 +76,44 @@ export default function StackedLineChart() {
     for (const line of payload) {
       if (line.dataKey === tooltip) {
         return (
-          <div>
-            <p>{line.name}</p>
-            <p>{line.value}</p>
+          <div className="custom-tooltip">
+            <p className="label">{line.name}</p>
+            <p className="desc">{line.value}</p>
           </div>
         );
       }
     }
     return null;
   };
+  const tooltipFormatter = ({ value, name }) => {
+    if (name === tooltip) return <CustomTooltip />;
+    return;
+  };
 
   const renderChart = (
     <>
-      <p> Co2 Emission by country</p>
+      <div>
+        <p className="headline"> Co2 Emission By Country</p>
+        <p className="description">
+          Shows the CO2 emissions of each country over time. Y-Axis is by
+          million tonnes of CO2. X-Axis is years.
+        </p>
+      </div>
       <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         data={nationalEmissions}
         width={800}
-        height={400}
+        height={1200}
       >
-        {/* <Legend verticalAlign="bottom" /> */}
         <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip content={<CustomTooltip />} />
-        <XAxis
-          dataKey="MtCO2/year"
-          interval={0}
-          angle={-55}
-          textAnchor="end"
-        ></XAxis>
-        <YAxis />
+        <Tooltip
+          tooltipFormatter={tooltipFormatter}
+          content={<CustomTooltip />}
+        />
+        <XAxis dataKey="MtCO2/year" interval="preserveEnd">
+          <Label value="YEAR" offset={-10} position="insideBottom" />
+        </XAxis>
+        <YAxis label={{ value: "MtCO2", angle: -90, position: "insideLeft" }} />
         {keyArray.map((keyId, i) => {
           return (
             <Line
@@ -118,6 +128,7 @@ export default function StackedLineChart() {
             ></Line>
           );
         })}
+        <Legend verticalAlign="bottom" />
       </LineChart>
     </>
   );
