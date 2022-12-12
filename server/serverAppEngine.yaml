@@ -1,0 +1,4 @@
+runtime: nodejs16
+service: server
+env_variables: 
+  INSTANCE_UNIX_SOCKET: /cloudsql/climate-history-project-40407:europe-north1:climatedata
