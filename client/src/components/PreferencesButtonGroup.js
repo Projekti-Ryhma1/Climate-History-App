@@ -29,11 +29,49 @@ export default function PreferencesButtonGroup(props){
         })
         handleClose();
     }
+
+    async function handleGroupDeletion(){
+        const address = 'http://localhost:3001/login/newSelectedPreference'
+        axios.post(address, {
+            username: props.username,
+            groupID: 1
+        })
+        .then((response) => {
+            console.log(response);
+            sessionStorage.removeItem("preferences"); //Remove preferences from local storage after selection of new preference group is succesfull
+            window.location.reload(false); //Reload window to load the components again to get new preference group
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+    
+    async function deletePreferenceGroup(){
+        const address = 'http://localhost:3001/userpreferences/deletePreferences'
+        console.log(props.groupid)
+        axios.delete(address, {
+            data: {
+                username: props.username,
+                groupID: props.groupid
+            }
+        })
+        .then((response) => {
+            console.log(response.status)
+            if(response.status==200){
+                handleGroupDeletion();
+            }
+        }).catch(error => {
+            alert(error);
+        });
+    }
+
     return(
         <div className="div-button-group">
-            <Button>Exit button</Button>
             <Button onClick={props.savePreferences}>Save button</Button>
             <Button variant="danger" onClick={handleShow}> Delete user </Button>
+            { props.groupid != 1 && 
+                <Button variant="danger" onClick={deletePreferenceGroup}>Delete preferences</Button>
+            }
             <Modal 
             show={show} 
             backdrop="static" 
@@ -47,7 +85,7 @@ export default function PreferencesButtonGroup(props){
                 <Modal.Footer>
                     <Button variant="primary" onClick={handleClose}> Close </Button>
                     <Button variant="danger" onClick={deleteUser}> Delete User </Button>
-                    </Modal.Footer>
+                </Modal.Footer>
             </Modal>
         </div>
     );

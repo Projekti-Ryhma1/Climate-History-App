@@ -16,7 +16,8 @@ export default function SignUp() {
         axios.post(URL, {
           username: username,
           password: password,
-          email: email
+          email: email,
+          selectedPreference: '1'
         }).then((resp) => {
           if(resp.data.serverStatus===2) {
           alert("User created successfully");

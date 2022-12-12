@@ -7,7 +7,7 @@ export default function Footer(){
     return (
         <footer className="page-footer font-small blue pt-4">
             <Container fluid='true' className="text-center text-md-left">
-                <Row>
+                <Row className="w-100">
                     <Col md="6">
                         <h5 className="text-uppercase">Footer Content</h5>
                         <p>Here you can use rows and columns to organize your footer content.</p>

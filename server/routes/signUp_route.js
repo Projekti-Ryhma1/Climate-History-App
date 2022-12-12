@@ -7,10 +7,11 @@ router.post('/', async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const email = req.body.email;
+  const selectedPreference = req.body.selectedPreference;
   const noEmptyValues = username.length > 0 && password.length > 0 && email.length > 0;
   if (noEmptyValues && username.length < 10) {
     try {
-      const userData = await signUp.createUser(username, password, email); // Creates new user to the database
+      const userData = await signUp.createUser(username, password, email, selectedPreference); // Creates new user to the database
       await prefs.createUserPreferences(username); // Creates preferences for the new user
       res.status(200).json(userData);
 
