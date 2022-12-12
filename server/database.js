@@ -1,21 +1,14 @@
 const mysql = require("mysql");
 
 const config = {
-  port: process.env.DB_PORT,
   user: process.env.DB_USER, // e.g. 'my-db-user'
   password: process.env.DB_PASS, // e.g. 'my-db-password'
   database: process.env.DB_DATABASE, // e.g. 'my-database'
-
-  //socketPath no currently needed...
-  socketPath: process.env.INSTANCE_UNIX_SOCKET, // e.g. '/cloudsql/project:region:instance'
 };
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV == "production") {
   console.log("Running from cloud. Connecting to DB through GCP socket.");
-  config.socketPath = process.env.INSTANCE_UNIX_SOCKET;
-}
-
-// When running from localhost, get the config from .env
-else {
+  config.socketPath = process.env.GAE_DB_SOCKET
+}else {
   console.log("Running from localhost. Connecting to DB directly.");
   config.host = process.env.DB_HOST;
 }

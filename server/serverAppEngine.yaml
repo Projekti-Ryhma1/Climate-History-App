@@ -1,4 +1,8 @@
 runtime: nodejs16
 service: server
 env_variables: 
-  INSTANCE_UNIX_SOCKET: /cloudsql/climate-history-project-40407:europe-north1:climatedata
+  GAE_DB_SOCKET: /cloudsql/climate-history-project-40407:europe-north1:climatedata
+  DB_DATABASE: Climate_History_data
+  DB_USER: climatedata 
+  DB_PASS: ProjektiRyhmä1
+  JWT_TOKEN: token
