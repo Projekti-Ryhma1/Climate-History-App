@@ -72,9 +72,9 @@ export default function EmissionPieChart(props) {
       <ResponsiveContainer width={300} height={200}>
       <SubSectorInfo sector={sectorName} width={200} height={200}/>
       </ResponsiveContainer>
-      <ResponsiveContainer width="100%" height={500}
+      <ResponsiveContainer width="100%" height={500} 
       >
-        <PieChart className="donut" width="50%" height={500} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
+        <PieChart width="50%" height={500} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
           <Pie
             activeIndex={activeIndex}
             activeShape={<RenderActiveShape sectorName={sectorName}/>}

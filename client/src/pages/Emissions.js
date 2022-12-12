@@ -4,7 +4,7 @@ export default function Emissions(props){
 
     return(
         <div>
-            <EmissionPieChart maxWindowWidth={props.maxWindowWidth}/>
+            <EmissionPieChart maxWindowWidth={props.maxWindowWidth} />
         </div>
     )
 }

@@ -22,7 +22,6 @@
 }
 .recharts-wrapper svg {
   flex: 1;
-  text-anchor: "middle";
 }
 .label-percentage {
   font-family: arial;
