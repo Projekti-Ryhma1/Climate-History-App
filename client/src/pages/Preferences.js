@@ -16,7 +16,7 @@ export default function Preferences(){
             let decodedToken = jwtDecode(cookies.token);
             let username = decodedToken.username;
             setUser(username);
-            const address = "http://localhost:3001/login/selectedPreference/" + username;
+            const address =  REACT_APP_API_ADDRESS + "/login/selectedPreference/" + username;
 
             axios.get(address)
             .then((response) => {

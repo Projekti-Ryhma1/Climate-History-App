@@ -29,7 +29,8 @@ export default function StackedLineChart() {
         JSON.parse(localStorage.getItem("nationalEmissions"))
       );
     } else {
-      const address = "http://localhost:3001/data/co2_emissions_national";
+      const address =
+        process.env.REACT_APP_API_ADDRESS + "/data/co2_emissions_national";
       axios
         .get(address)
         .then((response) => {

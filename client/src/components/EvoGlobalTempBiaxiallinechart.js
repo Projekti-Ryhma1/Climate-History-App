@@ -23,7 +23,8 @@ export default function EvoGlobalTempBiaxiallinechart() {
     if (localStorage.getItem("evoglobaltemp2myr")) {
       setEvoData(JSON.parse(localStorage.getItem("evoglobaltemp2myr")));
     } else {
-      const address = "http://localhost:3001/data/evo_of_global_temp_2m_years";
+      const address =
+        process.env.REACT_APP_API_ADDRESS + "/data/evo_of_global_temp_2m_years";
 
       axios
         .get(address)
@@ -38,7 +39,8 @@ export default function EvoGlobalTempBiaxiallinechart() {
     if (localStorage.getItem("humanActivities") !== null) {
       setHumanActivities(JSON.parse(localStorage.getItem("humanActivities")));
     } else {
-      const address = "http://localhost:3001/data/human_evolution_activities";
+      const address =
+        process.env.REACT_APP_API_ADDRESS + "/data/human_evolution_activities";
       axios
         .get(address)
         .then((response) => {
