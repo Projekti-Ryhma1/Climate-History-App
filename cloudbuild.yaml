@@ -1,4 +1,4 @@
 steps:
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ["clientAppEngine", "deploy"]
+  args: ["app", "deploy", "client/clientAppEngine.yaml", "server/serverAppEngine.yaml"]
 timeout: "1600s"
