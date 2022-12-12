@@ -10,14 +10,19 @@ import RenderActiveShape from "./RenderActiveShape";
  *  Make subsector info a modal window or something nicer?
  */
 
-export default function EmissionPieChart() {
+export default function EmissionPieChart(props) {
   const COLORS = ["#ffff00", "#FF8042", "#996633", "#009900"];
+  const [isMobileView, setMobileSize] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [sectorName, setSectorName] = useState("");
   const [sectorData, setSectorData] = useState([]);
 
   useEffect(() => {
+    window.addEventListener('resize', function () {
+      setMobileSize(window.innerWidth < props.maxWindowWidth);
+    });
+
     if (localStorage.getItem("sectorData") !== null) {
       setSectorData(JSON.parse(localStorage.getItem("sectorData")));
     } else {
@@ -61,6 +66,22 @@ export default function EmissionPieChart() {
     },
     [setActiveIndex]
   );
+
+  function renderSubSector(){
+    if(!isMobileView){
+    return( <>
+    <SubSectorInfo sector={sectorName}></SubSectorInfo>
+    </>
+    );
+    } else {
+      return( <>
+<div></div>
+        <SubSectorInfo sector={sectorName} margin={"auto"}></SubSectorInfo>
+        </>
+        );
+    }
+  }
+
   const renderPie = (
     <>
       <ResponsiveContainer width="100%" height="100%">
@@ -84,6 +105,9 @@ export default function EmissionPieChart() {
       <SubSectorInfo sector={sectorName}></SubSectorInfo>
     </>
   );
+
+
+
   return (
     <div className="container-chart-pie">
       {isLoading ? <Spinner /> : renderPie}

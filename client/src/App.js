@@ -13,6 +13,10 @@ import TempCo2 from './pages/TempCo2';
 import Preferences from './pages/Preferences';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+//Limit when mobile view is used (NavBar, StackedLineChart etc.)
+//Smaller value = mobile view
+const mobileWindowLimit = 830;
+
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const [jwt_token, setUserToken] = useState(cookies.token);
@@ -44,11 +48,11 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar/>
+      <NavBar maxWindowWidth= {mobileWindowLimit}/>
       <Routes>
         { authRoutes }
-        <Route path='/' element={<TempCo2/>} />
-        <Route path='/emissions' element={<Emissions/>} />
+        <Route path='/' element={<TempCo2 maxWindowWidth={mobileWindowLimit}/>} />
+        <Route path='/emissions' element={<Emissions maxWindowWidth={mobileWindowLimit}/>} />
         <Route path="/preferences" element={<Preferences/>} />
       </Routes>
       <Footer />

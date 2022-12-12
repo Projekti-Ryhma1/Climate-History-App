@@ -5,13 +5,13 @@ import Composite800kLineChart from "../components/Composite800kLineChart";
 import VostokIceLineChart from "../components/VostokIceLineChart";
 import EvoGlobalTempBiaxiallinechart from "../components/EvoGlobalTempBiaxiallinechart";
 
-export default function TempCo2(){
+export default function TempCo2(props){
     return(
         <div>
             <Composite800kLineChart/>
             <AtmosphericCO2LineChart/>
             <ClimateLineChart/>
-            <StackedLineChart/>
+            <StackedLineChart maxWindowWidth={props.maxWindowWidth}/>
             <VostokIceLineChart/>
             <EvoGlobalTempBiaxiallinechart/>
             <></>

@@ -9,11 +9,9 @@ import { useEffect, useState } from 'react';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-const maxWindowWidth = 830;
-
-export default function NavBar() {
+export default function NavBar(props) {
   const [cookies] = useCookies(['token']);
-  const [isMobileView, setMobileSize] = useState(window.innerWidth < maxWindowWidth);
+  const [isMobileView, setMobileSize] = useState(false);
   let username = "";
   if (cookies.token) {
     username = jwtDecode(cookies.token).username;
@@ -21,8 +19,7 @@ export default function NavBar() {
 
   useEffect(() => {
     window.addEventListener('resize', function () {
-      const windowSize = window.innerWidth;
-      setMobileSize(windowSize < maxWindowWidth);
+      setMobileSize(window.innerWidth < props.maxWindowWidth);
     });
   }, [])
 

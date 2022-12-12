@@ -20,14 +20,16 @@ import "./charts.css";
  *  zoom?
  */
 
-const maxWindowWidth = 700; // Max size when Legend is not visible
-
-export default function StackedLineChart() {
+export default function StackedLineChart(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [nationalEmissions, setnationalEmissions] = useState([]);
-  const [hideLegend, setHideLegend] = useState(window.innerWidth < maxWindowWidth);
+  const [hideLegend, setHideLegend] = useState(false);
 
   useEffect(() => {
+    window.addEventListener('resize', function () {
+      setHideLegend(window.innerWidth < props.maxWindowWidth);
+    });
+    
     if (localStorage.getItem("nationalEmissions") !== null) {
       setnationalEmissions(
         JSON.parse(localStorage.getItem("nationalEmissions"))
@@ -47,12 +49,6 @@ export default function StackedLineChart() {
           alert(error);
         });
     }
-
-    window.addEventListener('resize', function () {
-      const windowSize = window.innerWidth;
-      setHideLegend(windowSize < maxWindowWidth);
-    });
-
 
     setTimeout(() => {
       //give 0.5s time for data to load
