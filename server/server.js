@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.send(200);
+  res.status(200).send({message:"hello app engine"});
   res.end();
 });
 
