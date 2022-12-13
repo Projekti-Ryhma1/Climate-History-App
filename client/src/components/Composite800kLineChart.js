@@ -1,9 +1,10 @@
+import "./charts.css";
 import { useEffect, useState } from "react";
-import { Legend, Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
+import { Legend, Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import Spinner from "./Spinner";
 import axios from "axios";
 
-export default function Composite800kLineChart(){
+export default function Composite800kLineChart() {
     const [isLoading, setIsLoading] = useState(true);
     const [compositeData, setCompositeData] = useState([])
 
@@ -28,7 +29,8 @@ export default function Composite800kLineChart(){
     
     const renderChart = (
         <>
-            <p>Hello world chart</p>
+            <p className="headline">Ice core 800k year composite study CO2 measurement</p>
+            <ResponsiveContainer width={'100%'} height={400}>
             <LineChart
                 margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
                 data={compositeData}
@@ -51,6 +53,7 @@ export default function Composite800kLineChart(){
                     <Tooltip />
                     <Legend verticalAlign="top" height={26}/>
             </LineChart>
+            </ResponsiveContainer>
         </>
     );
 

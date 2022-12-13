@@ -8,11 +8,12 @@ import {
   ComposedChart,
   Scatter,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 import Button from "react-bootstrap/Button";
-import "../components/charts.css";
+import "./charts.css";
 
 export default function AtmosphericCO2LineChart() {
   const [showMonthlyData, setShowMonthlyData] = useState(false);
@@ -141,6 +142,7 @@ export default function AtmosphericCO2LineChart() {
 
   const renderChart = (
     <>
+      <ResponsiveContainer width={'100%'} height={400}>
       <ComposedChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         width={800}
@@ -266,6 +268,7 @@ export default function AtmosphericCO2LineChart() {
 
         <Legend />
       </ComposedChart>
+      </ResponsiveContainer>
       <Button onClick={handleMonthlyData} disabled={showIceData}>
         Show monthly data
       </Button>
