@@ -1,19 +1,12 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen, waitFor } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import CustomView from "./CustomView"
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import {MemoryRouter} from 'react-router-dom'
-import { act } from 'react-dom/test-utils';
 
-/* test('not found should be rendered', () => {
-    const container = render(<CustomView/>)
-    screen.debug();
-
-    expect(container.getAllByDisplayValue("Not found"))
-}) */
 it('Should return not found', async () => {
-    const badRoute = '/custom/49234723846352'
+    const badRoute = '/custom/49234723846352321åäö3' //Route used for bad test, user should not exist
         render(
             <MemoryRouter initialEntries={[badRoute]}>
                 <Routes>
@@ -27,7 +20,7 @@ it('Should return not found', async () => {
 });
 
 it('Should render custom page of esa', async () => {
-    const goodRoute = '/custom/esa'
+    const goodRoute = '/custom/esa' //Route used for good test, user should exist
         render(
             <MemoryRouter initialEntries={[goodRoute]}>
                 <Routes>
