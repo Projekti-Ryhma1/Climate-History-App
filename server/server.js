@@ -29,6 +29,23 @@ app.use("/login", loginRoute);
 app.use("/deleteuser", deleteUserRouter);
 app.use("/signup", signUp);
 const PORT = process.env.PORT || 3001;
+/*
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}...`);
-});
+});*/
+
+
+//--------------testing----------------------
+let serverInstance = null;
+
+module.exports = {
+  start: function() {
+    serverInstance = app.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}...`);
+    });
+  },
+  close: function() {
+    serverInstance.close();
+  }
+  //------------testing---------------------
+}
