@@ -24,7 +24,6 @@ export default function CustomView(props){
     const [notFound, setNotFound] = useState(true);
     const [cookies] = useCookies(['token']);
     const [createdNewPage, setCreatedNewPage] = useState(false);
-    const [hideLegend, setHideLegend] = useState(true);
 
     const customViewGroup = 2;
 
@@ -54,8 +53,6 @@ export default function CustomView(props){
     }
 
     useEffect(() => {
-          setHideLegend(window.innerWidth < props.maxWindowWidth);
-
             setUrlText(window.location.href);
             const address = "http://localhost:3001/userpreferences/user/" + username + "/" + customViewGroup;
             axios.get(address)

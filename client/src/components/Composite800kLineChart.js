@@ -29,7 +29,7 @@ export default function Composite800kLineChart() {
     
     const renderChart = (
         <>
-            <p className="headline">Hello world chart</p>
+            <p className="headline">Ice core 800k year composite study CO2 measurement</p>
             <ResponsiveContainer width={'100%'} height={400}>
             <LineChart
                 margin={{ top: 20, right: 20, left: 20, bottom: 20 }}

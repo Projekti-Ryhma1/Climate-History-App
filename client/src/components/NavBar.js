@@ -46,6 +46,7 @@ export default function NavBar(props) {
         result =
           <ListGroup>
             <ListGroup.Item action href="/preferences">Preferences</ListGroup.Item>
+            <ListGroup.Item action href={customViewPath}>Custom View</ListGroup.Item>
             <ListGroup.Item action href="/logout">Logout</ListGroup.Item>
           </ListGroup>
       }
