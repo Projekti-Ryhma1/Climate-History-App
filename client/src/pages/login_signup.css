@@ -1,25 +1,27 @@
-.user_headline {
+/*User's sign up an login css data for visualization*/
+
+.user_headline { /*Main headline*/
     margin: 10px;
 }
 
-.user_label {
+.user_label { /*Label for user input*/
     margin:10px;
     display: inline-block;
     width: 100px;
     text-align: right;
 }
 
-.user_input {
+.user_input { /*User input*/
     margin:10px;
     margin-right: auto;
     margin-left: auto;
 }
 
-.user_button {
+.user_button {  /*User button for sending the given data*/
     margin: 10px;
     background-color: white;
 }
 
-.user_errormsg {
+.user_errormsg { /*Error message*/
     color: darkred;
 }

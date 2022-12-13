@@ -14,15 +14,14 @@ import Preferences from './pages/Preferences';
 import CustomView from './pages/CustomView';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-//Limit when mobile view is used (NavBar, StackedLineChart etc.)
-//Smaller value = mobile view
-const mobileWindowLimit = 830;
+const mobileWindowLimit = 830; // maxWindowWidth: Horizontal window width limit for more mobile friendly solution
 
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
-  const [jwt_token, setUserToken] = useState(cookies.token);
+  const [cookies, setCookie, removeCookie] = useCookies(['token']); // React's own cookie "state"
+  const [jwt_token, setUserToken] = useState(cookies.token); // State for holding the token value
 
   // Base value for active routes when user is logged out
+  // Encrypts the token taken from the login and transfroms it to browser's cookie
   let authRoutes = <>
     <Route path="/login" element={<Login login={(newToken) => {
       setUserToken(newToken);
@@ -35,8 +34,10 @@ function App() {
     <Route path="/custom/:username" element={<CustomView />} />
   </>
 
+  // When token exists
   if (jwt_token != null) {
     // Active routes when user is logged in
+    // When user is logging out -> removes cookie token and preferences from the local storage
     authRoutes = <>
       <Route path="/logout" element={<Logout logout={(isLoggingOut) => {
         if (isLoggingOut) {
@@ -49,6 +50,8 @@ function App() {
     </>
   }
 
+    // maxWindowWidth: sets the props for the Navbar, TempCo2 and Emissions.
+    // {authRoutes}: determines which Navbar buttons are visible based on current state.
   return (
     <div className="App">
       <NavBar maxWindowWidth={mobileWindowLimit} />

@@ -11,7 +11,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 export default function NavBar(props) {
   const [cookies] = useCookies(['token']);
-  const [isMobileView, setMobileSize] = useState(window.innerWidth < props.maxWindowWidth); //Shows warning in VSCode??
+  const [isMobileView, setMobileSize] = useState(window.innerWidth < props.maxWindowWidth); // Sets the boolean value for window width
   let username = "";
   let customViewPath;
   if (cookies.token) {
@@ -19,20 +19,23 @@ export default function NavBar(props) {
     customViewPath = "/custom/" + username;
   }
 
-  useEffect(() => {
+  useEffect(() => { // Sets listener for the current window's horizontal size and tells when mobile view is used
     window.addEventListener('resize', function () {
       setMobileSize(window.innerWidth < props.maxWindowWidth);
     });
   }, [])
 
+  // Sets which navbar buttons are visible when user is logged in or is not logged in.
+  // Normal view: Creates all the buttons for a single User dropdown.
+  // Mobile view: Creates all the user buttons to be listed in a main dropdown as an item.
   function checkRoutes() {
     let result;
     if (cookies.token) { // User is logged in
-      if (!isMobileView) {
+      if (!isMobileView) { // Normal view
         result =
           <Nav className="lt-auto" variant="dark" >
             <Navbar.Toggle aria-controls="navbar-normal" />
-            <Navbar.Collapse id="navbar-normal" >
+            <Navbar.Collapse >
               <NavDropdown title={"User ( " + username + " )"}>
                 <ListGroup>
                   <ListGroup.Item action href="/preferences">Preferences</ListGroup.Item>
@@ -68,13 +71,12 @@ export default function NavBar(props) {
     return result;
   }
 
-
   if (!isMobileView) { // Desktop window
     return (
       <Navbar bg="dark" variant="dark">
         <Container>
           <Row>
-            <Nav className="me-auto">
+            <Nav className="navbar-normal">
               <Navbar.Brand href="/" >Climate Data</Navbar.Brand>
               <Nav.Link href="/">Temperature & CO2 Concentrations</Nav.Link>
               <Nav.Link href="/emissions">Emissions</Nav.Link>
@@ -91,7 +93,7 @@ export default function NavBar(props) {
         <Container>
           <Navbar.Brand href="/" >Climate Data</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-mobile" />
-          <Navbar.Collapse id="navbar-mobile">
+          <Navbar.Collapse className="navbar-mobile">
             <ListGroup>
               <ListGroup.Item action href="/">Temperature & CO2 Concentrations</ListGroup.Item>
               <ListGroup.Item action href="/emissions">Emissions</ListGroup.Item>

@@ -125,7 +125,7 @@ export default function StackedLineChart(props) {
           content={<CustomTooltip />}
         />
         <XAxis dataKey="MtCO2/year" interval="preserveEnd">
-          <Label value="YEAR" offset={-10} position="insideBottom" />
+          <Label value="YEAR" offset={-10} position="insideBottom"/>
         </XAxis>
         <YAxis label={{ value: "MtCO2", angle: -90, position: "insideLeft" }} />
         {keyArray.map((keyId, i) => {
@@ -142,7 +142,7 @@ export default function StackedLineChart(props) {
             ></Line>
           );
         })}
-        {!hideLegend&&<Legend/>}
+        {!hideLegend&&<Legend style={{fontSize:"20px"}}/>}
       </LineChart>
       </ResponsiveContainer>
     </>

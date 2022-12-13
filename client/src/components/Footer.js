@@ -9,8 +9,11 @@ export default function Footer(){
             <Container fluid='true' className="text-center text-md-left">
                 <Row className="w-100">
                     <Col md="6">
-                        <h5 className="text-uppercase">Footer Content</h5>
-                        <p>Here you can use rows and columns to organize your footer content.</p>
+                        <h5 className="text-uppercase">About us</h5>
+                        <p>
+                        Ilmastonmuutos on vakava asia, siksi haluamme tuoda helposti ymmärrettävän visualisoidun näkymän ilmastonmuutoksesta 
+                        käyttäjälle. Projektin tarkoituksena on kasvattaa tietoisuutta ilmastonmuutoksesta ja ihmisen vaikutuksesta ympäristöömme.
+                        </p>
                     </Col>
 
                     <hr className="clearfix w-100 d-md-none pb-0"/>

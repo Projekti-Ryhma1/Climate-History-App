@@ -1,11 +1,11 @@
-.container-chart {
+.container-chart { /*Container*/
   margin: auto;
   padding: 10px;
 }
 .recharts-wrapper {
   margin: auto;
 }
-.custom-tooltip {
+.custom-tooltip { /*Custom tooltip*/
   margin: 0;
   line-height: 24px;
   border: 1px solid #f5f5f5;
@@ -20,25 +20,23 @@
   margin: 0;
   color: #000;
 }
-.desc {
-  margin: 0;
-  color: rgb(0, 0, 0);
-}
-.headline{
+.headline{  /*Chart headline*/
   color: #000;
   margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
   max-width: 800px;
+  font-size: 18px;
 }
-.description{
+.description{  /*Chart description*/
   color: #000;
   margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
   max-width: 800px;
+  font-size: 16px;
 }
-.recharts-responsive-container { /* ResponsiveContainer */
+.recharts-responsive-container { /*ResponsiveContainer*/
   align-self: center;
   max-width: 800px; /* Max width for the chart */
   margin: auto;
