@@ -26,7 +26,7 @@ export default function EmissionPieChart(props) {
     if (localStorage.getItem("sectorData") !== null) {
       setSectorData(JSON.parse(localStorage.getItem("sectorData")));
     } else {
-      const address = "http://localhost:3001/data/sector_emissions";
+      const address =  process.env.REACT_APP_API_ADDRESS + "/data/sector_emissions";
       axios
         .get(address)
         .then((response) => {

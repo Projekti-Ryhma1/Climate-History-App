@@ -1,0 +1,5 @@
+node_modules
+.git
+CREDENTIALS_JSON_FILE.json
+.gitingnore
+.env

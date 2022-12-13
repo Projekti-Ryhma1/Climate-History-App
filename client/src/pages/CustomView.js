@@ -37,7 +37,7 @@ export default function CustomView(props){
 
     async function makeNewCustomPreferences(){
         console.log("Creating new custom view");
-        const address = 'http://localhost:3001/userpreferences/newpreferences';
+        const address = process.env.REACT_APP_API_ADDRESS + '/userpreferences/newpreferences';
         //Create new preference group with default customView preference ID
         axios.post(address, {
             username: loggedUser,
@@ -54,7 +54,7 @@ export default function CustomView(props){
 
     useEffect(() => {
             setUrlText(window.location.href);
-            const address = "http://localhost:3001/userpreferences/user/" + username + "/" + customViewGroup;
+            const address = process.env.REACT_APP_API_ADDRESS + "/userpreferences/user/" + username + "/" + customViewGroup;
             axios.get(address)
             .then((response) => {
                 if(response.data[0].length === 0){

@@ -15,7 +15,8 @@ export default function ClimateLineChart() {
     if (localStorage.getItem("globalMonthly") !== null) {
       setGlobalMonthly(JSON.parse(localStorage.getItem("globalMonthly")));
     } else {
-      const address = "http://localhost:3001/data/global_monthly";
+      const address =
+        process.env.REACT_APP_API_ADDRESS + "/data/global_monthly";
       axios
         .get(address)
         .then((response) => {
@@ -27,15 +28,20 @@ export default function ClimateLineChart() {
         });
     }
     if (localStorage.getItem("northernHemisphere2000yr") !== null) {
-      setNorthernHemisphere2000yr(JSON.parse(localStorage.getItem("northernHemisphere2000yr")));
+      setNorthernHemisphere2000yr(
+        JSON.parse(localStorage.getItem("northernHemisphere2000yr"))
+      );
     } else {
       const address1 =
-        "http://localhost:3001/data/northern_hemisphere_2000_year";
+      process.env.REACT_APP_API_ADDRESS+"/data/northern_hemisphere_2000_year";
       axios
         .get(address1)
         .then((response) => {
           setNorthernHemisphere2000yr(response.data);
-          localStorage.setItem("northernHemisphere2000yr", JSON.stringify(response.data));
+          localStorage.setItem(
+            "northernHemisphere2000yr",
+            JSON.stringify(response.data)
+          );
         })
         .catch((error) => {
           alert(error);

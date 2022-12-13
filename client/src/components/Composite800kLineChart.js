@@ -12,7 +12,7 @@ export default function Composite800kLineChart() {
             if(localStorage.getItem("antarcticcomposite") !== null){
                 setCompositeData(JSON.parse(localStorage.getItem("antarcticcomposite")));
             } else {
-                const address = "http://localhost:3001/data/antarctic_composite";
+                const address =   process.env.REACT_APP_API_ADDRESS + "/data/antarctic_composite";
                 axios.get(address)
                 .then((response) => {
                     setCompositeData(response.data);
