@@ -67,8 +67,8 @@ export default function TempCo2(props){
     }
     else if(cookies.token) return(
         <Container fluid>
-            <h1>Climate data</h1>
-            <Row lg={largeDisplayCharts} md="1" sm="1">
+            <h1 div className="tempco2_headline">Climate data</h1>
+            <Row div className="tempco2" lg={largeDisplayCharts} md="1" sm="1">
                 { preferences[1].preferenceValue == true && /* checks if the preference is toggled and renders chart if true */
                     <Col md="1">
                         <ClimateLineChart/>
