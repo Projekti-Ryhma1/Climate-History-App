@@ -10,12 +10,12 @@ import EvoGlobalTempBiaxiallinechart from "../components/EvoGlobalTempBiaxiallin
 export default function TempCo2(props){
     return(
         <div style={{marginTop: '10px', marginBottom: '50px'}}>
-            <ClimateLineChart/>
-            <AtmosphericCO2LineChart/>
-            <VostokIceLineChart/>
             <Composite800kLineChart/>
-            <EvoGlobalTempBiaxiallinechart/>
+            <AtmosphericCO2LineChart/>
+            <ClimateLineChart/>
             <StackedLineChart maxWindowWidth={props.maxWindowWidth}/>
+            <VostokIceLineChart/>
+            <EvoGlobalTempBiaxiallinechart/>
             <></>
         </div>
         

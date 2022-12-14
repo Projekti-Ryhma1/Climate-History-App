@@ -6,7 +6,7 @@ const server = require('../server');
 
 const URL = 'http://localhost:3001'
 
-describe('Climatedata API Tests', function () {
+describe('Climatedata API Tests', function () { // Tests one of the routes in climatedata route
 
     describe('GET /data/global_monthly', function () {
         // send http request
