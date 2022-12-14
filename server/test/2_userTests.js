@@ -69,5 +69,4 @@ describe('User API Tests', function () {
                 })
         });
     });
-
 });
