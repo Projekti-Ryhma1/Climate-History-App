@@ -12,6 +12,7 @@ export default function PreferencesButtonGroup(props) {
 
   const navigate = useNavigate();
 
+  //deletes user
   async function deleteUser() {
     const address = process.env.REACT_APP_API_ADDRESS + "/deleteuser";
     axios
@@ -32,6 +33,7 @@ export default function PreferencesButtonGroup(props) {
     handleClose();
   }
 
+  //handler after preference group is deleted
   async function handleGroupDeletion() {
     const address =
       process.env.REACT_APP_API_ADDRESS + "/login/newSelectedPreference";
@@ -50,6 +52,7 @@ export default function PreferencesButtonGroup(props) {
       });
   }
 
+  //Sends axios call to delete current preference group
   async function deletePreferenceGroup() {
     const address =
       process.env.REACT_APP_API_ADDRESS + "/userpreferences/deletePreferences";

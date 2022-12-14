@@ -8,6 +8,7 @@ export default function Composite800kLineChart() {
     const [isLoading, setIsLoading] = useState(true);
     const [compositeData, setCompositeData] = useState([])
 
+        //Load data from localstorage if exists, else load from server
         useEffect(() => {
             if(localStorage.getItem("antarcticcomposite") !== null){
                 setCompositeData(JSON.parse(localStorage.getItem("antarcticcomposite")));
@@ -29,10 +30,11 @@ export default function Composite800kLineChart() {
     
     const renderChart = (
         <>
-            <p className="headline">Ice core 800k year composite study CO2 measurement</p>
-            <ResponsiveContainer width={'100%'} height={400}>
+            <p className="headline">Ice core 800k year composite study CO2 measurement V6</p>
+            <p className="description">CO2 concentrations based on Ice core drilling in Antarctica. Time span of ~800,000 years.</p>
+            <ResponsiveContainer width={'100%'} height={420}>
             <LineChart
-                margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
+                margin={{ top: 20, right: 20, left: 20, bottom: 40 }}
                 data={compositeData}
                 width={800}
                 height={400}>
@@ -47,11 +49,11 @@ export default function Composite800kLineChart() {
                         dataKey="year"
                         reversed={true}
                         angle={-55}
-                        tickMargin={20}
-                        interval={75}
+                        tickMargin={25}
+                        interval={110}
                     />
                     <Tooltip />
-                    <Legend verticalAlign="top" height={26}/>
+                    <Legend verticalAlign="top" height={26}/> {/* Add chart legend to top */}
             </LineChart>
             </ResponsiveContainer>
         </>
