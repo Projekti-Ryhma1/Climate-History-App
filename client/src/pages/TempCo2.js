@@ -104,7 +104,7 @@ export default function TempCo2(props){
     )
     else{
         return(
-            <div className="tempco2" style={{marginTop: '10px', marginBottom: '50px'}}>
+            <div className="tempco2">
             <ClimateLineChart/>
             <AtmosphericCO2LineChart/>
             <VostokIceLineChart/>

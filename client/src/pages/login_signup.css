@@ -1,7 +1,12 @@
 /*User's sign up an login css data for visualization*/
+.user_form {
+    text-align: center;
+    font-size: 20px;
+}
 
 .user_headline { /*Main headline*/
     margin: 10px;
+    text-align: center;
 }
 
 .user_label { /*Label for user input*/
@@ -9,6 +14,7 @@
     display: inline-block;
     width: 100px;
     text-align: right;
+    
 }
 
 .user_input { /*User input*/

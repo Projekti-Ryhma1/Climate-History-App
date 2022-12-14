@@ -13,6 +13,8 @@ import TempCo2 from './pages/TempCo2';
 import Preferences from './pages/Preferences';
 import CustomView from './pages/CustomView';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/esm/Container';
+import Row from 'react-bootstrap/esm/Row';
 
 const mobileWindowLimit = 830; // maxWindowWidth: Horizontal window width limit for more mobile friendly solution
 
@@ -23,7 +25,7 @@ function App() {
   // Base value for active routes when user is logged out
   // Encrypts the token taken from the login and transfroms it to browser's cookie
   let authRoutes = <>
-    <Route path="/login" element={<Login login={(newToken) => {
+    <Route className="user_route" path="/login" element={<Login login={(newToken) => {
       setUserToken(newToken);
       let decodedToken = jwtDecode(newToken);
       console.log("Decoded Token", decodedToken);
@@ -52,18 +54,22 @@ function App() {
 
     // maxWindowWidth: sets the props for the Navbar, TempCo2 and Emissions.
     // {authRoutes}: determines which Navbar buttons are visible based on current state.
-  return (
-    <div className="App">
-      <NavBar maxWindowWidth={mobileWindowLimit} />
-      <Routes >
-        {authRoutes}
-        <Route path='/' element={<TempCo2 maxWindowWidth={mobileWindowLimit}/>} />
-        <Route path='/emissions' element={<Emissions maxWindowWidth={mobileWindowLimit}/>} />
-        <Route path="/preferences" element={<Preferences />} />
-      </Routes>
-      <Footer />
-    </div>
-  );
-}
+    return (
+      <div className="App">
+        <Container className="App-container" fluid>
+          <Row className="vh100">
+        <NavBar maxWindowWidth={mobileWindowLimit} />
+        <Routes>
+          {authRoutes}
+          <Route path='/' element={<TempCo2 maxWindowWidth={mobileWindowLimit} />} />
+          <Route path='/emissions' element={<Emissions maxWindowWidth={mobileWindowLimit} />} />
+          <Route path="/preferences" element={<Preferences />} />
+        </Routes>
+        </Row>
+        </Container>
+        <Footer />
+      </div>
+    );
+  }
 
 export default App;

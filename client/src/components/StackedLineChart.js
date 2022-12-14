@@ -110,7 +110,11 @@ export default function StackedLineChart(props) {
       <div>
         <p className="headline"> Co2 Emission By Country (V8)</p>
         <p className="description">
-
+        Global fossil CO2 emissions (excluding cement carbonation) in 2021 are returning towards 
+        their 2019 levels after decreasing 5.4 % in 2020. Fossil CO2 emissions significantly decreased 
+        in 23 countries during the decade 2010–2019. Altogether, these 23 countries contribute to about 
+        2.5 GtC yr−1 fossil fuel CO2 emissions over the last decade, only about one-quarter of world 
+        CO2 fossil emissions.
         </p>
       </div>
       <ResponsiveContainer width={'100%'} height={checkHeight()}>

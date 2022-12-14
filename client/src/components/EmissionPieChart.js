@@ -71,10 +71,12 @@ export default function EmissionPieChart(props) {
 
   const renderPie = (
     <>
+    <div>
       <p className="headline"> CO2 emissions by sectors (V9)</p>
       <p className="description">
-
+        Emmission piechart is to view how much carbondioxide humanity spread in the air on average in different gategories.
       </p>
+      </div>
       <ResponsiveContainer width={300} height={200}>
         <SubSectorInfo sector={sectorName} width={200} height={200} />
       </ResponsiveContainer>
