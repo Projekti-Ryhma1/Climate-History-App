@@ -1,10 +1,10 @@
 import EmissionPieChart from "../components/EmissionPieChart";
 
-export default function Emissions(){
+export default function Emissions(props){
 
     return(
         <div>
-            <EmissionPieChart/>
+            <EmissionPieChart maxWindowWidth={props.maxWindowWidth} />
         </div>
     )
 }
