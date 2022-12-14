@@ -53,7 +53,6 @@ describe('User API Tests', function () {
         })
     })
 
-
     describe('DEL /deleteuser', function () { // Delete user
 
         it('should delete user: ' + username, function (done) {

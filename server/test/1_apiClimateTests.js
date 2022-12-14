@@ -8,15 +8,6 @@ const URL = 'http://localhost:3001'
 
 describe('Climatedata API Tests', function () {
 
-    /*
-    before(function() { //Starts the server
-    server.start();
-    })
-    after(function() { //Stops the server
-        server.close();
-    });*/
-
-
     describe('GET /data/global_monthly', function () {
         // send http request
         it('should return global_monthly data', function (done) {
