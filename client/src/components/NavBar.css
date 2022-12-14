@@ -3,10 +3,12 @@
     align-items: center;
     text-align: left;
     margin: auto;
+    text-align: center;
 }
 
 .navbar-mobile {
     color: black;
     align-items: center;
     margin: auto;
+    text-align: center;
 }

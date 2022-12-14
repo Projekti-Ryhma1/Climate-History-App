@@ -1,3 +1,4 @@
+import './TempCo2.css';
 import AtmosphericCO2LineChart from "../components/AtmosphericCO2LineChart";
 import ClimateLineChart from "../components/ClimateLineChart";
 import StackedLineChart from "../components/StackedLineChart";
@@ -103,13 +104,13 @@ export default function TempCo2(props){
     )
     else{
         return(
-            <div style={{marginTop: '10px', marginBottom: '50px'}}>
-                <Composite800kLineChart/>
-                <AtmosphericCO2LineChart/>
-                <ClimateLineChart/>
-                <StackedLineChart maxWindowWidth={props.maxWindowWidth}/>
-                <VostokIceLineChart/>
-                <EvoGlobalTempBiaxiallinechart/>
+            <div className="tempco2">
+            <ClimateLineChart/>
+            <AtmosphericCO2LineChart/>
+            <VostokIceLineChart/>
+            <Composite800kLineChart/>
+            <EvoGlobalTempBiaxiallinechart/>
+            <StackedLineChart maxWindowWidth={props.maxWindowWidth}/>
                 <></>
             </div>
         )

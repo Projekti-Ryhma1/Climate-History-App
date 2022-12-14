@@ -27,6 +27,7 @@
   margin-bottom: 20px;
   max-width: 800px;
   font-size: 18px;
+  text-align: center;
 }
 .description{  /*Chart description*/
   color: #000;
@@ -35,6 +36,7 @@
   margin-bottom: 20px;
   max-width: 800px;
   font-size: 16px;
+  text-align: center;
 }
 .recharts-responsive-container { /*ResponsiveContainer*/
   align-self: center;

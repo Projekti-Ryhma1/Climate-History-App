@@ -5,13 +5,19 @@ import Spinner from "./Spinner";
 import "./charts.css";
 import Button from 'react-bootstrap/Button';;
 
+// V1 Global historical surface temperature anomalies from January 1850 onwards
+// V2 Northern Hemisphere 2,000-year temperature reconstruction
+
 export default function ClimateLineChart() {
   const [isLoading, setIsLoading] = useState(true);
   const [hideLine, setHideLine] = useState(true);
   const [xAxisMin, setXAxisMin] = useState(1850);
   const [globalMonthly, setGlobalMonthly] = useState([]);
   const [northernHemisphere2000yr, setNorthernHemisphere2000yr] = useState([]);
+  const [description, setDescription] = useState();
   useEffect(() => {
+    setDescription("HadCRUT5 is a gridded dataset of global historical surface temperature anomalies relative to a 1961-1990 reference period.");
+
     if (localStorage.getItem("globalMonthly") !== null) {
       setGlobalMonthly(JSON.parse(localStorage.getItem("globalMonthly")));
     } else {
@@ -54,17 +60,25 @@ export default function ClimateLineChart() {
   }, []);
 
   function handleClick() {
-    if (hideLine) {
+    if (hideLine) { // V2
+      setDescription("Reconstructed Northern Hemisphere temperatures for the past 2,000 years"+
+      "calculated by combining low-resolution proxies with tree-ring data, using a wavelet transform"+
+      " technique to achieve timescale-dependent processing of the data.");
       setHideLine(false); //if line is hidden show line..
       setXAxisMin(0);
-    } else {
+    } else { // V1
+      setDescription("HadCRUT5 is a gridded dataset of global historical surface temperature"+
+      " anomalies relative to a 1961-1990 reference period.");
       setHideLine(true); //if line is shown hide line..
       setXAxisMin(1850);
     }
   }
   const renderChart = (
     <>
-      <p className="headline">Global Temperature Anomaly</p>
+      <p className="headline">Global Temperature Anomaly (V1, V2)</p>
+      <p className="description">
+      {description}
+      </p>
       <ResponsiveContainer width={'100%'} height={400}>
       <LineChart
       role="ClimateLineChart"

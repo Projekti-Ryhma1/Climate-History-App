@@ -45,7 +45,7 @@ export default function SignUp() {
 
   // Return value for the parent of the function
   return (
-    <form>
+    <form className="user_form">
       <h2 className="user_headline">Create User</h2>
       <div>
         <label className="user_label">Username:</label>

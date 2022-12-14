@@ -15,6 +15,10 @@ import Spinner from "../components/Spinner";
 import Button from "react-bootstrap/Button";
 import "./charts.css";
 
+// V3 Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958
+// V4 Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements
+// V10 Human Evolution and Activities
+
 export default function AtmosphericCO2LineChart() {
   const [showMonthlyData, setShowMonthlyData] = useState(false);
   const [showIceData, setShowIceData] = useState(false);
@@ -24,8 +28,15 @@ export default function AtmosphericCO2LineChart() {
   const [antarcticIce, setAntarcticIce] = useState([]);
   const [humanActivities, setHumanActivities] = useState([]);
   const [xAxisMin, setXAxisMin] = useState(1958);
+  const [description, setDescription] = useState();
 
   useEffect(() => {
+    setDescription("We have confidence that the CO2 measurements made at the Mauna Loa Observatory reflect truth about "+
+    "our global atmosphere. The main reasons for that confidence are: The Observatory near the summit of Mauna Loa, at an "+
+    "altitude of 3400 m, is well situated to measure air masses that are representative of very large areas. All of the "+
+    "measurements are rigorously and very frequently calibrated. Ongoing comparisons of independent measurements at the "+
+    "same site allow an estimate of the accuracy, which is generally better than 0.2 ppm."); // V3
+    
     if (localStorage.getItem("maunaloaannual") !== null) {
       setMaunaLoaAnnual(JSON.parse(localStorage.getItem("maunaloaannual")));
     } else {
@@ -107,8 +118,14 @@ export default function AtmosphericCO2LineChart() {
       //if not showing monthly data show it
       setShowMonthlyData(true);
     }
+    setDescription("We have confidence that the CO2 measurements made at the Mauna Loa Observatory reflect truth about "+
+    "our global atmosphere. The main reasons for that confidence are: The Observatory near the summit of Mauna Loa, at an "+
+    "altitude of 3400 m, is well situated to measure air masses that are representative of very large areas. All of the "+
+    "measurements are rigorously and very frequently calibrated. Ongoing comparisons of independent measurements at the "+
+    "same site allow an estimate of the accuracy, which is generally better than 0.2 ppm."); // V3
+
   }
-  function handleIceCoreData() {
+  function handleIceCoreData() { // V10
     if (showIceData) {
       //hide monthly data
       setShowMonthlyData(false);
@@ -122,6 +139,9 @@ export default function AtmosphericCO2LineChart() {
       setXAxisMin(1006);
       setShowIceData(true);
     }
+    setDescription("The CO2 records presented here are derived from three ice cores obtained at Law Dome, East Antarctica "+
+    "from 1987 to 1993. The Law Dome site satisfies many of the desirable characteristics of an ideal ice core site for "+
+    "atmospheric CO2 reconstructions including negligible melting of the ice sheet surface and low concentrations"); // V4
   }
 
   const CustomTooltip = ({ payload, label, active }) => {
@@ -142,6 +162,10 @@ export default function AtmosphericCO2LineChart() {
 
   const renderChart = (
     <>
+    <p className="headline">Atmospheric CO2 concentrations from Mauna Loa (V3,V4,V10)</p>
+        <p className="description">
+          {description}
+        </p>
       <ResponsiveContainer width={'100%'} height={400}>
       <ComposedChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}

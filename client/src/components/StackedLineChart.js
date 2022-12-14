@@ -20,6 +20,8 @@ import "./charts.css";
  *  zoom?
  */
 
+// V8 CO2 emissions by country
+
 export default function StackedLineChart(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [nationalEmissions, setnationalEmissions] = useState([]);
@@ -106,10 +108,13 @@ export default function StackedLineChart(props) {
   const renderChart = (
     <>
       <div>
-        <p className="headline"> Co2 Emission By Country</p>
+        <p className="headline"> Co2 Emission By Country (V8)</p>
         <p className="description">
-          Shows the CO2 emissions of each country over time. Y-Axis is by
-          million tonnes of CO2. X-Axis is years.
+        Global fossil CO2 emissions (excluding cement carbonation) in 2021 are returning towards 
+        their 2019 levels after decreasing 5.4 % in 2020. Fossil CO2 emissions significantly decreased 
+        in 23 countries during the decade 2010–2019. Altogether, these 23 countries contribute to about 
+        2.5 GtC yr−1 fossil fuel CO2 emissions over the last decade, only about one-quarter of world 
+        CO2 fossil emissions.
         </p>
       </div>
       <ResponsiveContainer width={'100%'} height={checkHeight()}>
