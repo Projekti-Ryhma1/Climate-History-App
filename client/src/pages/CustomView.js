@@ -30,11 +30,13 @@ export default function CustomView(props){
     let { username} = useParams();
     let loggedUser;
 
+    //If user is logged in get loggedin users username
     if(cookies.token) {
         let decodedToken = jwtDecode(cookies.token);
         loggedUser = decodedToken.username;
     }
 
+    //The function that calls api to make new preferences for custom page
     async function makeNewCustomPreferences(){
         console.log("Creating new custom view");
         const address = process.env.REACT_APP_API_ADDRESS + '/userpreferences/newpreferences';
@@ -60,7 +62,7 @@ export default function CustomView(props){
                 if(response.data[0].length === 0){
                     console.log("No data");
                     if(username === loggedUser){
-                        makeNewCustomPreferences();
+                        makeNewCustomPreferences(); //If no data makes new preference with groupid assigned for customview, if username is same as logged in user.
                     }
                 }
                 else if(response.data[0].length != 0){
@@ -101,39 +103,39 @@ export default function CustomView(props){
                 <ClipBoardCopy copyText={urlText}/>
             </Row>
             <Row lg={largeDisplayCharts} md="1" sm="1">
-                { preferences[1].preferenceValue == true &&
-                    <Col>
-                    <AtmosphericCO2LineChart/>
+                { preferences[1].preferenceValue == true && /* checks if the preference is toggled and renders chart if true */
+                    <Col md="1">
+                        <ClimateLineChart/>
                     </Col>
                 }
                 { preferences[2].preferenceValue == true &&
-                    <Col>
-                    <ClimateLineChart/>
+                    <Col  md="1">
+                        <AtmosphericCO2LineChart/>
                     </Col>
                 }  
                 { preferences[3].preferenceValue == true &&
-                    <Col>
-                    <StackedLineChart maxWindowWidth={props.maxWindowWidth}/>
+                    <Col  md="1">
+                        <VostokIceLineChart/>
                     </Col>
                 }
                 { preferences[4].preferenceValue == true &&
-                    <Col>
+                    <Col  md="1">
                     <Composite800kLineChart/>
                     </Col>
                 }
                 { preferences[5].preferenceValue == true &&
-                    <Col>
-                    <EmissionPieChart/>
+                    <Col  md="1">
+                        <EvoGlobalTempBiaxiallinechart/>
                     </Col>
                 }
                 { preferences[6].preferenceValue == true &&
-                    <Col>
-                    <VostokIceLineChart/>
+                    <Col  md="1">
+                        <StackedLineChart maxWindowWidth={props.maxWindowWidth}/>
                     </Col>
                 }
                 { preferences[7].preferenceValue == true &&
-                    <Col>
-                    <EvoGlobalTempBiaxiallinechart/>
+                    <Col  md="1">
+                        <EmissionPieChart/>
                     </Col>
                 }
                 </Row>

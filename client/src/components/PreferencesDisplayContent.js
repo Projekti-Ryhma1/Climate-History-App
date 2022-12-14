@@ -13,7 +13,8 @@ export default function PreferencesDisplayContent(props) {
   const [preferences, setPreferences] = useState(null);
 
   var changeList = [];
-
+  
+  //saves preferences
   async function savePreferences() {
     const address =
       process.env.REACT_APP_API_ADDRESS + "/userpreferences/preference";
@@ -47,6 +48,7 @@ export default function PreferencesDisplayContent(props) {
     savePreferences();
   };
 
+  //Saves when any preference radio is changed
   const saveChange = (e) => {
     if (changeList.includes(e.target.id)) {
       changeList.splice(changeList.indexOf(e.target.id), 1);
@@ -56,6 +58,7 @@ export default function PreferencesDisplayContent(props) {
     console.log(changeList);
   };
 
+  //Handles when user changes preference group
   const handleGroupSelect = (e) => {
     let newGroupId = e; //set e value as default new groupID
 
@@ -163,49 +166,49 @@ export default function PreferencesDisplayContent(props) {
             saveChange={saveChange}
           />
           <PreferencesSwitchGroup
-            label="Anomaly chart"
+            label="Climate chart"
             name="settingTwoRadios"
             checked={preferences[0][1].preferenceValue}
             id="2"
             saveChange={saveChange}
           />
           <PreferencesSwitchGroup
-            label="chart 2 toggle"
+            label="Atmospheric CO2 concentrations"
             name="settingThreeRadios"
             checked={preferences[0][2].preferenceValue}
             id="3"
             saveChange={saveChange}
           />
           <PreferencesSwitchGroup
-            label="Chart 3 toggle"
+            label="Vostok Ice Core CO2"
             name="settingFourRadios"
             checked={preferences[0][3].preferenceValue}
             id="4"
             saveChange={saveChange}
           />
           <PreferencesSwitchGroup
-            label="chart 4 toggle"
+            label="Ice core 800k year Composite"
             name="settingFiveRadios"
             checked={preferences[0][4].preferenceValue}
             id="5"
             saveChange={saveChange}
           />
           <PreferencesSwitchGroup
-            label="chart 5 toggle"
+            label="Evolution of global temperature"
             name="settingSixRadios"
             checked={preferences[0][5].preferenceValue}
             id="6"
             saveChange={saveChange}
           />
           <PreferencesSwitchGroup
-            label="chart 5 toggle"
+            label="CO2 emissions by country"
             name="settingSevenRadios"
             checked={preferences[0][6].preferenceValue}
             id="7"
             saveChange={saveChange}
           />
           <PreferencesSwitchGroup
-            label="pie chart toggle"
+            label="CO2 emissions by sectors"
             name="settingEightRadios"
             checked={preferences[0][7].preferenceValue}
             id="8"
