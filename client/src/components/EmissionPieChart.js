@@ -10,6 +10,8 @@ import RenderActiveShape from "./RenderActiveShape";
  *  Make subsector info a modal window or something nicer?
  */
 
+// V9 CO2 emissions by sectors
+
 export default function EmissionPieChart(props) {
   const COLORS = ["#ffff00", "#FF8042", "#996633", "#009900"];
   const [isMobileView, setMobileSize] = useState(false);
@@ -26,7 +28,7 @@ export default function EmissionPieChart(props) {
     if (localStorage.getItem("sectorData") !== null) {
       setSectorData(JSON.parse(localStorage.getItem("sectorData")));
     } else {
-      const address =  process.env.REACT_APP_API_ADDRESS + "/data/sector_emissions";
+      const address = process.env.REACT_APP_API_ADDRESS + "/data/sector_emissions";
       axios
         .get(address)
         .then((response) => {
@@ -69,22 +71,26 @@ export default function EmissionPieChart(props) {
 
   const renderPie = (
     <>
+      <p className="headline"> CO2 emissions by sectors (V9)</p>
+      <p className="description">
+
+      </p>
       <ResponsiveContainer width={300} height={200}>
-      <SubSectorInfo sector={sectorName} width={200} height={200}/>
+        <SubSectorInfo sector={sectorName} width={200} height={200} />
       </ResponsiveContainer>
-      <ResponsiveContainer width="100%" height={500} 
+      <ResponsiveContainer width="100%" height={500}
       >
         <PieChart width="50%" height={500} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
           <Pie
             activeIndex={activeIndex}
-            activeShape={<RenderActiveShape sectorName={sectorName}/>}
+            activeShape={<RenderActiveShape sectorName={sectorName} />}
             data={sectorData}
             dataKey="emissions"
             cx="50%"
             cy="50%"
             paddingAngle="1"
             onMouseEnter={onPieEnter}
-            
+
           >
             {sectorData.map((entry, index) => (
               <Cell key={++index} fill={COLORS[index % COLORS.length]} />
@@ -93,7 +99,7 @@ export default function EmissionPieChart(props) {
         </PieChart>
       </ResponsiveContainer>
     </>
-    
+
   );
 
 

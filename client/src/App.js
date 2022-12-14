@@ -31,7 +31,7 @@ function App() {
         { path: '/', httpOnly: decodedToken.httpOnly, secure: decodedToken.secure, maxAge: decodedToken.cookieMaxAge });
     }} />} />
     <Route path="/signup" element={<SignUp />} />
-    <Route path="/custom/:username" element={<CustomView />} />
+    <Route path="/custom/:username" element={<CustomView maxWindowWidth={mobileWindowLimit}/>} />
   </>
 
   // When token exists
@@ -55,10 +55,10 @@ function App() {
   return (
     <div className="App">
       <NavBar maxWindowWidth={mobileWindowLimit} />
-      <Routes>
+      <Routes >
         {authRoutes}
-        <Route path='/' element={<TempCo2 maxWindowWidth={mobileWindowLimit} />} />
-        <Route path='/emissions' element={<Emissions maxWindowWidth={mobileWindowLimit} />} />
+        <Route path='/' element={<TempCo2 maxWindowWidth={mobileWindowLimit}/>} />
+        <Route path='/emissions' element={<Emissions maxWindowWidth={mobileWindowLimit}/>} />
         <Route path="/preferences" element={<Preferences />} />
       </Routes>
       <Footer />
