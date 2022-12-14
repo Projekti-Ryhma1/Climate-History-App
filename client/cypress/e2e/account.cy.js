@@ -6,9 +6,9 @@ describe('create user, login, delete user', () => {
       cy.get('[id=userName]').type('1234')
       cy.get('[id=userPassword]').type('1234')
       cy.get('[id=userEmail]').type('1234@1234.com')
-      cy.findByRole('button', {  name: /create/i}).click()
+      cy.findByRole('button', {  name: /create/i}).should('be.enabled').click()
+      cy.url().should('contain', '/login')
       //Login
-      cy.visit('localhost:3000/login')
       cy.get('[id=userName]').type('1234')
       cy.get('[id=userPassword]').type('1234')
       cy.findByRole('button', {  name: /login/i}).click()
