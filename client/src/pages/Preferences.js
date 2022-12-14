@@ -11,6 +11,7 @@ export default function Preferences(){
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    //Gets user group and name and sets them
     useEffect(() => {
         if(cookies.token) {
             let decodedToken = jwtDecode(cookies.token);
@@ -28,10 +29,10 @@ export default function Preferences(){
         }
     }, [])
 
+    //Stops loading once user and group is loaded
     useEffect(() => {
         if(selectedVisualisation !== null && user !== null)
         {
-/*             console.log(selectedVisualisation); */
             setIsLoading(false); //Disable spinner
         }
     }, [selectedVisualisation, user])

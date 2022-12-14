@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './login_signup.css'; // Shared .css file for the login and signup functions
 import axios from 'axios';
+import Button from "react-bootstrap/Button";
 
 const URL = process.env.REACT_APP_API_ADDRESS + "/login"; // Adress for the login in .env file (local and production)
 
@@ -37,14 +38,14 @@ export default function Login(props) { // Props contain the token given from the
       <h2 className="user_headline">Login</h2>
       <div>
         <label className="user_label">Username:</label>
-        <input className="user_input" type="text" maxLength={20} required onChange={e => setUserName(e.target.value)} />
+        <input id="userName" className="user_input" type="text" maxLength={20} required onChange={e => setUserName(e.target.value)} />
       </div>
       <div>
         <label className="user_label">Password:</label>
-        <input className="user_input" type="password" maxLength={20} required onChange={e => setPassword(e.target.value)} />
+        <input id="userPassword" className="user_input" type="password" maxLength={20} required onChange={e => setPassword(e.target.value)} />
       </div>
       <div>
-        <button className="user_button" onClick={SendLoginData} disabled={username.length === 0 || password.length === 0}>Login</button>
+        <Button className="user_button" onClick={SendLoginData} disabled={username.length === 0 || password.length === 0}>Login</Button>
       </div>
       <div>
         <p className="user_errormsg">{errorMessage}</p>

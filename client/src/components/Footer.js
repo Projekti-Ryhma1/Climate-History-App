@@ -11,8 +11,8 @@ export default function Footer(){
                     <Col md="6">
                         <h5 className="text-uppercase">About us</h5>
                         <p>
-                        Ilmastonmuutos on vakava asia, siksi haluamme tuoda helposti ymmärrettävän visualisoidun näkymän ilmastonmuutoksesta 
-                        käyttäjälle. Projektin tarkoituksena on kasvattaa tietoisuutta ilmastonmuutoksesta ja ihmisen vaikutuksesta ympäristöömme.
+                        Climate change is a serious issue, that is why we want to bring you an easy-to-understand visualised view of climate change. 
+                        This project aims to raise awareness of climate change and the human impact on our environment.
                         </p>
                     </Col>
 

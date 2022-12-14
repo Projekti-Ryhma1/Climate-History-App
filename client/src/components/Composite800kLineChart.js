@@ -10,12 +10,13 @@ export default function Composite800kLineChart() {
     const [isLoading, setIsLoading] = useState(true);
     const [compositeData, setCompositeData] = useState([])
 
-    useEffect(() => {
-        if (localStorage.getItem("antarcticcomposite") !== null) {
-            setCompositeData(JSON.parse(localStorage.getItem("antarcticcomposite")));
-        } else {
-            const address = process.env.REACT_APP_API_ADDRESS + "/data/antarctic_composite";
-            axios.get(address)
+        //Load data from localstorage if exists, else load from server
+        useEffect(() => {
+            if(localStorage.getItem("antarcticcomposite") !== null){
+                setCompositeData(JSON.parse(localStorage.getItem("antarcticcomposite")));
+            } else {
+                const address =   process.env.REACT_APP_API_ADDRESS + "/data/antarctic_composite";
+                axios.get(address)
                 .then((response) => {
                     setCompositeData(response.data);
                     localStorage.setItem("antarcticcomposite", JSON.stringify(response.data));
@@ -54,12 +55,12 @@ export default function Composite800kLineChart() {
                         dataKey="year"
                         reversed={true}
                         angle={-55}
-                        tickMargin={20}
-                        interval={75}
+                        tickMargin={25}
+                        interval={110}
                     />
                     <Tooltip />
-                    <Legend verticalAlign="top" height={26} />
-                </LineChart>
+                    <Legend verticalAlign="top" height={26}/> {/* Add chart legend to top */}
+            </LineChart>
             </ResponsiveContainer>
         </>
     );
