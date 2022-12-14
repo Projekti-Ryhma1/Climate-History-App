@@ -92,10 +92,11 @@ export default function CustomView(props){
     }
     else if(notFound){
         return(
-            <h1>Page not found</h1>
+            <h1 className='customview_headline'>Page not found</h1>
         );
     }
     else return(
+        <div className='customview'>
         <Container fluid>
             <Row>
                 <h1>Custom view of {username}</h1>
@@ -141,5 +142,6 @@ export default function CustomView(props){
                 }
                 </Row>
         </Container>
+        </div>
     );
 }

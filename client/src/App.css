@@ -5,3 +5,7 @@
     display: grid;
     grid-template-rows: auto 1fr auto;
   }
+
+  .customview {
+    text-align: center;
+  }
