@@ -33,7 +33,7 @@ function App() {
         { path: '/', httpOnly: decodedToken.httpOnly, secure: decodedToken.secure, maxAge: decodedToken.cookieMaxAge });
     }} />} />
     <Route path="/signup" element={<SignUp />} />
-    <Route path="/custom/:username" element={<CustomView maxWindowWidth={mobileWindowLimit}/>} />
+    <Route path="/custom/:username" element={<CustomView className='customview' maxWindowWidth={mobileWindowLimit}/>} />
   </>
 
   // When token exists
@@ -48,7 +48,7 @@ function App() {
           window.location = "/";
         }
       }} />} />
-      <Route path="/custom/:username" element={<CustomView maxWindowWidth={mobileWindowLimit}/>} />
+      <Route path="/custom/:username" element={<CustomView className='customview' maxWindowWidth={mobileWindowLimit}/>} />
     </>
   }
 
