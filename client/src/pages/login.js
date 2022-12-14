@@ -34,7 +34,7 @@ export default function Login(props) { // Props contain the token given from the
 
   // Return value for the parent of the function
   return (
-    <form>
+    <form className="user_form">
       <h2 className="user_headline">Login</h2>
       <div>
         <label className="user_label">Username:</label>
