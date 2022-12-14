@@ -4,6 +4,7 @@ const database = require('../models/deleteUser_model');
 
 router.delete("/", async (req, res) => {
     const username = req.body.username;
+    console.log("Deleting user: "+username);
     try{
     res.status(200).json(await database.deleteUser(username));
     } catch (error) {
