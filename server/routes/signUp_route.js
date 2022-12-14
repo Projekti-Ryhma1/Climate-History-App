@@ -4,11 +4,11 @@ const signUp = require('../models/signUp_model');
 const prefs = require("../models/preferencesdata_model");
 
 router.post('/', async (req, res) => {
-  const username = req.body.username;
+  const username = req.body.username; // Requested body values from the client side
   const password = req.body.password;
   const email = req.body.email;
   const selectedPreference = req.body.selectedPreference;
-  const noEmptyValues = username.length > 0 && password.length > 0 && email.length > 0;
+  const noEmptyValues = username.length > 0 && password.length > 0 && email.length > 0; // Boolean for checking empty values
   if (noEmptyValues && username.length < 10) {
     try {
       const userData = await signUp.createUser(username, password, email, selectedPreference); // Creates new user to the database
@@ -18,6 +18,7 @@ router.post('/', async (req, res) => {
     } catch (error) {
       const errorMessage = error.sqlMessage;
 
+       // Reads string value of the error message and makes a custom error message
       if (errorMessage.includes('users.PRIMARY')) {
         console.log("Username is already taken");
         res.status(400).send({ code: 0, message: "Username is already taken" });
@@ -31,10 +32,10 @@ router.post('/', async (req, res) => {
       }
 
     }
-  } else if (!noEmptyValues) {
+  } else if (!noEmptyValues) { // Some of the requested values are empty
     console.log("Username, password or email is empty");
     res.status(400).send({ code: 0, message: "Username, password or email is empty" });
-  } else {
+  } else { // Final possible outcome: username is too long
     console.log("Username is too long");
     res.status(400).send({ code: 0, message: "Username is too long" });
   }

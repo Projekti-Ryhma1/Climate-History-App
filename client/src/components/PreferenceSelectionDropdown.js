@@ -11,7 +11,7 @@ export default function PreferenceSelectionDropdown (props) {
     const [customViewKey] = useState(2);
 
 
-
+    //maps all preference groups into buttons and sets if customview group button is rendered 
     useEffect(() => {
         let numbers = [];
         console.log(JSON.stringify(props) + " props from dropdown");

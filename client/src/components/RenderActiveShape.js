@@ -21,7 +21,7 @@ export default function RenderActiveShape(props) {
   const my = cy + (outerRadius + 30) * sin;
   const ex = mx + (cos >= 0 ? 1 : -1) * 22;
   const ey = my;
-  const textAnchor = cos >= 0 ? "start" : "end";
+  const textAnchor = cos >= 1 ? "start" : "end";
   return (
     <>
       <Sector
@@ -42,21 +42,15 @@ export default function RenderActiveShape(props) {
         outerRadius={outerRadius + 10}
         fill={fill}
       />
-      <path
-        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-        stroke={fill}
-        fill="none"
-      />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text
-        x={ex + (cos >= 0 ? 1 : -1) * 10}
-        y={ey}
+        x={200}
+        y={200}
         textAnchor={textAnchor}
         fill="#333"
       >{`${sectorName}`}</text>
       <text
-        x={ex + (cos >= 0 ? 1 : -1) * 10}
-        y={ey}
+        x={200}
+        y={200}
         dy={18}
         textAnchor={textAnchor}
         fill="#999"

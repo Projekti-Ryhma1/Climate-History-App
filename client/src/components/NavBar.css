@@ -1,0 +1,12 @@
+.navbar-normal {
+    scroll-snap-align: left;
+    align-items: center;
+    text-align: left;
+    margin: auto;
+}
+
+.navbar-mobile {
+    color: black;
+    align-items: center;
+    margin: auto;
+}

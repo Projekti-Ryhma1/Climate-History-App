@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.send(200);
+  res.status(200).send({message:"hello from google app engine"});
   res.end();
 });
 
@@ -29,6 +29,7 @@ app.use("/login", loginRoute);
 app.use("/deleteuser", deleteUserRouter);
 app.use("/signup", signUp);
 const PORT = process.env.PORT || 3001;
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}...`);
 });

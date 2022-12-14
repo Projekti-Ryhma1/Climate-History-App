@@ -8,6 +8,7 @@ import {
   CartesianGrid,
   Legend,
   Label,
+  ResponsiveContainer,
 } from "recharts";
 import axios from "axios";
 import Spinner from "./Spinner";
@@ -19,11 +20,14 @@ import "./charts.css";
  *  zoom?
  */
 
-export default function StackedLineChart() {
+export default function StackedLineChart(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [nationalEmissions, setnationalEmissions] = useState([]);
+  const [hideLegend, setHideLegend] = useState(true);
 
   useEffect(() => {
+    setHideLegend(window.innerWidth < props.maxWindowWidth);
+    
     if (localStorage.getItem("nationalEmissions") !== null) {
       setnationalEmissions(
         JSON.parse(localStorage.getItem("nationalEmissions"))
@@ -44,6 +48,7 @@ export default function StackedLineChart() {
           alert(error);
         });
     }
+
     setTimeout(() => {
       //give 0.5s time for data to load
       setIsLoading(false);
@@ -90,6 +95,14 @@ export default function StackedLineChart() {
     return;
   };
 
+  function checkHeight() {
+    if(!hideLegend) {
+      return 1200;
+    } else {
+      return 400;
+    }
+  }
+
   const renderChart = (
     <>
       <div>
@@ -99,6 +112,7 @@ export default function StackedLineChart() {
           million tonnes of CO2. X-Axis is years.
         </p>
       </div>
+      <ResponsiveContainer width={'100%'} height={checkHeight()}>
       <LineChart
         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
         data={nationalEmissions}
@@ -111,7 +125,7 @@ export default function StackedLineChart() {
           content={<CustomTooltip />}
         />
         <XAxis dataKey="MtCO2/year" interval="preserveEnd">
-          <Label value="YEAR" offset={-10} position="insideBottom" />
+          <Label value="YEAR" offset={-10} position="insideBottom"/>
         </XAxis>
         <YAxis label={{ value: "MtCO2", angle: -90, position: "insideLeft" }} />
         {keyArray.map((keyId, i) => {
@@ -128,8 +142,9 @@ export default function StackedLineChart() {
             ></Line>
           );
         })}
-        <Legend verticalAlign="bottom" />
+        {!hideLegend&&<Legend style={{fontSize:"20px"}}/>}
       </LineChart>
+      </ResponsiveContainer>
     </>
   );
 

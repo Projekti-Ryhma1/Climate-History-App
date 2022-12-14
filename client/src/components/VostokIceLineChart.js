@@ -1,5 +1,6 @@
-import { LineChart, Line, XAxis, YAxis, Legend } from "recharts";
-import axios from "axios";
+import "./charts.css";
+import {LineChart, Line, XAxis, YAxis,Legend, ResponsiveContainer } from 'recharts';
+import axios from 'axios';
 import Spinner from "./Spinner";
 import { useEffect, useState } from "react";
 
@@ -25,24 +26,32 @@ export default function VostokIceLineChart() {
     }
   }, []);
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 500);
-  const renderChart = (
-    <>
-      <p>Vostok Ice Data</p>
-      <LineChart
-        margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
-        width={800}
-        height={400}
-      >
-        <Line
-          stroke="#483BF6"
-          data={vostokIce}
-          type="monotone"
-          dataKey="c02ratio"
-          dot={false}
-          name="Vostok Ice Chart"
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+const renderChart = (
+  <>
+    <p>Vostok Ice Data</p>
+    <ResponsiveContainer width={'100%'} height={400}>
+    <LineChart
+      margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
+      width={800}
+      height={400}
+    >
+      <Line
+        stroke="#483BF6"
+        data={vostokIce}
+        type="monotone"
+        dataKey="c02ratio"
+        dot={false}
+        name="Vostok Ice Chart"
+        />
+       
+        <XAxis
+        dataKey="year"
+        type="number"
+        domain={[2342,417160]}
         />
 
         <XAxis dataKey="year" type="number" domain={[2342, 417160]} />
@@ -50,11 +59,12 @@ export default function VostokIceLineChart() {
 
         <Legend />
       </LineChart>
-    </>
-  );
-  return (
-    <div className="container-chart">
-      {isLoading ? <Spinner /> : renderChart}
-    </div>
-  );
-}
+      </ResponsiveContainer>
+      </>
+      );
+      return (
+        <div className="container-chart">
+          {isLoading ? <Spinner /> : renderChart}
+        </div>
+      )
+      }
