@@ -13,6 +13,7 @@ describe('create user, login, delete user', () => {
       cy.get('[id=userPassword]').type('1234')
       cy.findByRole('button', {  name: /login/i}).click()
       //Delete user
+      cy.findByRole('button', {  name: /user \( 1234 \)/i}).click()
       cy.findByRole('link', {  name: /preferences/i}).click()
       cy.findByRole('button', {  name: /delete user/i}).click()
       cy.findByRole('dialog').within(($form) => {

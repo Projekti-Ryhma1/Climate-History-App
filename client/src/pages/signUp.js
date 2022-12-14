@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './login_signup.css'; // Shared .css file for the login and signup functions
 import axios from 'axios';
 import bcrypt from 'bcryptjs'; // For crypting the password
+import Button from "react-bootstrap/Button";
 
 const URL = process.env.REACT_APP_API_ADDRESS + "/signup"; // Adress for the sign up in .env file (local and production)
 
@@ -48,19 +49,19 @@ export default function SignUp() {
       <h2 className="user_headline">Create User</h2>
       <div>
         <label className="user_label">Username:</label>
-        <input className="user_input" type="text" maxLength={20} required onChange={e => setUserName(e.target.value)} />
+        <input id="userName" className="user_input" type="text" maxLength={20} required onChange={e => setUserName(e.target.value)} />
       </div>
       <div>
         <label className="user_label">Password:</label>
-        <input className="user_input" type="password" maxLength={20} required onChange={e => createPassword(e.target.value)} />
+        <input id="userPassword" className="user_input" type="password" maxLength={20} required onChange={e => createPassword(e.target.value)} />
       </div>
       <div>
         <label className="user_label">Email:</label>
-        <input className="user_input" type="text" maxLength={20} required onChange={e => setEmail(e.target.value)} />
+        <input id="userEmail" className="user_input" type="text" maxLength={20} required onChange={e => setEmail(e.target.value)} />
       </div>
       <div>
-        <button className="user_button" onClick={SendUserData}
-          disabled={username.length === 0 || password.length === 0 || email.length === 0}>Create</button>
+        <Button className="user_button" onClick={SendUserData}
+          disabled={username.length === 0 || password.length === 0 || email.length === 0}>Create</Button>
       </div>
       <div>
         <p className="user_errormsg">{errorMessage}</p>

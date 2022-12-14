@@ -102,37 +102,37 @@ export default function CustomView(props){
             </Row>
             <Row lg={largeDisplayCharts} md="1" sm="1">
                 { preferences[1].preferenceValue == true &&
-                    <Col>
+                    <Col md="1">
                     <AtmosphericCO2LineChart/>
                     </Col>
                 }
                 { preferences[2].preferenceValue == true &&
-                    <Col>
+                    <Col  md="1">
                     <ClimateLineChart/>
                     </Col>
                 }  
                 { preferences[3].preferenceValue == true &&
-                    <Col>
+                    <Col  md="1">
                     <StackedLineChart maxWindowWidth={props.maxWindowWidth}/>
                     </Col>
                 }
                 { preferences[4].preferenceValue == true &&
-                    <Col>
+                    <Col  md="1">
                     <Composite800kLineChart/>
                     </Col>
                 }
                 { preferences[5].preferenceValue == true &&
-                    <Col>
+                    <Col  md="1">
                     <EmissionPieChart/>
                     </Col>
                 }
                 { preferences[6].preferenceValue == true &&
-                    <Col>
+                    <Col  md="1">
                     <VostokIceLineChart/>
                     </Col>
                 }
                 { preferences[7].preferenceValue == true &&
-                    <Col>
+                    <Col  md="1">
                     <EvoGlobalTempBiaxiallinechart/>
                     </Col>
                 }
